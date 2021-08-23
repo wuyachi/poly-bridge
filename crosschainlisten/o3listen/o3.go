@@ -257,7 +257,12 @@ func (this *O3ChainListen) getECCMEventByBlockNumber(contractAddr string, startH
 
 func (this *O3ChainListen) getProxyEventByBlockNumber(contractAddr string, startHeight uint64, endHeight uint64) ([]*models.ProxyLockEvent, []*models.ProxyUnlockEvent, []*models.SwapUnlockEvent, error) {
 	proxyAddress := common.HexToAddress(contractAddr)
-	proxyContract, err := swapper_abi.NewSwapProxy(proxyAddress, this.ethSdk.GetClient())
+	backend := this.ethSdk.GetClient()
+	if backend == nil {
+		return nil, nil, nil, fmt.Errorf("GetSmartContractEventByBlock, error: %s", "GetClient() return nil")
+	}
+
+	proxyContract, err := swapper_abi.NewSwapProxy(proxyAddress, backend)
 	if err != nil {
 		return nil, nil, nil, fmt.Errorf("GetSmartContractEventByBlock, error: %s", err.Error())
 	}
