@@ -20,6 +20,7 @@ package crosschainlisten
 import (
 	"fmt"
 	"math"
+	"poly-bridge/http/tools"
 	"runtime/debug"
 	"time"
 
@@ -33,7 +34,6 @@ import (
 	"poly-bridge/crosschainlisten/ontologylisten"
 	"poly-bridge/crosschainlisten/polylisten"
 	"poly-bridge/crosschainlisten/switcheolisten"
-	"poly-bridge/http/tools"
 	"poly-bridge/models"
 
 	"github.com/beego/beego/v2/core/logs"
@@ -73,6 +73,7 @@ type ChainHandle interface {
 	GetChainId() uint64
 	GetChainName() string
 	GetDefer() uint64
+	GetBatchSize() uint64
 }
 
 func NewChainHandle(chainListenConfig *conf.ChainListenConfig) ChainHandle {
@@ -211,20 +212,44 @@ func (ccl *CrossChainListen) listenChain() (exit bool) {
 			}
 			logs.Info("ListenChain - chain %s latest height is %d, listen height: %d", ccl.handle.GetChainName(), height, chain.Height)
 			for chain.Height < height-ccl.handle.GetDefer() {
-				wrapperTransactions, srcTransactions, polyTransactions, dstTransactions, err := ccl.HandleNewBlock(chain.Height + 1)
-				if err != nil {
-					logs.Error("HandleNewBlock %d err: %v", chain.Height+1, err)
+				batchSize := ccl.handle.GetBatchSize()
+				if batchSize == 0 {
+					batchSize = 1
+				}
+				if batchSize > height-chain.Height {
+					batchSize = height - chain.Height - ccl.handle.GetDefer()
+				}
+
+				doneChannel := make(chan bool)
+				allTasksSuccess := true
+				for i := uint64(1); i <= batchSize; i++ {
+					go func(height uint64) {
+						wrapperTransactions, srcTransactions, polyTransactions, dstTransactions, err := ccl.HandleNewBlock(height)
+						if err != nil {
+							logs.Error("HandleNewBlock %d err: %v", height, err)
+							doneChannel <- false
+						}
+						err = ccl.db.UpdateEvents(wrapperTransactions, srcTransactions, polyTransactions, dstTransactions)
+						if err != nil {
+							logs.Error("UpdateEvents on block %d err: %v", height, err)
+							doneChannel <- false
+						}
+						tools.Record(len(srcTransactions), "%v.locks", chain.ChainId)
+						tools.Record(len(dstTransactions), "%v.unlocks", chain.ChainId)
+						doneChannel <- true
+					}(chain.Height + i)
+					if doneRes := <-doneChannel; !doneRes {
+						allTasksSuccess = false
+					}
+				}
+				if !allTasksSuccess {
 					break
 				}
-				chain.Height += 1
-				err = ccl.db.UpdateEvents(chain, wrapperTransactions, srcTransactions, polyTransactions, dstTransactions)
-				if err != nil {
-					logs.Error("UpdateEvents on block %d err: %v", chain.Height+1, err)
-					chain.Height -= 1
-					break
+				chain.Height += batchSize
+				if err := ccl.db.UpdateChain(chain); err != nil {
+					logs.Error("UpdateChain [chainId:%d, height:%d] err %v", chain.ChainId, chain.Height, err)
+					chain.Height -= batchSize
 				}
-				tools.Record(len(srcTransactions), "%v.locks", chain.ChainId)
-				tools.Record(len(dstTransactions), "%v.unlocks", chain.ChainId)
 			}
 		case <-ccl.exit:
 			logs.Info("cross chain listen exit, chain: %s, dao: %s......", ccl.handle.GetChainName(), ccl.db.Name())
