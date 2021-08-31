@@ -153,6 +153,7 @@ func (c *FeeController) CheckFee() {
 }
 
 func (c *FeeController) checkFee(Checks []*models.CheckFeeReq) []*models.CheckFee {
+	logs.Debug("checkfee para: %v", Checks)
 	hash2ChainId := make(map[string]uint64, 0)
 	requestHashs := make([]string, 0)
 	for _, check := range Checks {
@@ -203,6 +204,7 @@ func (c *FeeController) checkFee(Checks []*models.CheckFeeReq) []*models.CheckFe
 		checkFee.MinProxyFee = new(big.Float).SetInt64(0)
 		_, ok := chain2Fees[check.ChainId]
 		if !ok {
+			logs.Debug("check.ChainId not exist in chain2Fees")
 			checkFee.PayState = -1
 			checkFees = append(checkFees, checkFee)
 			continue
@@ -215,12 +217,14 @@ func (c *FeeController) checkFee(Checks []*models.CheckFeeReq) []*models.CheckFe
 		}
 		wrapperTransactionWithToken, ok := txHash2WrapperTransaction[newHash]
 		if !ok {
+			logs.Debug("newHash:%s not exist", newHash)
 			checkFee.PayState = -1
 			checkFees = append(checkFees, checkFee)
 			continue
 		}
 		chainFee, ok := chain2Fees[wrapperTransactionWithToken.DstChainId]
 		if !ok {
+			logs.Debug("DstChainId:%d not exist in chain2Fees", wrapperTransactionWithToken.DstChainId)
 			checkFee.PayState = -1
 			checkFees = append(checkFees, checkFee)
 			continue
@@ -235,6 +239,7 @@ func (c *FeeController) checkFee(Checks []*models.CheckFeeReq) []*models.CheckFe
 		if feePay.Cmp(feeMin) >= 0 {
 			checkFee.PayState = 1
 		} else {
+			logs.Debug("feePay:%v less than feeMin:%v", feePay, feeMin)
 			checkFee.PayState = -1
 		}
 		checkFee.Amount = feePay
