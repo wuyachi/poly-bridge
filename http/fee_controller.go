@@ -153,7 +153,6 @@ func (c *FeeController) CheckFee() {
 }
 
 func (c *FeeController) checkFee(Checks []*models.CheckFeeReq) []*models.CheckFee {
-	logs.Debug("checkfee para: %v", Checks)
 	hash2ChainId := make(map[string]uint64, 0)
 	requestHashs := make([]string, 0)
 	for _, check := range Checks {
@@ -211,6 +210,7 @@ func (c *FeeController) checkFee(Checks []*models.CheckFeeReq) []*models.CheckFe
 		}
 		newHash, ok := key2Txhash[check.Hash]
 		if !ok {
+			logs.Debug("check.Hash:%s not exist in key2Txhash", check.Hash)
 			checkFee.PayState = 0
 			checkFees = append(checkFees, checkFee)
 			continue
