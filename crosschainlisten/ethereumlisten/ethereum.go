@@ -103,6 +103,7 @@ func (this *EthereumChainListen) getPLTUnlock(tx common.Hash) *models.ProxyUnloc
 
 func (this *EthereumChainListen) HandleNewBlock(height uint64) ([]*models.WrapperTransaction, []*models.SrcTransaction, []*models.PolyTransaction, []*models.DstTransaction, int, int, error) {
 	blockHeader, err := this.ethSdk.GetHeaderByNumber(height)
+	logs.Info("blockHeader=%v", *blockHeader)
 	if err != nil {
 		logs.Error("GetHeaderByNumber %d err %v", height, err)
 		return nil, nil, nil, nil, 0, 0, err
