@@ -169,6 +169,7 @@ func (this *EthereumChainListen) HandleNewBlock(height uint64) ([]*models.Wrappe
 	srcTransactions := make([]*models.SrcTransaction, 0)
 	dstTransactions := make([]*models.DstTransaction, 0)
 	for _, lockEvent := range eccmLockEvents {
+		logs.Info("lockEvent=%v", lockEvent)
 		if lockEvent.Method == _eth_crosschainlock {
 			logs.Info("(lock) from chain: %s, txhash: %s, txid: %s", this.GetChainName(), lockEvent.TxHash, lockEvent.Txid)
 			srcTransaction := &models.SrcTransaction{}
@@ -189,6 +190,7 @@ func (this *EthereumChainListen) HandleNewBlock(height uint64) ([]*models.Wrappe
 				lock, _ = this.GetPaletteLockProxyLockEvent(common.HexToHash("0x" + lockEvent.TxHash))
 			} else {
 				for _, v := range proxyLockEvents {
+					logs.Info("proxyLockEvent=%v", *v)
 					if v.TxHash == lockEvent.TxHash {
 						lock = v
 						break
@@ -253,6 +255,7 @@ func (this *EthereumChainListen) HandleNewBlock(height uint64) ([]*models.Wrappe
 	}
 	// save unLockEvent to db
 	for _, unLockEvent := range eccmUnLockEvents {
+		logs.Info("unLockEvent=%v", unLockEvent)
 		if unLockEvent.Method == _eth_crosschainunlock {
 			logs.Info("(unlock) to chain: %s, txhash: %s", this.GetChainName(), unLockEvent.TxHash)
 			dstTransaction := &models.DstTransaction{}
@@ -270,6 +273,7 @@ func (this *EthereumChainListen) HandleNewBlock(height uint64) ([]*models.Wrappe
 				unlock = this.getPLTUnlock(common.HexToHash("0x" + unLockEvent.TxHash))
 			} else {
 				for _, v := range proxyUnlockEvents {
+					logs.Info("proxyUnlockEvent=%v", *v)
 					if v.TxHash == unLockEvent.TxHash {
 						unlock = v
 						break
