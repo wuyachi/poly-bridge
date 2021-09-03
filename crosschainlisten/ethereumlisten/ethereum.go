@@ -104,9 +104,11 @@ func (this *EthereumChainListen) getPLTUnlock(tx common.Hash) *models.ProxyUnloc
 func (this *EthereumChainListen) HandleNewBlock(height uint64) ([]*models.WrapperTransaction, []*models.SrcTransaction, []*models.PolyTransaction, []*models.DstTransaction, int, int, error) {
 	blockHeader, err := this.ethSdk.GetHeaderByNumber(height)
 	if err != nil {
+		logs.Error("GetHeaderByNumber %d err %v", height, err)
 		return nil, nil, nil, nil, 0, 0, err
 	}
 	if blockHeader == nil {
+		logs.Error("there is no ethereum block!")
 		return nil, nil, nil, nil, 0, 0, fmt.Errorf("there is no ethereum block!")
 	}
 	tt := blockHeader.Time
@@ -114,10 +116,12 @@ func (this *EthereumChainListen) HandleNewBlock(height uint64) ([]*models.Wrappe
 	wrapperTransactions := make([]*models.WrapperTransaction, 0)
 	erc20WrapperTransactions, err := this.getWrapperEventByBlockNumber(this.ethCfg.WrapperContract, height, height)
 	if err != nil {
+		logs.Error("getWrapperEventByBlockNumber %d err %v", height, err)
 		return nil, nil, nil, nil, 0, 0, err
 	}
 	nftWrapperTransactions, err := this.getNFTWrapperEventByBlockNumber(this.ethCfg.NFTWrapperContract, height, height)
 	if err != nil {
+		logs.Error("getNFTWrapperEventByBlockNumber %d err %v", height, err)
 		return nil, nil, nil, nil, 0, 0, err
 	}
 	wrapperTransactions = append(wrapperTransactions, erc20WrapperTransactions...)
@@ -131,17 +135,20 @@ func (this *EthereumChainListen) HandleNewBlock(height uint64) ([]*models.Wrappe
 	}
 	eccmLockEvents, eccmUnLockEvents, err := this.getECCMEventByBlockNumber(this.ethCfg.CCMContract, height, height)
 	if err != nil {
+		logs.Error("getECCMEventByBlockNumber %d err %v", height, err)
 		return nil, nil, nil, nil, 0, 0, err
 	}
 
 	proxyLockEvents, proxyUnlockEvents := make([]*models.ProxyLockEvent, 0), make([]*models.ProxyUnlockEvent, 0)
 	erc20ProxyLockEvents, erc20ProxyUnlockEvents, err := this.getProxyEventByBlockNumber(this.ethCfg.ProxyContract, height, height)
 	if err != nil {
+		logs.Error("getProxyEventByBlockNumber %d err %v", height, err)
 		return nil, nil, nil, nil, 0, 0, err
 	}
 
 	nftProxyLockEvents, nftProxyUnlockEvents, err := this.getNFTProxyEventByBlockNumber(this.ethCfg.NFTProxyContract, height, height)
 	if err != nil {
+		logs.Error("getNFTProxyEventByBlockNumber %d err %v", height, err)
 		return nil, nil, nil, nil, 0, 0, err
 	}
 
@@ -152,6 +159,7 @@ func (this *EthereumChainListen) HandleNewBlock(height uint64) ([]*models.Wrappe
 
 	swapLockEvents, swapEvents, err := this.getSwapEventByBlockNumber(this.ethCfg.SwapContract, height, height)
 	if err != nil {
+		logs.Error("getSwapEventByBlockNumber %d err %v", height, err)
 		return nil, nil, nil, nil, 0, 0, err
 	}
 	proxyLockEvents = append(proxyLockEvents, swapLockEvents...)

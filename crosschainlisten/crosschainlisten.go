@@ -152,7 +152,7 @@ func (ccl *CrossChainListen) HandleNewBlock(height uint64) (w []*models.WrapperT
 	var locks, unlocks int
 	for c := 3; c > 0; c-- {
 		w, s, p, d, locks, unlocks, err = ccl.handle.HandleNewBlock(height)
-		logs.Info("len(w)=%d\nlen(s)=%d\nlen(p)=%d\nlen(locks)=%d\nlen(unlocks)=%d\n,err=%v", len(w), len(s), len(p), locks, unlocks, err)
+		//logs.Info("len(w)=%d\nlen(s)=%d\nlen(p)=%d\nlen(locks)=%d\nlen(unlocks)=%d\n,err=%v", len(w), len(s), len(p), locks, unlocks, err)
 		if err != nil {
 			return
 		}
