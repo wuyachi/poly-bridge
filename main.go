@@ -71,10 +71,12 @@ func run(ctx *cli.Context) {
 	basedef.ConfirmEnv(config.Env)
 	common.SetupChainsSDK(config)
 
-	context.NewContext().Output.Header("x-frame-options", "DENY")
-	context.NewContext().Output.Header("Referrer-Policy", "same-origin")
-	context.NewContext().Output.Header("Content-Security-Policy", "default-src 'none'; script-src 'self'; connect-src 'self'; img-src 'self'; style-src 'self';base-uri 'self';form-action 'self'")
-
+	securityFilter := func(ctx *context.Context) {
+		ctx.ResponseWriter.Header().Add("x-frame-options", "DENY")
+		ctx.ResponseWriter.Header().Add("Referrer-Policy", "same-origin")
+		ctx.ResponseWriter.Header().Add("Content-Security-Policy", "default-src 'none'; script-src 'self'; connect-src 'self'; img-src 'self'; style-src 'self';base-uri 'self';form-action 'self'")
+	}
+	web.InsertFilter("*", web.BeforeRouter, securityFilter)
 	web.InsertFilter("*", web.BeforeRouter, cors.Allow(
 		&cors.Options{
 			AllowAllOrigins:  true,
