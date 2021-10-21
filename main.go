@@ -81,12 +81,16 @@ func run(ctx *cli.Context) {
 		},
 	))
 	securityFilter := func(ctx *context.Context) {
+		logs.Info("wuyachi x-frame-options:%s", ctx.ResponseWriter.Header().Get("x-frame-options"))
 		ctx.ResponseWriter.Header().Del("x-frame-options")
+		logs.Info("wuyachi x-frame-options:%s", ctx.ResponseWriter.Header().Get("x-frame-options"))
 		ctx.ResponseWriter.Header().Set("x-frame-options", "DENY")
+		logs.Info("wuyachi x-frame-options:%s", ctx.ResponseWriter.Header().Get("x-frame-options"))
+
 		ctx.ResponseWriter.Header().Set("Referrer-Policy", "same-origin")
 		ctx.ResponseWriter.Header().Set("Content-Security-Policy", "default-src 'none'; script-src 'self'; connect-src 'self'; img-src 'self'; style-src 'self';base-uri 'self';form-action 'self'")
 	}
-	web.InsertFilter("*", web.AfterExec, securityFilter)
+	web.InsertFilter("*", web.BeforeRouter, securityFilter)
 
 	// bridge http
 	http.Init()
