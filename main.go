@@ -73,7 +73,7 @@ func run(ctx *cli.Context) {
 
 	web.InsertFilter("*", web.BeforeRouter, cors.Allow(
 		&cors.Options{
-			//AllowAllOrigins:  true,
+			AllowAllOrigins:  true,
 			AllowMethods:     []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
 			AllowHeaders:     []string{"Origin", "Authorization", "Access-Control-Allow-Origin", "Access-Control-Allow-Headers", "Content-Type"},
 			ExposeHeaders:    []string{"Content-Length", "Access-Control-Allow-Origin", "Access-Control-Allow-Headers", "Content-Type"},
@@ -81,6 +81,7 @@ func run(ctx *cli.Context) {
 		},
 	))
 	securityFilter := func(ctx *context.Context) {
+		ctx.ResponseWriter.Header().Del("x-frame-options")
 		ctx.ResponseWriter.Header().Set("x-frame-options", "DENY")
 		ctx.ResponseWriter.Header().Set("Referrer-Policy", "same-origin")
 		ctx.ResponseWriter.Header().Set("Content-Security-Policy", "default-src 'none'; script-src 'self'; connect-src 'self'; img-src 'self'; style-src 'self';base-uri 'self';form-action 'self'")
