@@ -71,12 +71,6 @@ func run(ctx *cli.Context) {
 	basedef.ConfirmEnv(config.Env)
 	common.SetupChainsSDK(config)
 
-	securityFilter := func(ctx *context.Context) {
-		ctx.ResponseWriter.Header().Set("x-frame-options", "DENY")
-		ctx.ResponseWriter.Header().Set("Referrer-Policy", "same-origin")
-		ctx.ResponseWriter.Header().Set("Content-Security-Policy", "default-src 'none'; script-src 'self'; connect-src 'self'; img-src 'self'; style-src 'self';base-uri 'self';form-action 'self'")
-	}
-	web.InsertFilter("*", web.BeforeRouter, securityFilter)
 	web.InsertFilter("*", web.BeforeRouter, cors.Allow(
 		&cors.Options{
 			AllowAllOrigins:  true,
@@ -86,6 +80,12 @@ func run(ctx *cli.Context) {
 			AllowCredentials: true,
 		},
 	))
+	securityFilter := func(ctx *context.Context) {
+		ctx.ResponseWriter.Header().Set("x-frame-options", "DENY")
+		ctx.ResponseWriter.Header().Set("Referrer-Policy", "same-origin")
+		ctx.ResponseWriter.Header().Set("Content-Security-Policy", "default-src 'none'; script-src 'self'; connect-src 'self'; img-src 'self'; style-src 'self';base-uri 'self';form-action 'self'")
+	}
+	web.InsertFilter("*", web.BeforeRouter, securityFilter)
 
 	// bridge http
 	http.Init()
