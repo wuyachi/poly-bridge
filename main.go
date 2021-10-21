@@ -73,7 +73,7 @@ func run(ctx *cli.Context) {
 
 	web.InsertFilter("*", web.BeforeRouter, cors.Allow(
 		&cors.Options{
-			AllowAllOrigins:  true,
+			//AllowAllOrigins:  true,
 			AllowMethods:     []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
 			AllowHeaders:     []string{"Origin", "Authorization", "Access-Control-Allow-Origin", "Access-Control-Allow-Headers", "Content-Type"},
 			ExposeHeaders:    []string{"Content-Length", "Access-Control-Allow-Origin", "Access-Control-Allow-Headers", "Content-Type"},
