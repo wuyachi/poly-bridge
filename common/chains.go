@@ -10,18 +10,19 @@ import (
 )
 
 var (
-	ethereumSdk *chainsdk.EthereumSdkPro
-	pltSdk      *chainsdk.EthereumSdkPro
-	bscSdk      *chainsdk.EthereumSdkPro
-	hecoSdk     *chainsdk.EthereumSdkPro
-	okSdk       *chainsdk.EthereumSdkPro
-	neoSdk      *chainsdk.NeoSdkPro
-	ontologySdk *chainsdk.OntologySdkPro
-	maticSdk    *chainsdk.EthereumSdkPro
-	swthSdk     *chainsdk.SwitcheoSdkPro
-	arbitrumSdk *chainsdk.EthereumSdkPro
-	xdaiSdk     *chainsdk.EthereumSdkPro
-	config      *conf.Config
+	ethereumSdk   *chainsdk.EthereumSdkPro
+	pltSdk        *chainsdk.EthereumSdkPro
+	bscSdk        *chainsdk.EthereumSdkPro
+	hecoSdk       *chainsdk.EthereumSdkPro
+	okSdk         *chainsdk.EthereumSdkPro
+	neoSdk        *chainsdk.NeoSdkPro
+	ontologySdk   *chainsdk.OntologySdkPro
+	maticSdk      *chainsdk.EthereumSdkPro
+	swthSdk       *chainsdk.SwitcheoSdkPro
+	arbitrumSdk   *chainsdk.EthereumSdkPro
+	xdaiSdk       *chainsdk.EthereumSdkPro
+	optimisticSdk *chainsdk.EthereumSdkPro
+	config        *conf.Config
 )
 
 func SetupChainsSDK(cfg *conf.Config) {
@@ -123,6 +124,13 @@ func newChainSdks(config *conf.Config) {
 		xdaiSdk = chainsdk.NewEthereumSdkPro(urls, xdaiConfig.ListenSlot, xdaiConfig.ChainId)
 	}
 
+		optimisticConfig := config.GetChainListenConfig(basedef.OPTIMISTIC_CROSSCHAIN_ID)
+		if optimisticConfig == nil {
+			panic("chain is invalid")
+		}
+		urls := optimisticConfig.GetNodesUrl()
+		optimisticSdk = chainsdk.NewEthereumSdkPro(urls, optimisticConfig.ListenSlot, optimisticConfig.ChainId)
+	}
 }
 
 func GetBalance(chainId uint64, hash string) (*big.Int, error) {
@@ -196,6 +204,13 @@ func GetBalance(chainId uint64, hash string) (*big.Int, error) {
 		}
 		return xdaiSdk.Erc20Balance(hash, xdaiConfig.ProxyContract)
 	}
+	if chainId == basedef.OPTIMISTIC_CROSSCHAIN_ID {
+		optimisticConfig := config.GetChainListenConfig(basedef.OPTIMISTIC_CROSSCHAIN_ID)
+		if optimisticConfig == nil {
+			panic("chain is invalid")
+		}
+		return optimisticSdk.Erc20Balance(hash, optimisticConfig.ProxyContract)
+	}
 	/*if chainId == basedef.PLT_CROSSCHAIN_ID {
 		conf := config.GetChainListenConfig(basedef.PLT_CROSSCHAIN_ID)
 		if conf == nil {
@@ -258,7 +273,7 @@ func GetTotalSupply(chainId uint64, hash string) (*big.Int, error) {
 		return maticSdk.Erc20TotalSupply(hash)
 	}
 	if chainId == basedef.ARBITRUM_CROSSCHAIN_ID {
-		arbitrumConfig := config.GetChainListenConfig(basedef.BSC_CROSSCHAIN_ID)
+		arbitrumConfig := config.GetChainListenConfig(basedef.ARBITRUM_CROSSCHAIN_ID)
 		if arbitrumConfig == nil {
 			panic("chain is invalid")
 		}
@@ -271,6 +286,14 @@ func GetTotalSupply(chainId uint64, hash string) (*big.Int, error) {
 		}
 		return xdaiSdk.Erc20TotalSupply(hash)
 	}
+	if chainId == basedef.OPTIMISTIC_CROSSCHAIN_ID {
+		optimisticConfig := config.GetChainListenConfig(basedef.OPTIMISTIC_CROSSCHAIN_ID)
+		if optimisticConfig == nil {
+			panic("chain is invalid")
+		}
+		return optimisticSdk.Erc20TotalSupply(hash)
+	}
+
 	return new(big.Int).SetUint64(0), nil
 }
 
@@ -490,6 +513,32 @@ func GetAllLockProxyBalance(chainId uint64, hash string) []*ProxyBalance {
 		}
 		return proxyBalances
 	}
+	if chainId == basedef.OPTIMISTIC_CROSSCHAIN_ID {
+		optimisticConfig := config.GetChainListenConfig(basedef.OPTIMISTIC_CROSSCHAIN_ID)
+		if optimisticConfig == nil {
+			panic("chain is invalid")
+		}
+		amount, err := optimisticSdk.Erc20Balance(hash, optimisticConfig.ProxyContract)
+		if err == nil {
+			proxyBalance := new(ProxyBalance)
+			proxyBalance.Amount = amount
+			proxyBalance.ItemName = "poly"
+			proxyBalance.ItemProxy = optimisticConfig.ProxyContract
+			proxyBalances = append(proxyBalances, proxyBalance)
+		}
+		for _, otherProxyContract := range optimisticConfig.OtherProxyContract {
+			amount, err := arbitrumSdk.Erc20Balance(hash, otherProxyContract.ItemProxy)
+			if err != nil {
+				continue
+			}
+			proxyBalance := new(ProxyBalance)
+			proxyBalance.Amount = amount
+			proxyBalance.ItemName = otherProxyContract.ItemName
+			proxyBalance.ItemProxy = otherProxyContract.ItemProxy
+			proxyBalances = append(proxyBalances, proxyBalance)
+		}
+		return proxyBalances
+	}
 	return proxyBalances
 }
 
@@ -513,7 +562,8 @@ func GetProxyBalance(chainId uint64, hash string, proxy string) (*big.Int, error
 		return arbitrumSdk.Erc20Balance(hash, proxy)
 	case basedef.XDAI_CROSSCHAIN_ID:
 		return xdaiSdk.Erc20Balance(hash, proxy)
-
+	case basedef.OPTIMISTIC_CROSSCHAIN_ID:
+		return optimisticSdk.Erc20Balance(hash, proxy)
 	default:
 		return new(big.Int).SetUint64(0), nil
 	}
