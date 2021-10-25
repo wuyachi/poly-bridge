@@ -123,7 +123,7 @@ func newChainSdks(config *conf.Config) {
 		urls := xdaiConfig.GetNodesUrl()
 		xdaiSdk = chainsdk.NewEthereumSdkPro(urls, xdaiConfig.ListenSlot, xdaiConfig.ChainId)
 	}
-
+	{
 		optimisticConfig := config.GetChainListenConfig(basedef.OPTIMISTIC_CROSSCHAIN_ID)
 		if optimisticConfig == nil {
 			panic("chain is invalid")
