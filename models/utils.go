@@ -126,42 +126,52 @@ func FormatAmount(precision uint64, amount *BigInt) string {
 
 func FormatFee(chain uint64, fee *BigInt) string {
 	fee_new := decimal.NewFromBigInt(&fee.Int, 0)
-	if chain == basedef.BTC_CROSSCHAIN_ID {
+
+	switch chain {
+	case basedef.BTC_CROSSCHAIN_ID:
 		precision_new := decimal.New(int64(100000000), 0)
 		return fee_new.Div(precision_new).String() + " BTC"
-	} else if chain == basedef.ONT_CROSSCHAIN_ID {
+	case basedef.ONT_CROSSCHAIN_ID:
 		precision_new := decimal.New(int64(1000000000), 0)
 		return fee_new.Div(precision_new).String() + " ONG"
-	} else if chain == basedef.ETHEREUM_CROSSCHAIN_ID {
+	case basedef.ETHEREUM_CROSSCHAIN_ID:
 		precision_new := decimal.New(int64(1000000000000000000), 0)
 		return fee_new.Div(precision_new).String() + " ETH"
-	} else if chain == basedef.NEO_CROSSCHAIN_ID {
+	case basedef.NEO_CROSSCHAIN_ID:
 		precision_new := decimal.New(int64(100000000), 0)
 		return fee_new.Div(precision_new).String() + " GAS"
-	} else if chain == basedef.SWITCHEO_CROSSCHAIN_ID {
+	case basedef.SWITCHEO_CROSSCHAIN_ID:
 		precision_new := decimal.New(int64(100000000), 0)
 		return fee_new.Div(precision_new).String() + " SWTH"
-	} else if chain == basedef.BSC_CROSSCHAIN_ID {
+	case basedef.BSC_CROSSCHAIN_ID:
 		precision_new := decimal.New(int64(1000000000000000000), 0)
 		return fee_new.Div(precision_new).String() + " BNB"
-	} else if chain == basedef.O3_CROSSCHAIN_ID {
+	case basedef.O3_CROSSCHAIN_ID:
 		precision_new := decimal.New(int64(1000000000000000000), 0)
 		return fee_new.Div(precision_new).String() + " O3"
-	} else if chain == basedef.HECO_CROSSCHAIN_ID {
+	case basedef.HECO_CROSSCHAIN_ID:
 		precision_new := decimal.New(int64(1000000000000000000), 0)
 		return fee_new.Div(precision_new).String() + " HT"
-	} else if chain == basedef.OK_CROSSCHAIN_ID {
+	case basedef.OK_CROSSCHAIN_ID:
 		precision_new := decimal.New(int64(1000000000000000000), 0)
 		return fee_new.Div(precision_new).String() + " OKT"
-	} else if chain == basedef.MATIC_CROSSCHAIN_ID {
+	case basedef.MATIC_CROSSCHAIN_ID:
 		precision_new := decimal.New(int64(1000000000000000000), 0)
 		return fee_new.Div(precision_new).String() + " MATIC"
-	} else if chain == basedef.NEO3_CROSSCHAIN_ID {
+	case basedef.NEO3_CROSSCHAIN_ID:
 		precision_new := decimal.New(int64(100000000), 0)
 		return fee_new.Div(precision_new).String() + " GAS"
-	} else {
+	case basedef.ARBITRUM_CROSSCHAIN_ID:
+		precision_new := decimal.New(int64(1000000000000000000), 0)
+		return fee_new.Div(precision_new).String() + " ETH"
+	case basedef.OPTIMISTIC_CROSSCHAIN_ID:
+		precision_new := decimal.New(int64(1000000000000000000), 0)
+		return fee_new.Div(precision_new).String() + " ETH"
+
+	default:
 		precision_new := decimal.New(int64(1), 0)
 		return fee_new.Div(precision_new).String()
+
 	}
 }
 
