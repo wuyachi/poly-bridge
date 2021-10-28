@@ -35,6 +35,7 @@ const (
 	MATIC_CROSSCHAIN_ID    = uint64(202)
 	SWITCHEO_CROSSCHAIN_ID = uint64(1000) // No testnet for cosmos
 	ARBITRUM_CROSSCHAIN_ID = uint64(205)
+	FANTOM_CROSSCHAIN_ID   = uint64(208)
 
 	ENV = "testnet"
 )

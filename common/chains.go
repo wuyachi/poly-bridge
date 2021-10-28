@@ -20,6 +20,7 @@ var (
 	maticSdk    *chainsdk.EthereumSdkPro
 	swthSdk     *chainsdk.SwitcheoSdkPro
 	arbitrumSdk *chainsdk.EthereumSdkPro
+	fantomSdk   *chainsdk.EthereumSdkPro
 	config      *conf.Config
 )
 
@@ -113,6 +114,14 @@ func newChainSdks(config *conf.Config) {
 		urls := arbitrumConfig.GetNodesUrl()
 		arbitrumSdk = chainsdk.NewEthereumSdkPro(urls, arbitrumConfig.ListenSlot, arbitrumConfig.ChainId)
 	}
+	{
+		fantomConfig := config.GetChainListenConfig(basedef.FANTOM_CROSSCHAIN_ID)
+		if fantomConfig == nil {
+			panic("chain is invalid")
+		}
+		urls := fantomConfig.GetNodesUrl()
+		fantomSdk = chainsdk.NewEthereumSdkPro(urls, fantomConfig.ListenSlot, fantomConfig.ChainId)
+	}
 }
 
 func GetBalance(chainId uint64, hash string) (*big.Int, error) {
@@ -178,6 +187,13 @@ func GetBalance(chainId uint64, hash string) (*big.Int, error) {
 			panic("chain is invalid")
 		}
 		return arbitrumSdk.Erc20Balance(hash, arbitrumConfig.ProxyContract)
+	}
+	if chainId == basedef.FANTOM_CROSSCHAIN_ID {
+		fantomConfig := config.GetChainListenConfig(basedef.FANTOM_CROSSCHAIN_ID)
+		if fantomConfig == nil {
+			panic("chain is invalid")
+		}
+		return fantomSdk.Erc20Balance(hash, fantomConfig.ProxyContract)
 	}
 	/*if chainId == basedef.PLT_CROSSCHAIN_ID {
 		conf := config.GetChainListenConfig(basedef.PLT_CROSSCHAIN_ID)
@@ -246,6 +262,13 @@ func GetTotalSupply(chainId uint64, hash string) (*big.Int, error) {
 			panic("chain is invalid")
 		}
 		return arbitrumSdk.Erc20TotalSupply(hash)
+	}
+	if chainId == basedef.FANTOM_CROSSCHAIN_ID {
+		fantomConfig := config.GetChainListenConfig(basedef.FANTOM_CROSSCHAIN_ID)
+		if fantomConfig == nil {
+			panic("chain is invalid")
+		}
+		return fantomSdk.Erc20TotalSupply(hash)
 	}
 	return new(big.Int).SetUint64(0), nil
 }
@@ -466,6 +489,32 @@ func GetAllLockProxyBalance(chainId uint64, hash string) []*ProxyBalance {
 		}
 		return proxyBalances
 	}
+	if chainId == basedef.FANTOM_CROSSCHAIN_ID {
+		fantomConfig := config.GetChainListenConfig(basedef.FANTOM_CROSSCHAIN_ID)
+		if fantomConfig == nil {
+			panic("chain is invalid")
+		}
+		amount, err := fantomSdk.Erc20Balance(hash, fantomConfig.ProxyContract)
+		if err == nil {
+			proxyBalance := new(ProxyBalance)
+			proxyBalance.Amount = amount
+			proxyBalance.ItemName = "poly"
+			proxyBalance.ItemProxy = fantomConfig.ProxyContract
+			proxyBalances = append(proxyBalances, proxyBalance)
+		}
+		for _, otherProxyContract := range fantomConfig.OtherProxyContract {
+			amount, err := fantomSdk.Erc20Balance(hash, otherProxyContract.ItemProxy)
+			if err != nil {
+				continue
+			}
+			proxyBalance := new(ProxyBalance)
+			proxyBalance.Amount = amount
+			proxyBalance.ItemName = otherProxyContract.ItemName
+			proxyBalance.ItemProxy = otherProxyContract.ItemProxy
+			proxyBalances = append(proxyBalances, proxyBalance)
+		}
+		return proxyBalances
+	}
 	return proxyBalances
 }
 
@@ -487,7 +536,8 @@ func GetProxyBalance(chainId uint64, hash string, proxy string) (*big.Int, error
 		return ontologySdk.Oep4Balance(hash, proxy)
 	case basedef.ARBITRUM_CROSSCHAIN_ID:
 		return arbitrumSdk.Erc20Balance(hash, proxy)
-
+	case basedef.FANTOM_CROSSCHAIN_ID:
+		return fantomSdk.Erc20Balance(hash, proxy)
 	default:
 		return new(big.Int).SetUint64(0), nil
 	}

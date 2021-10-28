@@ -298,6 +298,25 @@
       ],
       "CCMContract": "3A77dB10eAa7436e608a99643Ab2bEB2E901C72C",
       "ProxyContract": "97f72bA888A26A0F98C67cf15d781dDBFE64B990"
+    },
+    {
+      "ChainName": "Fantom",
+      "ChainId": 208,
+      "ListenSlot": 1,
+      "Defer": 1,
+      "BatchSize": 5,
+      "Nodes": [
+        {
+          "Url": "https://rpc.testnet.fantom.network"
+        }
+      ],
+      "ExtendNodes": [],
+      "WrapperContract": [
+        "",
+        "FAddf0cfb08F92779560db57BE6b2C7303aaD266"
+      ],
+      "CCMContract": "D9A3d265a1127051F620e700B5a461af4991EaAE",
+      "ProxyContract": "4a76E52600C6285029c8f7c52183cf86282cA5b8"
     }
   ],
   "StatsConfig": {
@@ -443,6 +462,18 @@
       "Nodes": [
         {
           "Url": "https://rinkeby.arbitrum.io/rpc"
+        }
+      ],
+      "GasLimit": 120000,
+      "ProxyFee": 140,
+      "MinFee": 20
+    },
+    {
+      "ChainId": 208,
+      "ChainName": "Fantom",
+      "Nodes": [
+        {
+          "Url": "https://rpc.testnet.fantom.network"
         }
       ],
       "GasLimit": 120000,
