@@ -10,20 +10,21 @@ import (
 )
 
 var (
-	ethereumSdk *chainsdk.EthereumSdkPro
-	pltSdk      *chainsdk.EthereumSdkPro
-	bscSdk      *chainsdk.EthereumSdkPro
-	hecoSdk     *chainsdk.EthereumSdkPro
-	okSdk       *chainsdk.EthereumSdkPro
-	neoSdk      *chainsdk.NeoSdkPro
-	ontologySdk *chainsdk.OntologySdkPro
-	maticSdk    *chainsdk.EthereumSdkPro
-	swthSdk     *chainsdk.SwitcheoSdkPro
-	arbitrumSdk *chainsdk.EthereumSdkPro
-	xdaiSdk     *chainsdk.EthereumSdkPro
+	ethereumSdk   *chainsdk.EthereumSdkPro
+	pltSdk        *chainsdk.EthereumSdkPro
+	bscSdk        *chainsdk.EthereumSdkPro
+	hecoSdk       *chainsdk.EthereumSdkPro
+	okSdk         *chainsdk.EthereumSdkPro
+	neoSdk        *chainsdk.NeoSdkPro
+	ontologySdk   *chainsdk.OntologySdkPro
+	maticSdk      *chainsdk.EthereumSdkPro
+	swthSdk       *chainsdk.SwitcheoSdkPro
+	arbitrumSdk   *chainsdk.EthereumSdkPro
+	xdaiSdk       *chainsdk.EthereumSdkPro
 	optimisticSdk *chainsdk.EthereumSdkPro
-	
-	config      *conf.Config
+	fantomSdk     *chainsdk.EthereumSdkPro
+
+	config *conf.Config
 )
 
 func SetupChainsSDK(cfg *conf.Config) {
