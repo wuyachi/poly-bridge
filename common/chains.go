@@ -21,6 +21,7 @@ var (
 	swthSdk     *chainsdk.SwitcheoSdkPro
 	arbitrumSdk *chainsdk.EthereumSdkPro
 	xdaiSdk     *chainsdk.EthereumSdkPro
+	avaxSdk     *chainsdk.EthereumSdkPro
 	config      *conf.Config
 )
 
@@ -122,7 +123,14 @@ func newChainSdks(config *conf.Config) {
 		urls := xdaiConfig.GetNodesUrl()
 		xdaiSdk = chainsdk.NewEthereumSdkPro(urls, xdaiConfig.ListenSlot, xdaiConfig.ChainId)
 	}
-
+	{
+		avaxConfig := config.GetChainListenConfig(basedef.AVAX_CROSSCHAIN_ID)
+		if avaxConfig == nil {
+			panic("chain is invalid")
+		}
+		urls := avaxConfig.GetNodesUrl()
+		avaxSdk = chainsdk.NewEthereumSdkPro(urls, avaxConfig.ListenSlot, avaxConfig.ChainId)
+	}
 }
 
 func GetBalance(chainId uint64, hash string) (*big.Int, error) {
@@ -195,6 +203,13 @@ func GetBalance(chainId uint64, hash string) (*big.Int, error) {
 			panic("chain is invalid")
 		}
 		return xdaiSdk.Erc20Balance(hash, xdaiConfig.ProxyContract)
+	}
+	if chainId == basedef.AVAX_CROSSCHAIN_ID {
+		avaxConfig := config.GetChainListenConfig(basedef.AVAX_CROSSCHAIN_ID)
+		if avaxConfig == nil {
+			panic("chain is invalid")
+		}
+		return avaxSdk.Erc20Balance(hash, avaxConfig.ProxyContract)
 	}
 	/*if chainId == basedef.PLT_CROSSCHAIN_ID {
 		conf := config.GetChainListenConfig(basedef.PLT_CROSSCHAIN_ID)
@@ -271,6 +286,13 @@ func GetTotalSupply(chainId uint64, hash string) (*big.Int, error) {
 		}
 		return xdaiSdk.Erc20TotalSupply(hash)
 	}
+	if chainId == basedef.AVAX_CROSSCHAIN_ID {
+		avaxConfig := config.GetChainListenConfig(basedef.AVAX_CROSSCHAIN_ID)
+		if avaxConfig == nil {
+			panic("chain is invalid")
+		}
+		return avaxSdk.Erc20TotalSupply(hash)
+	}
 	return new(big.Int).SetUint64(0), nil
 }
 
@@ -300,6 +322,8 @@ func GetProxyBalance(chainId uint64, hash string, proxy string) (*big.Int, error
 		return arbitrumSdk.Erc20Balance(hash, proxy)
 	case basedef.XDAI_CROSSCHAIN_ID:
 		return xdaiSdk.Erc20Balance(hash, proxy)
+	case basedef.AVAX_CROSSCHAIN_ID:
+		return avaxSdk.Erc20Balance(hash, proxy)
 	default:
 		return new(big.Int).SetUint64(0), nil
 	}

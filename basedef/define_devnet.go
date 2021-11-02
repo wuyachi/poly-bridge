@@ -34,6 +34,7 @@ const (
 	PLT_CROSSCHAIN_ID      = uint64(107)
 	ARBITRUM_CROSSCHAIN_ID = uint64(205)
 	XDAI_CROSSCHAIN_ID     = uint64(206)
+	AVAX_CROSSCHAIN_ID     = uint64(209)
 
 	ENV = "devnet"
 )
