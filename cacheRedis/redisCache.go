@@ -21,6 +21,8 @@ const (
 	_TokenBalance      = "TokenBalance"
 	TxCheckBot         = "TxCheckBot"
 	LargeTxAlarmPrefix = "LargeTxAlarm_"
+	MarkTxAsPaidPrefix = "MarkTxAsPaid_"
+	MarkTxAsSkipPrefix = "MarkTxAsSkip_"
 )
 
 type RedisCache struct {
