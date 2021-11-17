@@ -26,9 +26,9 @@ import (
 	"poly-bridge/basedef"
 	"poly-bridge/common"
 	"poly-bridge/conf"
-	"poly-bridge/explorer"
 	"poly-bridge/http"
 	"poly-bridge/nft_http"
+	"poly-bridge/routers"
 
 	"github.com/beego/beego/v2/core/logs"
 	"github.com/beego/beego/v2/server/web"
@@ -40,7 +40,7 @@ import (
 )
 
 func main() {
-        go func() {
+	go func() {
 		http2.ListenAndServe("0.0.0.0:3344", nil)
 	}()
 	if err := setupApp().Run(os.Args); err != nil {
@@ -109,6 +109,9 @@ func run(ctx *cli.Context) {
 	web.BConfig.AppName = "bridgehttp"
 	web.BConfig.CopyRequestBody = true
 	web.BConfig.EnableErrorsRender = false
+
+	web.BConfig.WebConfig.DirectoryIndex = true
+	web.BConfig.WebConfig.StaticDir["/swagger"] = "swagger"
 
 	if config.RunMode == "dev" {
 		var FilterLog = func(ctx *context.Context) {

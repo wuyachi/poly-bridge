@@ -33,9 +33,9 @@ func Test_GetExplorerInfo(t *testing.T) {
 
 func Test_GetTokenTxList(t *testing.T) {
 	req := &models.TokenTxListReq{
-		PageSize:10,
-		PageNo:0,
-		Token:"2",
+		PageSize: 10,
+		PageNo:   0,
+		Token:    "2",
 	}
 
 	c := new(ExplorerController)
@@ -46,8 +46,7 @@ func Test_GetTokenTxList(t *testing.T) {
 }
 
 func Test_GetAddressTxList(t *testing.T) {
-	req := &models.AddressTxListReq{
-	}
+	req := &models.AddressTxListReq{}
 
 	c := new(ExplorerController)
 	c.Controller = web.Controller{}
@@ -57,8 +56,7 @@ func Test_GetAddressTxList(t *testing.T) {
 }
 
 func Test_GetCrossTxList(t *testing.T) {
-	req := &models.AddressTxListReq{
-	}
+	req := &models.AddressTxListReq{}
 
 	c := new(ExplorerController)
 	c.Controller = web.Controller{}
@@ -68,8 +66,7 @@ func Test_GetCrossTxList(t *testing.T) {
 }
 
 func Test_GetCrossTx(t *testing.T) {
-	req := &models.AddressTxListReq{
-	}
+	req := &models.AddressTxListReq{}
 
 	c := new(ExplorerController)
 	c.Controller = web.Controller{}
@@ -79,8 +76,7 @@ func Test_GetCrossTx(t *testing.T) {
 }
 
 func Test_GetAssetStatistic(t *testing.T) {
-	req := &models.AddressTxListReq{
-	}
+	req := &models.AddressTxListReq{}
 
 	c := new(ExplorerController)
 	c.Controller = web.Controller{}
@@ -90,8 +86,7 @@ func Test_GetAssetStatistic(t *testing.T) {
 }
 
 func Test_GetTransferStatistic(t *testing.T) {
-	req := &models.AddressTxListReq{
-	}
+	req := &models.AddressTxListReq{}
 
 	c := new(ExplorerController)
 	c.Controller = web.Controller{}
