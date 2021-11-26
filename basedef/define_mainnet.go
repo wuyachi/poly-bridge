@@ -21,7 +21,7 @@
 package basedef
 
 const (
-	POLY_CROSSCHAIN_ID       = uint64(0)
+	ZION_CROSSCHAIN_ID       = uint64(0)
 	BTC_CROSSCHAIN_ID        = uint64(1)
 	ETHEREUM_CROSSCHAIN_ID   = uint64(2)
 	ONT_CROSSCHAIN_ID        = uint64(3)
@@ -40,6 +40,11 @@ const (
 	AVAX_CROSSCHAIN_ID       = uint64(21)
 	FANTOM_CROSSCHAIN_ID     = uint64(22)
 	OPTIMISTIC_CROSSCHAIN_ID = uint64(23)
+
+	//only on testnet
+	KOVAN_CROSSCHAIN_ID     = uint64(999999)
+	RINKEBY_CROSSCHAIN_ID   = uint64(999999)
+	GOERLI_CROSSCHAIN_ID    = uint64(999999)
 
 	ENV = "mainnet"
 )

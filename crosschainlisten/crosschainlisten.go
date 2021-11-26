@@ -19,18 +19,17 @@ package crosschainlisten
 
 import (
 	"fmt"
-	"github.com/shopspring/decimal"
 	"math"
 	"poly-bridge/cacheRedis"
 	"poly-bridge/common"
 	"poly-bridge/crosschainlisten/zilliqalisten"
+	"poly-bridge/utils/decimal"
 	"runtime/debug"
 	"strconv"
 	"strings"
 	"sync"
 	"time"
 
-	"github.com/polynetwork/bridge-common/metrics"
 	"poly-bridge/basedef"
 	"poly-bridge/conf"
 	"poly-bridge/crosschaindao"
@@ -86,11 +85,8 @@ type ChainHandle interface {
 
 func NewChainHandle(chainListenConfig *conf.ChainListenConfig) ChainHandle {
 	switch chainListenConfig.ChainId {
-	case basedef.POLY_CROSSCHAIN_ID:
+	case basedef.ZION_CROSSCHAIN_ID:
 		return polylisten.NewPolyChainListen(chainListenConfig)
-	case basedef.ETHEREUM_CROSSCHAIN_ID, basedef.BSC_CROSSCHAIN_ID, basedef.PLT_CROSSCHAIN_ID, basedef.OK_CROSSCHAIN_ID,
-		basedef.HECO_CROSSCHAIN_ID, basedef.MATIC_CROSSCHAIN_ID, basedef.ARBITRUM_CROSSCHAIN_ID, basedef.XDAI_CROSSCHAIN_ID, basedef.FANTOM_CROSSCHAIN_ID, basedef.AVAX_CROSSCHAIN_ID, basedef.OPTIMISTIC_CROSSCHAIN_ID:
-		return ethereumlisten.NewEthereumChainListen(chainListenConfig)
 	case basedef.NEO_CROSSCHAIN_ID:
 		return neolisten.NewNeoChainListen(chainListenConfig)
 	case basedef.ONT_CROSSCHAIN_ID:
@@ -105,7 +101,7 @@ func NewChainHandle(chainListenConfig *conf.ChainListenConfig) ChainHandle {
 		return zilliqalisten.NewZilliqaChainListen(chainListenConfig)
 
 	default:
-		return nil
+		return ethereumlisten.NewEthereumChainListen(chainListenConfig)
 	}
 }
 
@@ -133,7 +129,7 @@ func (ccl *CrossChainListen) SetHeight(height uint64) {
 }
 
 func (ccl *CrossChainListen) Start() {
-	if ccl.config.Backup && ccl.handle.GetChainId() == basedef.POLY_CROSSCHAIN_ID {
+	if ccl.config.Backup && ccl.handle.GetChainId() == basedef.ZION_CROSSCHAIN_ID {
 		return
 	}
 	logs.Info("start cross chain listen: %s", ccl.handle.GetChainName())
@@ -179,7 +175,7 @@ func (ccl *CrossChainListen) listenChain() (exit bool) {
 	}
 	height, err := ccl.handle.GetLatestHeight()
 	if err != nil || height == 0 {
-		panic(err)
+		panic(fmt.Sprintf("chain:", ccl.handle.GetChainName(), "err:", err))
 	}
 	if chain.Height == 0 {
 		chain.Height = height
@@ -218,9 +214,9 @@ func (ccl *CrossChainListen) listenChain() (exit bool) {
 				} else if extendHeight >= height+21 {
 					logs.Error("ListenChain - chain %s node is too slow, node height: %d, really height: %d", ccl.handle.GetChainName(), height, extendHeight)
 				}
-				metrics.Record(height, "%v.lastest_height", chain.ChainId)
-				metrics.Record(extendHeight, "%v.watch_height", chain.ChainId)
-				metrics.Record(chain.Height, "%v.height", chain.ChainId)
+				//metrics.Record(height, "%v.lastest_height", chain.ChainId)
+				//metrics.Record(extendHeight, "%v.watch_height", chain.ChainId)
+				//metrics.Record(chain.Height, "%v.height", chain.ChainId)
 				if chain.Height >= height-ccl.handle.GetDefer() {
 					continue
 				}

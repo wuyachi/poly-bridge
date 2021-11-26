@@ -19,9 +19,9 @@ package models
 
 import (
 	"github.com/beego/beego/v2/core/logs"
-	"github.com/shopspring/decimal"
 	"math/big"
 	"poly-bridge/basedef"
+	"poly-bridge/utils/decimal"
 	"time"
 )
 
@@ -538,7 +538,9 @@ func MakeTransactionRsp(transaction *SrcPolyDstRelation, chainsMap map[uint64]*C
 	dstUser := ""
 	if transaction.SrcTransaction.SrcTransfer != nil {
 		aaa := new(big.Int).Set(&transaction.SrcTransaction.SrcTransfer.Amount.Int)
+		logs.Error("zhegejiaoyi_aaa:", aaa)
 		transferAmount = aaa.String()
+		logs.Error("zhegejiaoyi_transferAmount:", transferAmount)
 		dstUser = transaction.SrcTransaction.SrcTransfer.DstUser
 	}
 	transactionRsp := &TransactionRsp{
@@ -554,13 +556,21 @@ func MakeTransactionRsp(transaction *SrcPolyDstRelation, chainsMap map[uint64]*C
 		DstUser:        dstUser,
 		State:          transaction.WrapperTransaction.Status,
 	}
+	logs.Error("zhegejiaoyi_transactionRsp.TransferAmount:", transactionRsp.TransferAmount)
 	if transaction.Token != nil {
 		transactionRsp.Token = MakeTokenRsp(transaction.Token)
 		precision := decimal.NewFromInt(basedef.Int64FromFigure(int(transaction.Token.Precision)))
+		logs.Error("zhegejiaoyi_precision:", precision) //10^18
 		if transaction.SrcTransaction.SrcTransfer != nil {
 			bbb := decimal.NewFromBigInt(&transaction.SrcTransaction.SrcTransfer.Amount.Int, 0)
+			logs.Error("zhegejiaoyi_bbb:", bbb) // 1
 			transferAmount := bbb.Div(precision)
+			x := transferAmount.Cmp(decimal.New(0, 1))
+			logs.Error("zhegejiaoyi_x", x)
+			logs.Error("zhegejiaoyi_transferAmount.String()==\"0\"", transferAmount.String() == "0")
+			logs.Error("zhegejiaoyi_transferAmount:", transferAmount.String()) // 0
 			transactionRsp.TransferAmount = transferAmount.String()
+			logs.Error("zhegejiaoyi_transactionRsp.TransferAmount:", transactionRsp.TransferAmount)
 		}
 	}
 	if transaction.FeeToken != nil {

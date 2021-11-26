@@ -18,7 +18,6 @@
 package chainfeelisten
 
 import (
-	"github.com/polynetwork/bridge-common/metrics"
 	"math/big"
 	"runtime/debug"
 	"strings"
@@ -73,9 +72,6 @@ type ChainFee interface {
 
 func NewChainFee(cfg *conf.FeeListenConfig, feeUpdateSlot int64) ChainFee {
 	switch cfg.ChainId {
-	case basedef.ETHEREUM_CROSSCHAIN_ID, basedef.BSC_CROSSCHAIN_ID, basedef.HECO_CROSSCHAIN_ID, basedef.OK_CROSSCHAIN_ID,
-		basedef.MATIC_CROSSCHAIN_ID, basedef.PLT_CROSSCHAIN_ID, basedef.ARBITRUM_CROSSCHAIN_ID, basedef.XDAI_CROSSCHAIN_ID, basedef.FANTOM_CROSSCHAIN_ID, basedef.AVAX_CROSSCHAIN_ID, basedef.OPTIMISTIC_CROSSCHAIN_ID:
-		return ethereumfee.NewEthereumFee(cfg, feeUpdateSlot)
 	case basedef.NEO_CROSSCHAIN_ID:
 		return neofee.NewNeoFee(cfg, feeUpdateSlot)
 	case basedef.NEO3_CROSSCHAIN_ID:
@@ -88,7 +84,7 @@ func NewChainFee(cfg *conf.FeeListenConfig, feeUpdateSlot int64) ChainFee {
 		return zilliqafee.NewZilliqaFee(cfg, feeUpdateSlot)
 
 	default:
-		return nil
+		return ethereumfee.NewEthereumFee(cfg, feeUpdateSlot)
 	}
 }
 
@@ -211,8 +207,8 @@ func (fl *FeeListen) updateChainFees(chainFees []*models.ChainFee) error {
 		}
 		for _, feeListenCfg := range listenFeeCfgs {
 			if feeListenCfg.ChainId == chainId {
-				metrics.Record(minFee, "minfee_chain.%v", chainId)
-				metrics.Record(new(big.Int).Div(maxFee, big.NewInt(feeListenCfg.GasLimit)), "gasPrice_chain.%v", chainId)
+				//metrics.Record(minFee, "minfee_chain.%v", chainId)
+				//metrics.Record(new(big.Int).Div(maxFee, big.NewInt(feeListenCfg.GasLimit)), "gasPrice_chain.%v", chainId)
 				break
 			}
 		}

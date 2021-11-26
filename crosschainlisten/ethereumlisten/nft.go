@@ -60,10 +60,6 @@ func (e *EthereumChainListen) NFTWrapperAddress() common.Address {
 	return common.HexToAddress(e.ethCfg.NFTWrapperContract)
 }
 
-func (e *EthereumChainListen) ECCMAddress() common.Address {
-	return common.HexToAddress(e.ethCfg.CCMContract)
-}
-
 func (e *EthereumChainListen) NFTProxyAddress() common.Address {
 	return common.HexToAddress(e.ethCfg.NFTProxyContract)
 }
@@ -228,7 +224,7 @@ func (e *EthereumChainListen) getNFTECCMEventByBlockNumber(
 	error,
 ) {
 
-	eccmContract, err := eccm_abi.NewEthCrossChainManager(eccmAddr, e.ethSdk.GetClient())
+	eccmContract, err := eccm_abi.NewEthCrossChainManagerImplemetation(eccmAddr, e.ethSdk.GetClient())
 	if err != nil {
 		return nil, nil, fmt.Errorf("GetSmartContractEventByBlock, error: %s", err.Error())
 	}
