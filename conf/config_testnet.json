@@ -34,14 +34,14 @@
   },
   "ChainListenConfig": [
     {
-      "ChainName": "Poly",
+      "ChainName": "Zion",
       "ChainId": 0,
       "ListenSlot": 1,
       "Defer": 1,
       "BatchSize": 5,
       "Nodes": [
         {
-          "Url": "http://124.156.226.204:20336"
+          "Url": "http://101.32.99.70:2200"
         }
       ],
       "ExtendNodes": [],
