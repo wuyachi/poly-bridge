@@ -31,6 +31,7 @@ var (
 	metisSdk      *chainsdk.EthereumSdkPro
 	bobaSdk       *chainsdk.EthereumSdkPro
 	rinkebySdk    *chainsdk.EthereumSdkPro
+	pixieSdk      *chainsdk.EthereumSdkPro
 	sdkMap        map[uint64]interface{}
 	config        *conf.Config
 )
@@ -207,6 +208,15 @@ func newChainSdks(config *conf.Config) {
 		urls := bobaConfig.GetNodesUrl()
 		bobaSdk = chainsdk.NewEthereumSdkPro(urls, bobaConfig.ListenSlot, bobaConfig.ChainId)
 		sdkMap[basedef.BOBA_CROSSCHAIN_ID] = bobaSdk
+	}
+	{
+		pixieConfig := config.GetChainListenConfig(basedef.PIXIE_CROSSCHAIN_ID)
+		if pixieConfig == nil {
+			panic("pixie chain is invalid")
+		}
+		urls := pixieConfig.GetNodesUrl()
+		pixieSdk = chainsdk.NewEthereumSdkPro(urls, pixieConfig.ListenSlot, pixieConfig.ChainId)
+		sdkMap[basedef.PIXIE_CROSSCHAIN_ID] = pixieSdk
 	}
 	if basedef.ENV == basedef.TESTNET {
 		{
@@ -468,6 +478,20 @@ func GetBalance(chainId uint64, hash string) (*big.Int, error) {
 			errMap[err] = true
 		}
 	}
+	if chainId == basedef.PIXIE_CROSSCHAIN_ID {
+		pixieConfig := config.GetChainListenConfig(basedef.PIXIE_CROSSCHAIN_ID)
+		if pixieConfig == nil {
+			panic("pixie chain is invalid")
+		}
+		for _, v := range pixieConfig.ProxyContract {
+			if len(strings.TrimSpace(v)) == 0 {
+				continue
+			}
+			balance, err := pixieSdk.Erc20Balance(hash, v)
+			maxFun(balance)
+			errMap[err] = true
+		}
+	}
 	if maxBalance.Cmp(big.NewInt(0)) > 0 {
 		return maxBalance, nil
 	}
@@ -600,6 +624,13 @@ func GetTotalSupply(chainId uint64, hash string) (*big.Int, error) {
 		}
 		return rinkebySdk.Erc20TotalSupply(hash)
 	}
+	if chainId == basedef.PIXIE_CROSSCHAIN_ID {
+		pixieConfig := config.GetChainListenConfig(basedef.PIXIE_CROSSCHAIN_ID)
+		if pixieConfig == nil {
+			panic("pixie chain GetTotalSupply invalid")
+		}
+		return pixieSdk.Erc20TotalSupply(hash)
+	}
 	return new(big.Int).SetUint64(0), nil
 }
 
@@ -645,6 +676,8 @@ func GetProxyBalance(chainId uint64, hash string, proxy string) (*big.Int, error
 		return bobaSdk.Erc20Balance(hash, proxy)
 	case basedef.RINKEBY_CROSSCHAIN_ID:
 		return rinkebySdk.Erc20Balance(hash, proxy)
+	case basedef.PIXIE_CROSSCHAIN_ID:
+		return pixieSdk.Erc20Balance(hash, proxy)
 	default:
 		return new(big.Int).SetUint64(0), nil
 	}
