@@ -29,6 +29,7 @@ var (
 	avaxSdk       *chainsdk.EthereumSdkPro
 	optimisticSdk *chainsdk.EthereumSdkPro
 	metisSdk      *chainsdk.EthereumSdkPro
+	bobaSdk       *chainsdk.EthereumSdkPro
 	sdkMap        map[uint64]interface{}
 	config        *conf.Config
 )
@@ -196,6 +197,15 @@ func newChainSdks(config *conf.Config) {
 		urls := metisConfig.GetNodesUrl()
 		metisSdk = chainsdk.NewEthereumSdkPro(urls, metisConfig.ListenSlot, metisConfig.ChainId)
 		sdkMap[basedef.METIS_CROSSCHAIN_ID] = metisSdk
+	}
+	{
+		bobaConfig := config.GetChainListenConfig(basedef.BOBA_CROSSCHAIN_ID)
+		if bobaConfig == nil {
+			panic("boba chain is invalid")
+		}
+		urls := bobaConfig.GetNodesUrl()
+		bobaSdk = chainsdk.NewEthereumSdkPro(urls, bobaConfig.ListenSlot, bobaConfig.ChainId)
+		sdkMap[basedef.BOBA_CROSSCHAIN_ID] = bobaSdk
 	}
 }
 
@@ -417,6 +427,20 @@ func GetBalance(chainId uint64, hash string) (*big.Int, error) {
 			errMap[err] = true
 		}
 	}
+	if chainId == basedef.BOBA_CROSSCHAIN_ID {
+		bobaConfig := config.GetChainListenConfig(basedef.BOBA_CROSSCHAIN_ID)
+		if bobaConfig == nil {
+			panic("boba chain is invalid")
+		}
+		for _, v := range bobaConfig.ProxyContract {
+			if len(strings.TrimSpace(v)) == 0 {
+				continue
+			}
+			balance, err := bobaSdk.Erc20Balance(hash, v)
+			maxFun(balance)
+			errMap[err] = true
+		}
+	}
 	if maxBalance.Cmp(big.NewInt(0)) > 0 {
 		return maxBalance, nil
 	}
@@ -535,6 +559,13 @@ func GetTotalSupply(chainId uint64, hash string) (*big.Int, error) {
 		}
 		return metisSdk.Erc20TotalSupply(hash)
 	}
+	if chainId == basedef.BOBA_CROSSCHAIN_ID {
+		bobaConfig := config.GetChainListenConfig(basedef.BOBA_CROSSCHAIN_ID)
+		if bobaConfig == nil {
+			panic("boba chain GetTotalSupply invalid")
+		}
+		return bobaSdk.Erc20TotalSupply(hash)
+	}
 	return new(big.Int).SetUint64(0), nil
 }
 
@@ -576,6 +607,8 @@ func GetProxyBalance(chainId uint64, hash string, proxy string) (*big.Int, error
 		return optimisticSdk.Erc20Balance(hash, proxy)
 	case basedef.METIS_CROSSCHAIN_ID:
 		return metisSdk.Erc20Balance(hash, proxy)
+	case basedef.BOBA_CROSSCHAIN_ID:
+		return bobaSdk.Erc20Balance(hash, proxy)
 	default:
 		return new(big.Int).SetUint64(0), nil
 	}
