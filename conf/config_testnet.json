@@ -549,7 +549,14 @@
         "E7Db150e4095Cbb35914b5dC980906C77B5990d2"
       ],
       "CCMContract": "2E830E0cf3dc8643B497F88C07c8A72EFE24B11f",
-      "ProxyContract": ["46Fc99509c4Aab0c958B8b2175edAa9C4963Ac09"]
+      "ProxyContract": ["46Fc99509c4Aab0c958B8b2175edAa9C4963Ac09"],
+      "NFTWrapperContract": [
+        "06e3d8Eeb9DC4732e474c26674e08213c6e11921"
+      ],
+      "NFTProxyContract": [
+        "D54a267B2c983d883D39248Dd7002dc7405559E0"
+      ],
+      "NFTQueryContract": "baBaAF5CF7f63437755aAAFE7a4106463c5cD540"
     },
     {
       "ChainName": "Rinkeby",
