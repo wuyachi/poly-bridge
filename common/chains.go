@@ -32,6 +32,7 @@ var (
 	bobaSdk       *chainsdk.EthereumSdkPro
 	rinkebySdk    *chainsdk.EthereumSdkPro
 	sdkMap        map[uint64]interface{}
+	starcoinSdk   *chainsdk.StarcoinSdkPro
 	config        *conf.Config
 )
 
@@ -207,6 +208,15 @@ func newChainSdks(config *conf.Config) {
 		urls := bobaConfig.GetNodesUrl()
 		bobaSdk = chainsdk.NewEthereumSdkPro(urls, bobaConfig.ListenSlot, bobaConfig.ChainId)
 		sdkMap[basedef.BOBA_CROSSCHAIN_ID] = bobaSdk
+	}
+	{
+		starcoinConfig := config.GetChainListenConfig(basedef.STARCOIN_CROSSCHAIN_ID)
+		if starcoinConfig == nil {
+			panic("starcoin chain is invalid")
+		}
+		urls := starcoinConfig.GetNodesUrl()
+		starcoinSdk = chainsdk.NewStarcoinSdkPro(urls, starcoinConfig.ListenSlot, starcoinConfig.ChainId)
+		sdkMap[basedef.STARCOIN_CROSSCHAIN_ID] = starcoinSdk
 	}
 	if basedef.ENV == basedef.TESTNET {
 		{
@@ -468,6 +478,9 @@ func GetBalance(chainId uint64, hash string) (*big.Int, error) {
 			errMap[err] = true
 		}
 	}
+	if chainId == basedef.STARCOIN_CROSSCHAIN_ID {
+		// todo starcoin
+	}
 	if maxBalance.Cmp(big.NewInt(0)) > 0 {
 		return maxBalance, nil
 	}
@@ -600,6 +613,9 @@ func GetTotalSupply(chainId uint64, hash string) (*big.Int, error) {
 		}
 		return rinkebySdk.Erc20TotalSupply(hash)
 	}
+	if chainId == basedef.STARCOIN_CROSSCHAIN_ID {
+		// todo starcoin
+	}
 	return new(big.Int).SetUint64(0), nil
 }
 
@@ -645,6 +661,10 @@ func GetProxyBalance(chainId uint64, hash string, proxy string) (*big.Int, error
 		return bobaSdk.Erc20Balance(hash, proxy)
 	case basedef.RINKEBY_CROSSCHAIN_ID:
 		return rinkebySdk.Erc20Balance(hash, proxy)
+	//	todo starcoin
+	//case basedef.STARCOIN_CROSSCHAIN_ID:
+	//	return starcoinSdk.
+
 	default:
 		return new(big.Int).SetUint64(0), nil
 	}
