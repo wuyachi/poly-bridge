@@ -41,6 +41,7 @@ const (
 	METIS_CROSSCHAIN_ID      = uint64(300)
 	BOBA_CROSSCHAIN_ID       = uint64(400)
 	RINKEBY_CROSSCHAIN_ID    = uint64(402)
+	STARCOIN_CROSSCHAIN_ID   = uint64(318)
 
 	ENV = "devnet"
 )
