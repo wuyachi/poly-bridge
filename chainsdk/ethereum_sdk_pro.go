@@ -586,13 +586,14 @@ func (pro *EthereumSdkPro) GetBoundLockProxy(lockProxies []string, srcTokenHash,
 			}
 			addrHash := (boundAsset.Hex())[2:]
 			logs.Info("GetBoundAssetHash addrHash=%s", addrHash)
+
 			if chainId == basedef.STARCOIN_CROSSCHAIN_ID {
-				srcTokenHashByteString := hex.EncodeToString([]byte(srcTokenHash))
-				if strings.Contains(srcTokenHashByteString, addrHash) {
+				srcTokenHashByteString := strings.ToLower(hex.EncodeToString([]byte(srcTokenHash)))
+				logs.Info("srcTokenHashByteString =%s", srcTokenHashByteString)
+				if strings.Contains(srcTokenHashByteString, strings.ToLower(addrHash)) {
 					return proxy, nil
 				}
-			}
-			if strings.EqualFold(addrHash, srcTokenHash) || strings.EqualFold(basedef.HexStringReverse(addrHash), srcTokenHash) {
+			} else if strings.EqualFold(addrHash, srcTokenHash) || strings.EqualFold(basedef.HexStringReverse(addrHash), srcTokenHash) {
 				return proxy, nil
 			}
 		}
