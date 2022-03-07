@@ -624,9 +624,6 @@ func GetTotalSupply(chainId uint64, hash string) (*big.Int, error) {
 		}
 		return rinkebySdk.Erc20TotalSupply(hash)
 	}
-	if chainId == basedef.STARCOIN_CROSSCHAIN_ID {
-		// todo starcoin
-	}
 	return new(big.Int).SetUint64(0), nil
 }
 
@@ -672,9 +669,8 @@ func GetProxyBalance(chainId uint64, hash string, proxy string) (*big.Int, error
 		return bobaSdk.Erc20Balance(hash, proxy)
 	case basedef.RINKEBY_CROSSCHAIN_ID:
 		return rinkebySdk.Erc20Balance(hash, proxy)
-	//	todo starcoin
-	//case basedef.STARCOIN_CROSSCHAIN_ID:
-	//	return starcoinSdk.
+	case basedef.STARCOIN_CROSSCHAIN_ID:
+		return starcoinSdk.GetBalance(hash, proxy)
 
 	default:
 		return new(big.Int).SetUint64(0), nil
