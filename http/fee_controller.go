@@ -72,6 +72,12 @@ func (c *FeeController) GetFee() {
 	tokenFee = new(big.Float).Quo(tokenFee, new(big.Float).SetInt64(token.TokenBasic.Price))
 	tokenFeeWithPrecision := new(big.Float).Mul(tokenFee, new(big.Float).SetInt64(basedef.Int64FromFigure(int(token.Precision))))
 
+	if getFeeReq.SrcChainId == basedef.STARCOIN_CROSSCHAIN_ID {
+		logs.Info("usdtFee=%s", usdtFee.String())
+		logs.Info("tokenName=%s, tokenBasicName=%s, Price=%d", token.Name, token.TokenBasic.Name, token.TokenBasic.Price)
+		logs.Info("tokenFee=%s", tokenFee.String())
+	}
+
 	// get optimistic L1 fee on ethereum
 	if basedef.OPTIMISTIC_CROSSCHAIN_ID == getFeeReq.DstChainId {
 		ethChainFee := new(models.ChainFee)
