@@ -32,9 +32,10 @@ var (
 	metisSdk      *chainsdk.EthereumSdkPro
 	bobaSdk       *chainsdk.EthereumSdkPro
 	rinkebySdk    *chainsdk.EthereumSdkPro
-	sdkMap        map[uint64]interface{}
 	oasisSdk      *chainsdk.EthereumSdkPro
+	bcspaletteSdk *chainsdk.EthereumSdkPro
 	config        *conf.Config
+	sdkMap        map[uint64]interface{}
 )
 
 func SetupChainsSDK(cfg *conf.Config) {
@@ -229,6 +230,15 @@ func newChainSdks(config *conf.Config) {
 		urls := chainConfig.GetNodesUrl()
 		oasisSdk = chainsdk.NewEthereumSdkPro(urls, chainConfig.ListenSlot, chainConfig.ChainId)
 		sdkMap[basedef.OASIS_CROSSCHAIN_ID] = oasisSdk
+	}
+	{
+		chainConfig := config.GetChainListenConfig(basedef.BCSPALETTE_CROSSCHAIN_ID)
+		if chainConfig == nil {
+			panic("bcspalette chain is invalid")
+		}
+		urls := chainConfig.GetNodesUrl()
+		bcspaletteSdk = chainsdk.NewEthereumSdkPro(urls, chainConfig.ListenSlot, chainConfig.ChainId)
+		sdkMap[basedef.BCSPALETTE_CROSSCHAIN_ID] = bcspaletteSdk
 	}
 }
 
@@ -683,7 +693,7 @@ func GetProxyBalance(chainId uint64, hash string, proxy string) (*big.Int, error
 	}
 }
 
-func GetNftOwner(chainId uint64,asset string, tokenId int) (owner common.Address, err error) {
+func GetNftOwner(chainId uint64, asset string, tokenId int) (owner common.Address, err error) {
 	switch chainId {
 	case basedef.ETHEREUM_CROSSCHAIN_ID:
 		return ethereumSdk.GetNFTOwner(asset, big.NewInt(int64(tokenId)))
@@ -700,7 +710,7 @@ func GetNftOwner(chainId uint64,asset string, tokenId int) (owner common.Address
 	case basedef.XDAI_CROSSCHAIN_ID:
 		return xdaiSdk.GetNFTOwner(asset, big.NewInt(int64(tokenId)))
 	default:
-		return common.Address{}, fmt.Errorf("has nat func with chain:%v",chainId)
+		return common.Address{}, fmt.Errorf("has nat func with chain:%v", chainId)
 	}
 }
 

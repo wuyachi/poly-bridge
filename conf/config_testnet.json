@@ -223,6 +223,15 @@
           "Url": "https://rinkeby.boba.network/"
         }
       ]
+    },
+    {
+      "ChainName": "BCS Palette",
+      "ChainId": 1001,
+      "Nodes": [
+        {
+          "Url": "http://18.220.17.201:22004"
+        }
+      ]
     }
   ],
   "ChainListenConfig": [
@@ -559,6 +568,28 @@
       "CCMContract": "a65bD4431C38A4dD9c92ebE60dE3cb8C252c04E5",
       "ProxyContract": [
         "46Fc99509c4Aab0c958B8b2175edAa9C4963Ac09"
+      ]
+    },
+    {
+      "ChainName": "BCS Palette",
+      "ChainId": 1001,
+      "ListenSlot": 1,
+      "Defer": 1,
+      "BatchSize": 5,
+      "WrapperContract": [
+        "0c5c0b03e897e7b1828f2bc923ea4498ec891060",
+        ""
+      ],
+      "NFTWrapperContract": [
+        "0000000000000000000000000000000000000000"
+      ],
+      "NFTProxyContract": [
+        "0000000000000000000000000000000000000000"
+      ],
+      "NFTQueryContract": "0000000000000000000000000000000000000000",
+      "CCMContract": "f2cae31596433ada66393bde525f80aee97b3112",
+      "ProxyContract": [
+        "0000000000000000000000000000000000000103"
       ]
     }
   ],
