@@ -751,8 +751,6 @@ func GetProxyBalance(chainId uint64, hash string, proxy string) (*big.Int, error
 		return metisSdk.Erc20Balance(hash, proxy)
 	case basedef.BOBA_CROSSCHAIN_ID:
 		return bobaSdk.Erc20Balance(hash, proxy)
-	case basedef.RINKEBY_CROSSCHAIN_ID:
-		return rinkebySdk.Erc20Balance(hash, proxy)
 	case basedef.OASIS_CROSSCHAIN_ID:
 		return oasisSdk.Erc20Balance(hash, proxy)
 	default:
