@@ -35,14 +35,14 @@ import (
 	"github.com/beego/beego/v2/server/web/context"
 	"github.com/beego/beego/v2/server/web/filter/cors"
 	"github.com/urfave/cli"
-	http2 "net/http"
+	//http2 "net/http"
 	_ "net/http/pprof"
 )
 
 func main() {
-        go func() {
-		http2.ListenAndServe("0.0.0.0:3344", nil)
-	}()
+	//go func() {
+	//	http2.ListenAndServe("0.0.0.0:3344", nil)
+	//}()
 	if err := setupApp().Run(os.Args); err != nil {
 		fmt.Fprintln(os.Stderr, err)
 		os.Exit(1)
@@ -67,8 +67,8 @@ func run(ctx *cli.Context) {
 	configFile := ctx.GlobalString("config")
 	config := conf.NewConfig(configFile)
 	if config == nil || config.HttpConfig == nil {
-		fmt.Println(config)
-		fmt.Println(config.HttpConfig)
+		//fmt.Println(config)
+		//fmt.Println(config.HttpConfig)
 		panic("Invalid server config")
 	}
 	logs.SetLogger(logs.AdapterFile, fmt.Sprintf(`{"filename":"%s"}`, config.LogFile))

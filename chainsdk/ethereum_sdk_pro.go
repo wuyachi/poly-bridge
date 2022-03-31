@@ -21,7 +21,9 @@ import (
 	"fmt"
 	"math"
 	"math/big"
+	"poly-bridge/basedef"
 	"runtime/debug"
+	"strings"
 	"sync"
 	"time"
 
@@ -91,8 +93,8 @@ func (pro *EthereumSdkPro) nodeSelection() {
 func (pro *EthereumSdkPro) selection() {
 	for url, info := range pro.infos {
 		height, err := info.sdk.GetCurrentBlockHeight()
-		if err != nil || height == math.MaxUint64 {
-			logs.Error("get current block height err: %v, url: %s", err, url)
+		if err != nil || height == math.MaxUint64 || height == 0 {
+			logs.Error("nodeselection get current block height err: %v, url: %s", err, url)
 			height = 1
 		}
 		/*
@@ -143,6 +145,16 @@ func (pro *EthereumSdkPro) GetClient() *ethclient.Client {
 	return info.sdk.GetClient()
 }
 
+func (pro *EthereumSdkPro) SetClientHeightZero(cli *ethclient.Client) {
+	for node, info := range pro.infos {
+		if info.sdk.GetClient() == cli {
+			logs.Error("SetClientHeightZero node:%v is err", node)
+			info.latestHeight = 0
+			break
+		}
+	}
+}
+
 func (pro *EthereumSdkPro) GetLatestHeight() (uint64, error) {
 	info := pro.GetLatest()
 	if info == nil {
@@ -156,13 +168,20 @@ func (pro *EthereumSdkPro) GetHeaderByNumber(number uint64) (*types.Header, erro
 	if info == nil {
 		return nil, fmt.Errorf("all node is not working")
 	}
-
+	flag := 0
 	for info != nil {
 		header, err := info.sdk.GetHeaderByNumber(number)
 		if err != nil {
+			flag++
+			if flag > 3 {
+				logs.Error("GetHeaderByNumber_chain:%v,node:%v,GetHeaderByNumber err %v", pro.id, info.sdk.url, err)
+				flag = 0
+				time.Sleep(time.Second)
+			}
 			info.latestHeight = 0
 			info = pro.GetLatest()
 		} else {
+			flag = 0
 			return header, nil
 		}
 	}
@@ -174,13 +193,20 @@ func (pro *EthereumSdkPro) GetTransactionByHash(hash common.Hash) (*types.Transa
 	if info == nil {
 		return nil, fmt.Errorf("all node is not working")
 	}
-
+	flag := 0
 	for info != nil {
 		tx, err := info.sdk.GetTransactionByHash(hash)
 		if err != nil {
+			flag++
+			if flag > 3 {
+				logs.Error("chain:%v,node:%v,GetHeaderByNumber err %v", pro.id, info.sdk.url, err)
+				flag = 0
+				time.Sleep(time.Second)
+			}
 			info.latestHeight = 0
 			info = pro.GetLatest()
 		} else {
+			flag = 0
 			return tx, nil
 		}
 	}
@@ -192,13 +218,20 @@ func (pro *EthereumSdkPro) GetTransactionReceipt(hash common.Hash) (*types.Recei
 	if info == nil {
 		return nil, fmt.Errorf("all node is not working")
 	}
-
+	flag := 0
 	for info != nil {
 		receipt, err := info.sdk.GetTransactionReceipt(hash)
 		if err != nil {
+			flag++
+			if flag > 3 {
+				logs.Error("chain:%v,node:%v,GetHeaderByNumber err %v", pro.id, info.sdk.url, err)
+				flag = 0
+				time.Sleep(time.Second)
+			}
 			info.latestHeight = 0
 			info = pro.GetLatest()
 		} else {
+			flag = 0
 			return receipt, nil
 		}
 	}
@@ -404,14 +437,15 @@ func (pro *EthereumSdkPro) NFTBalance(asset, owner common.Address) (balance *big
 	return
 }
 
-func (pro *EthereumSdkPro) GetNFTOwner(asset common.Address, tokenId *big.Int) (owner common.Address, err error) {
+func (pro *EthereumSdkPro) GetNFTOwner(asset string, tokenId *big.Int) (owner common.Address, err error) {
+	assetAddr:=common.HexToAddress(asset)
 	info := pro.GetLatest()
 	if info == nil {
 		return EmptyAddress, fmt.Errorf("all node is not working")
 	}
 
 	for info != nil {
-		if owner, err = info.sdk.GetNFTOwner(asset, tokenId); err != nil {
+		if owner, err = info.sdk.GetNFTOwner(assetAddr, tokenId); err != nil {
 			info = pro.reset(info)
 		} else {
 			return
@@ -496,7 +530,8 @@ func (pro *EthereumSdkPro) GetAndCheckTokenUrl(
 }
 
 func (pro *EthereumSdkPro) GetUnCrossChainNFTsByIndex(
-	inquirer, asset, lockProxy common.Address,
+	inquirer, asset common.Address,
+	lockProxies []common.Address,
 	start, length int,
 ) (mp map[string]string, err error) {
 
@@ -505,7 +540,7 @@ func (pro *EthereumSdkPro) GetUnCrossChainNFTsByIndex(
 		return nil, fmt.Errorf("all node is not working")
 	}
 	for info != nil {
-		if mp, err = info.sdk.GetUnCrossChainNFTsByIndex(inquirer, asset, lockProxy, start, length); err != nil {
+		if mp, err = info.sdk.GetUnCrossChainNFTsByIndex(inquirer, asset, lockProxies, start, length); err != nil {
 			info = pro.reset(info)
 		} else {
 			return
@@ -532,4 +567,29 @@ func (pro *EthereumSdkPro) GetNFTURLs(asset common.Address, tokenIds []*big.Int)
 func (pro *EthereumSdkPro) reset(info *EthereumInfo) *EthereumInfo {
 	info.latestHeight = 0
 	return pro.GetLatest()
+}
+
+func (pro *EthereumSdkPro) GetBoundLockProxy(lockProxies []string, srcTokenHash, dstTokenHash string, chainId uint64) (string, error) {
+	info := pro.GetLatest()
+	dstTokenAddress := common.HexToAddress(dstTokenHash)
+
+	if info != nil {
+		for _, proxy := range lockProxies {
+			proxyAddr := common.HexToAddress(proxy)
+			boundAsset, err := info.sdk.GetBoundAssetHash(dstTokenAddress, proxyAddr, chainId)
+			if err != nil || boundAsset == nil {
+				logs.Info("GetBoundAssetHash err:%s", err)
+				continue
+			}
+			if boundAsset == nil {
+				continue
+			}
+			addrHash := (boundAsset.Hex())[2:]
+			logs.Info("GetBoundAssetHash addrHash=%s", addrHash)
+			if strings.EqualFold(addrHash, srcTokenHash) || strings.EqualFold(basedef.HexStringReverse(addrHash), srcTokenHash) {
+				return proxy, nil
+			}
+		}
+	}
+	return "", fmt.Errorf("catnot get bounded asset hash of %s", dstTokenHash)
 }

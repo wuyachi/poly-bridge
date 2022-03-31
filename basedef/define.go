@@ -54,7 +54,39 @@ const (
 
 const (
 	NATIVE_TOKEN = "0000000000000000000000000000000000000000"
+	StatusOk = "OK"
 )
+
+type LargeTx struct {
+	Asset     string
+	Type      string
+	From      string
+	To        string
+	Amount    string
+	USDAmount string
+	Hash      string
+	User      string
+	Time      string
+}
+
+type NodeStatus struct {
+	ChainId   uint64
+	ChainName string
+	Url       string
+	Height    uint64
+	Status    []string
+	Time      int64
+}
+
+type RelayerAccountStatus struct {
+	ChainId   uint64
+	ChainName string
+	Address   string
+	Balance   float64
+	Threshold float64
+	Status    string
+	Time      int64
+}
 
 func GetStateName(state int) string {
 	switch state {

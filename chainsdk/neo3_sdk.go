@@ -19,6 +19,7 @@ package chainsdk
 
 import (
 	"fmt"
+	"github.com/beego/beego/v2/core/logs"
 	"github.com/joeqian10/neo3-gogogo/helper"
 	"github.com/joeqian10/neo3-gogogo/nep17"
 	"github.com/joeqian10/neo3-gogogo/rpc"
@@ -37,6 +38,14 @@ func NewNeo3Sdk(url string) *Neo3Sdk {
 		client: rpc.NewClient(url),
 		url:    url,
 	}
+}
+
+func (sdk *Neo3Sdk) GetClient() *rpc.RpcClient {
+	return sdk.client
+}
+
+func (sdk *Neo3Sdk) GetUrl() string {
+	return sdk.url
 }
 
 func (sdk *Neo3Sdk) GetBlockCount() (uint64, error) {
@@ -107,4 +116,17 @@ func (sdk *Neo3Sdk) Nep17Balance(hash string, addr string) (*big.Int, error) {
 		return new(big.Int).SetUint64(0), err
 	}
 	return nep17.BalanceOf(addrHash)
+}
+
+func (sdk *Neo3Sdk) Nep17TotalSupply(hash string) (*big.Int, error) {
+	scriptHash, err := helper.UInt160FromString(hash)
+	if err != nil {
+		return new(big.Int).SetUint64(0), err
+	}
+	logs.Info("hash: %s", hash)
+	nep17 := nep17.NewNep17Helper(scriptHash, sdk.client)
+	if err != nil {
+		return new(big.Int).SetUint64(0), err
+	}
+	return nep17.TotalSupply()
 }

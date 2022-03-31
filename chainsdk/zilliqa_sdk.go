@@ -27,6 +27,10 @@ func NewZilliqaSdk(url string) *ZilliqaSdk {
 	}
 }
 
+func (zs *ZilliqaSdk) GetUrl() string {
+	return zs.url
+}
+
 func (zs *ZilliqaSdk) GetCurrentBlockHeight() (uint64, error) {
 	txBlock, err := zs.client.GetLatestTxBlock()
 	if err != nil {
@@ -63,7 +67,7 @@ func (zs *ZilliqaSdk) GetBlock(height uint64) (*ZilBlock, error) {
 	zilBlock.Timestamp = tt
 	transactions, err := zs.client.GetTxnBodiesForTxBlock(strconv.FormatUint(height, 10))
 	if err != nil {
-		if strings.Contains(err.Error(), "TxBlock has no transactions") {
+		if strings.Contains(err.Error(), "TxBlock has no transactions") || strings.Contains(err.Error(), "Failed to get Microblock") {
 			return &ZilBlock{
 				tt,
 				[]core.Transaction{},

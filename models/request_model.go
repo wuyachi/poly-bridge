@@ -18,6 +18,7 @@
 package models
 
 import (
+	"fmt"
 	"github.com/beego/beego/v2/core/logs"
 	"math/big"
 	"poly-bridge/basedef"
@@ -334,40 +335,23 @@ func MakeGetFeeRsp(srcChainId uint64, hash string, dstChainId uint64, usdtAmount
 		SrcChainId:               srcChainId,
 		Hash:                     hash,
 		DstChainId:               dstChainId,
-		UsdtAmount:               usdtAmount.String(),
+		UsdtAmount:               fmt.Sprintf("%v", usdtAmount),
 		TokenAmount:              tokenAmount.String(),
-		TokenAmountWithPrecision: tokenAmountWithPrecision.String(),
+		TokenAmountWithPrecision: fmt.Sprintf("%v", tokenAmountWithPrecision),
 		SwapTokenHash:            swapTokenHash,
-		Balance:                  balanceWithoutPrecision.String(),
-		BalanceWithPrecision:     balance.String(),
-	}
-	{
-		aaa, _ := usdtAmount.Float64()
-		usdtAmount := decimal.NewFromFloat(aaa)
-		getFeeRsp.UsdtAmount = usdtAmount.String()
+		Balance:                  fmt.Sprintf("%v", balanceWithoutPrecision),
+		BalanceWithPrecision:     fmt.Sprintf("%v", balance),
 	}
 	{
 		precision := decimal.NewFromInt(basedef.PRICE_PRECISION)
 		aaa := new(big.Float).Mul(tokenAmount, new(big.Float).SetInt64(basedef.PRICE_PRECISION))
 		bbb, _ := aaa.Int64()
-		ccc := decimal.NewFromInt(bbb + 1)
+		ccc := decimal.NewFromInt(bbb)
 		tokenAmount := ccc.Div(precision)
 		getFeeRsp.TokenAmount = tokenAmount.String()
 	}
-	{
-		aaa, _ := tokenAmountWithPrecision.Float64()
-		tokenAmountWithPrecision := decimal.NewFromFloat(aaa)
-		getFeeRsp.TokenAmountWithPrecision = tokenAmountWithPrecision.String()
-	}
-	{
-		aaa, _ := balanceWithoutPrecision.Float64()
-		balanceWithoutPrecision := decimal.NewFromFloat(aaa)
-		getFeeRsp.Balance = balanceWithoutPrecision.String()
-	}
-	{
-		aaa, _ := balance.Float64()
-		balance := decimal.NewFromFloat(aaa)
-		getFeeRsp.BalanceWithPrecision = balance.String()
+	if getFeeRsp.DstChainId == basedef.BSC_CROSSCHAIN_ID {
+		logs.Info("tobscgetfee srcChain:%v swapTokenHash:%v feeAmount:%v", srcChainId, swapTokenHash, getFeeRsp.TokenAmount)
 	}
 	return getFeeRsp
 }
@@ -1210,7 +1194,12 @@ type BotTx struct {
 }
 
 func ParseBotTx(tx *SrcPolyDstRelation, fees map[string]CheckFeeResult) BotTx {
-	v := BotTx{Hash: tx.SrcHash, PolyHash: tx.PolyHash}
+	// in case src transaction is missing
+	hash := tx.SrcHash
+	if hash == "" {
+		hash = tx.PolyHash
+	}
+	v := BotTx{Hash: hash, PolyHash: tx.PolyHash}
 	if c := tx.WrapperTransaction; c != nil {
 		v.SrcChainId = c.SrcChainId
 		v.DstChainId = c.DstChainId
@@ -1258,4 +1247,27 @@ func ParseBotTx(tx *SrcPolyDstRelation, fees map[string]CheckFeeResult) BotTx {
 		}
 	}
 	return v
+}
+
+func MakeBottxsRsp(pageSize int, pageNo int, totalPage int, totalCount int, transactions []*SrcPolyDstRelation, fees map[string]CheckFeeResult) map[string]interface{} {
+	rsp := map[string]interface{}{}
+	rsp["PageSize"] = pageSize
+	rsp["PageNo"] = pageNo
+	rsp["TotalPage"] = totalPage
+	rsp["TotalCount"] = totalCount
+	txs := make([]BotTx, len(transactions))
+	for i, tx := range transactions {
+		txs[i] = ParseBotTx(tx, fees)
+	}
+	rsp["Transactions"] = txs
+	return rsp
+}
+
+type ManualTxDataReq struct {
+	PolyHash string
+}
+
+type ManualTxDataResp struct {
+	Data   string `json:"data"`
+	DstCCM string `json:"dst_ccm"`
 }

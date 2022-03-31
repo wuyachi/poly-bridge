@@ -27,6 +27,7 @@ import (
 	"gorm.io/gorm/logger"
 	"os"
 	"poly-bridge/basedef"
+	"poly-bridge/bridge_tools/toolsmethod"
 	"poly-bridge/coinpricelisten/coinmarketcap"
 	"poly-bridge/conf"
 	"poly-bridge/crosschaindao"
@@ -63,8 +64,8 @@ func executeMethod(method string, ctx *cli.Context) {
 		migrateLockTokenStatisticTable(config)
 	case "updateZilliqaPolyOldData":
 		updateZilliqaPolyOldData(config)
-	case "zion_create_tables":
-		zionCreateTables(config)
+	case "nft":
+		toolsmethod.Nft(config)
 	//case "zion_migrate_basic_tables":
 	//	zionMigrateBasicTables(config)
 	default:

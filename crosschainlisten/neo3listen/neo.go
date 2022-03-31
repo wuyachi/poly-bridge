@@ -148,14 +148,6 @@ func (this *Neo3ChainListen) HandleNewBlock(height uint64) ([]*models.WrapperTra
 							serverId = new(big.Int).SetUint64(0)
 						}
 
-						encodeAssetString := states[0].Value.(string)
-						decodeAssetBytes, err := base64.StdEncoding.DecodeString(encodeAssetString)
-						if err != nil {
-							logs.Error("txhash: %s decode wrapper asset: %s err: %s", tx.Hash[2:], encodeAssetString, err)
-							continue
-						}
-						asset := hex.EncodeToString(basedef.HexReverse(decodeAssetBytes))
-
 						encodeUserString := states[1].Value.(string)
 						decodeUserBytes, err := base64.StdEncoding.DecodeString(encodeUserString)
 						if err != nil {
@@ -173,17 +165,17 @@ func (this *Neo3ChainListen) HandleNewBlock(height uint64) ([]*models.WrapperTra
 						dstUser := hex.EncodeToString(basedef.HexReverse(decodeDstUserBytes))
 
 						amount := big.NewInt(0)
-						if states[4].Type == "Integer" {
-							amount, _ = new(big.Int).SetString(states[4].Value.(string), 10)
+						if states[5].Type == "Integer" {
+							amount, _ = new(big.Int).SetString(states[5].Value.(string), 10)
 						} else {
-							amount, _ = new(big.Int).SetString(basedef.HexStringReverse(states[4].Value.(string)), 16)
+							amount, _ = new(big.Int).SetString(basedef.HexStringReverse(states[5].Value.(string)), 16)
 						}
 						wrapperTransactions = append(wrapperTransactions, &models.WrapperTransaction{
 							Hash:         tx.Hash[2:],
 							User:         user,
 							DstChainId:   tchainId.Uint64(),
 							DstUser:      dstUser,
-							FeeTokenHash: asset,
+							FeeTokenHash: "d2a4cff31913016155e38e474a2c06d08be276cf",
 							FeeAmount:    models.NewBigInt(amount),
 							ServerId:     serverId.Uint64(),
 							Status:       basedef.STATE_SOURCE_DONE,

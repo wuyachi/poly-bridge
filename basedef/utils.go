@@ -209,6 +209,18 @@ func GetChainName(id uint64) string {
 		return "Neo3"
 	case PLT_CROSSCHAIN_ID:
 		return "PLT"
+	case AVAX_CROSSCHAIN_ID:
+		return "AVAX"
+	case FANTOM_CROSSCHAIN_ID:
+		return "FANTOM"
+	case OPTIMISTIC_CROSSCHAIN_ID:
+		return "OPTIMISTIC"
+	case METIS_CROSSCHAIN_ID:
+		return "METIS"
+	case BOBA_CROSSCHAIN_ID:
+		return "BOBA"
+	case OASIS_CROSSCHAIN_ID:
+		return "OASIS"
 	case KOVAN_CROSSCHAIN_ID:
 		return "KOVAN"
 	case RINKEBY_CROSSCHAIN_ID:

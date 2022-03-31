@@ -82,6 +82,13 @@ type OtherItemProxy struct {
 	ItemProxy string
 }
 
+type ChainNodes struct {
+	ChainName   string
+	ChainId     uint64
+	Nodes       []*Restful
+	ExtendNodes []*Restful
+}
+
 type ChainListenConfig struct {
 	ChainName          string
 	ChainId            uint64
@@ -94,10 +101,36 @@ type ChainListenConfig struct {
 	CCMContract        []string
 	ProxyContract      []string
 	OtherProxyContract []*OtherItemProxy
-	NFTWrapperContract string
-	NFTProxyContract   string
+	NFTWrapperContract []string
+	NFTProxyContract   []string
 	NFTQueryContract   string
 	SwapContract       string
+}
+
+type HealthMonitorConfig struct {
+	ChainId        uint64
+	ChainName      string
+	ChainNodes     *ChainNodes
+	CCMContract    []string
+	RelayerAccount *RelayAccountConfig
+}
+
+type RelayAccountConfig struct {
+	ChainName   string
+	ChainId     uint64
+	Address     []string
+	Neo3Account []Neo3Account
+	Threshold   float64
+}
+
+type Neo3Account struct {
+	Address string
+	Key     string
+	Pwd     string
+}
+
+type RelayerConfig struct {
+	RelayAccountConfig []*RelayAccountConfig
 }
 
 func (cfg *ChainListenConfig) GetNodesUrl() []string {
@@ -154,12 +187,13 @@ func (cfg *CoinPriceListenConfig) GetNodesKey() []string {
 }
 
 type FeeListenConfig struct {
-	ChainId   uint64
-	ChainName string
-	Nodes     []*Restful
-	ProxyFee  int64
-	MinFee    int64
-	GasLimit  int64
+	ChainId       uint64
+	ChainName     string
+	Nodes         []*Restful
+	ProxyFee      int64
+	MinFee        int64
+	GasLimit      int64
+	EthL1GasLimit int64
 }
 
 func (cfg *FeeListenConfig) GetNodesUrl() []string {
@@ -200,17 +234,24 @@ type EventEffectConfig struct {
 }
 
 type BotConfig struct {
-	DingUrl        string
-	LargeTxDingUrl string
-	CheckFrom      int64
-	Interval       int64
-	BaseUrl        string
-	DetailUrl      string
-	FinishUrl      string
-	MarkAsPaidUrl  string
-	TxUrl          string
-	ListLargeTxUrl string
-	ApiToken       string
+	DingUrl                      string
+	LargeTxDingUrl               string
+	NodeStatusDingUrl            string
+	RelayerAccountStatusDingUrl  string
+	CheckFrom                    int64
+	Interval                     int64
+	BaseUrl                      string
+	DetailUrl                    string
+	FinishUrl                    string
+	MarkAsPaidUrl                string
+	TxUrl                        string
+	ListLargeTxUrl               string
+	ListNodeStatusUrl            string
+	ListRelayerAccountStatusUrl  string
+	IgnoreNodeStatusAlarmUrl     string
+	ApiToken                     string
+	ChainNodeStatusCheckInterval uint64
+	ChainNodeStatusAlarmInterval uint64
 }
 
 type HttpConfig struct {
@@ -233,6 +274,7 @@ type Config struct {
 	LogFile               string
 	HttpConfig            *HttpConfig
 	MetricConfig          *HttpConfig
+	ChainNodes            []*ChainNodes
 	ChainListenConfig     []*ChainListenConfig
 	CoinPriceUpdateSlot   int64
 	CoinPriceListenConfig []*CoinPriceListenConfig
@@ -244,6 +286,8 @@ type Config struct {
 	BotConfig             *BotConfig
 	RedisConfig           *RedisConfig
 	IPPortConfig          *IPPortConfig
+	NftConfig             *NftConfig
+	RelayUrl              string
 }
 
 func (cfg *Config) GetChainListenConfig(chainId uint64) *ChainListenConfig {
@@ -285,6 +329,24 @@ func NewConfig(filePath string) *Config {
 		logs.Error("NewServiceConfig: failed, err: %s", err)
 		return nil
 	}
+
+	chainNodeMap := make(map[uint64]*ChainNodes, 0)
+	for _, node := range config.ChainNodes {
+		chainNodeMap[node.ChainId] = node
+	}
+
+	for _, listenConfig := range config.ChainListenConfig {
+		if chainNode, ok := chainNodeMap[listenConfig.ChainId]; ok {
+			listenConfig.Nodes = chainNode.Nodes
+			listenConfig.ExtendNodes = chainNode.ExtendNodes
+		}
+	}
+	for _, listenConfig := range config.FeeListenConfig {
+		if chainNode, ok := chainNodeMap[listenConfig.ChainId]; ok {
+			listenConfig.Nodes = chainNode.Nodes
+		}
+	}
+
 	GlobalConfig = config
 	initPolyProxy()
 	return config
@@ -307,12 +369,42 @@ func initPolyProxy() {
 		}
 		PolyProxy[strings.ToUpper(v.SwapContract)] = true
 		PolyProxy[strings.ToUpper(basedef.HexStringReverse(v.SwapContract))] = true
-		PolyProxy[strings.ToUpper(v.NFTProxyContract)] = true
-		PolyProxy[strings.ToUpper(basedef.HexStringReverse(v.NFTProxyContract))] = true
+		for _, contract := range v.NFTProxyContract {
+			PolyProxy[strings.ToUpper(contract)] = true
+		}
+		for _, contract := range v.NFTProxyContract {
+			PolyProxy[strings.ToUpper(basedef.HexStringReverse(contract))] = true
+		}
 	}
 	if len(PolyProxy) == 0 {
 		panic("init PolyProxy err,polyProxy is nil")
 	}
 	PolyProxy[""] = true
 	logs.Info("init polyProxy:", PolyProxy)
+}
+
+type NftConfig struct {
+	Description string
+	ExternalUrl string
+	ColImage    string
+	DfImage     string
+	ColName     string
+	DfName      string
+	IpfsUrl     string
+	Pwd         string
+}
+
+func NewRelayerConfig(filePath string) *RelayerConfig {
+	fileContent, err := basedef.ReadFile(filePath)
+	if err != nil {
+		logs.Error("NewRelayerConfig: failed, err: %s", err)
+		return nil
+	}
+	config := &RelayerConfig{}
+	err = json.Unmarshal(fileContent, config)
+	if err != nil {
+		logs.Error("NewRelayerConfig: failed, err: %s", err)
+		return nil
+	}
+	return config
 }

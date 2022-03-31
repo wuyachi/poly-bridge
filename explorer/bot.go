@@ -30,8 +30,10 @@ import (
 	"poly-bridge/conf"
 	"poly-bridge/models"
 	"poly-bridge/utils/decimal"
+	"poly-bridge/utils/fee"
 	"poly-bridge/utils/net"
 	"runtime/debug"
+	"sort"
 	"strconv"
 	"strings"
 	"time"
@@ -40,13 +42,10 @@ import (
 	"github.com/beego/beego/v2/server/web"
 )
 
-// Deduplicate alarms
-var ALARMS = map[string]struct{}{}
 var LOCAL_IPV4 string
 
 type BotController struct {
 	web.Controller
-	Conf *conf.Config
 }
 
 func init() {
@@ -301,18 +300,30 @@ func (c *BotController) checkFees(hashes []string) (fees map[string]models.Check
 		}
 
 		x := new(big.Int).Mul(&tx.FeeAmount.Int, big.NewInt(tx.FeeToken.TokenBasic.Price))
-		feePay := new(big.Float).Quo(new(big.Float).SetInt(x), new(big.Float).SetInt64(basedef.Int64FromFigure(int(tx.FeeToken.Precision))))
-		feePay = new(big.Float).Quo(feePay, new(big.Float).SetInt64(basedef.PRICE_PRECISION))
+		payFee := new(big.Float).Quo(new(big.Float).SetInt(x), new(big.Float).SetInt64(basedef.Int64FromFigure(int(tx.FeeToken.Precision))))
+		payFee = new(big.Float).Quo(payFee, new(big.Float).SetInt64(basedef.PRICE_PRECISION))
 		x = new(big.Int).Mul(&chainFee.MinFee.Int, big.NewInt(chainFee.TokenBasic.Price))
-		feeMin := new(big.Float).Quo(new(big.Float).SetInt(x), new(big.Float).SetInt64(basedef.PRICE_PRECISION))
-		feeMin = new(big.Float).Quo(feeMin, new(big.Float).SetInt64(basedef.FEE_PRECISION))
-		feeMin = new(big.Float).Quo(feeMin, new(big.Float).SetInt64(basedef.Int64FromFigure(int(chainFee.TokenBasic.Precision))))
+		minFee := new(big.Float).Quo(new(big.Float).SetInt(x), new(big.Float).SetInt64(basedef.PRICE_PRECISION))
+		minFee = new(big.Float).Quo(minFee, new(big.Float).SetInt64(basedef.FEE_PRECISION))
+		minFee = new(big.Float).Quo(minFee, new(big.Float).SetInt64(basedef.Int64FromFigure(int(chainFee.TokenBasic.Precision))))
+
+		// get optimistic L1 fee on ethereum
+		if chainId == basedef.OPTIMISTIC_CROSSCHAIN_ID {
+			ethChainFee, ok := chain2Fees[basedef.ETHEREUM_CROSSCHAIN_ID]
+			if ok {
+				l1MinFee, _, err := fee.GetL1Fee(ethChainFee, chainId)
+				if err == nil {
+					minFee = new(big.Float).Add(minFee, l1MinFee)
+				}
+			}
+		}
+
 		res := models.CheckFeeResult{}
-		if feePay.Cmp(feeMin) >= 0 {
+		if payFee.Cmp(minFee) >= 0 {
 			res.Pass = true
 		}
-		res.Paid, _ = feePay.Float64()
-		res.Min, _ = feeMin.Float64()
+		res.Paid, _ = payFee.Float64()
+		res.Min, _ = minFee.Float64()
 		fees[tx.Hash] = res
 	}
 
@@ -565,19 +576,17 @@ func (c *BotController) checkTxs() (err error) {
 		return err
 	}
 	for _, tx := range txs {
-		_, ok := ALARMS[tx.SrcHash]
-		if ok {
-			continue
-		}
-		ALARMS[tx.SrcHash] = struct{}{}
-
 		srcPolyDstRelation, err := getSrcPolyDstRelation(tx)
 		if err != nil {
 			logs.Error("getSrcPolyDstRelation of hash: %s err: %s", tx.SrcHash, err)
 			continue
 		}
-
 		entry := models.ParseBotTx(srcPolyDstRelation, fees)
+		if existed, err := cacheRedis.Redis.Exists(cacheRedis.StuckTxAlarmHasSendPrefix + strings.ToLower(entry.Hash)); err == nil && existed {
+			logs.Info("stuck TX alarm has been sent: %s", tx.SrcHash)
+			continue
+		}
+
 		title := fmt.Sprintf("Asset %s(%s->%s): %s", entry.Asset, entry.SrcChainName, entry.DstChainName, entry.Status)
 		body := fmt.Sprintf(
 			"## %s\n- Amount %v\n- Time %v\n- Duration %v\n- Fee %v(%v min:%v)\n- Hash %v\n- Poly %v\n",
@@ -619,25 +628,14 @@ func (c *BotController) checkTxs() (err error) {
 
 		err = c.PostDingCard(title, body, btns)
 		if err != nil {
-			logs.Error("Post dingtalk error %s", err)
+			logs.Error("send tx stuck ding alarm error. hash: %s, err:", tx.SrcHash, err)
+		} else {
+			if _, err := cacheRedis.Redis.Set(cacheRedis.StuckTxAlarmHasSendPrefix+strings.ToLower(entry.Hash), "done", time.Hour*24*time.Duration(conf.GlobalConfig.BotConfig.CheckFrom)); err != nil {
+				logs.Error("mark tx stuck alarm hash been sent error. hash: %s err: %s", entry.Hash, err)
+			}
 		}
 	}
 
-	/*
-		title := fmt.Sprintf("### Total %d, page %d/%d page size %d", count, pageNo, pages, len(txs))
-		list := make([]string, len(txs))
-		for i, tx := range txs {
-			pass := "Lack"
-			fee, ok := fees[tx.SrcHash]
-			if ok && fee.Pass {
-				pass = "Pass"
-			}
-			tsp := time.Unix(int64(tx.WrapperTransaction.Time), 0).Format(time.RFC3339)
-			list[i] = fmt.Sprintf("- %s %s fee_paid(%s) %v fee_min %v", tsp, tx.SrcHash, pass, fee.Paid, fee.Min)
-		}
-		body := strings.Join(list, "\n")
-		return c.PostDing(title, body)
-	*/
 	return nil
 }
 
@@ -688,7 +686,7 @@ func (c *BotController) postDing(payload interface{}) error {
 func (c *BotController) ListLargeTxPage() {
 	apiToken := c.Ctx.Input.Query("token")
 	var err error
-	largeTxs := make([]*cacheRedis.LargeTx, 0)
+	largeTxs := make([]*basedef.LargeTx, 0)
 	if apiToken == conf.GlobalConfig.BotConfig.ApiToken {
 		ltxs, err := cacheRedis.Redis.LRange(cacheRedis.LargeTxList, -100, -1)
 		if err == nil && len(ltxs) != 0 {
@@ -744,9 +742,11 @@ func (c *BotController) ListLargeTxPage() {
 					}
 
 					var amount, usdAmount decimal.Decimal
+					var assetName string
 					if v.SrcTransaction.SrcTransfer != nil &&
 						v.SrcTransaction.SrcTransfer.Token != nil &&
 						v.SrcTransaction.SrcTransfer.Token.TokenBasic != nil {
+						assetName = v.SrcTransaction.SrcTransfer.Token.Name
 						amount = decimal.NewFromBigInt(&v.SrcTransaction.SrcTransfer.Amount.Int, 0).
 							Div(decimal.NewFromInt(basedef.Int64FromFigure(int(v.SrcTransaction.SrcTransfer.Token.Precision))))
 						usdAmount = decimal.NewFromBigInt(&v.SrcTransaction.SrcTransfer.Amount.Int, 0).
@@ -757,8 +757,8 @@ func (c *BotController) ListLargeTxPage() {
 
 					intUsdAmount := usdAmount.IntPart() / 10000
 
-					largeTx := &cacheRedis.LargeTx{
-						Asset:     v.SrcTransaction.SrcTransfer.Token.Name,
+					largeTx := &basedef.LargeTx{
+						Asset:     assetName,
 						From:      srcChainName,
 						To:        dstChainName,
 						Type:      txType,
@@ -817,6 +817,169 @@ func (c *BotController) ListLargeTxPage() {
 		return
 	} else {
 		err = fmt.Errorf("access denied")
+		c.Data["json"] = err.Error()
+		c.Ctx.ResponseWriter.WriteHeader(400)
+		c.ServeJSON()
+	}
+}
+
+func (c *BotController) ListNodeStatusPage() {
+	apiToken := c.Ctx.Input.Query("token")
+	if apiToken == conf.GlobalConfig.BotConfig.ApiToken {
+		nodeStatusesMap := make(map[string][]basedef.NodeStatus, 0)
+		chainNames := make([]string, 0)
+		for _, cfg := range conf.GlobalConfig.ChainNodes {
+			if dataStr, err := cacheRedis.Redis.Get(cacheRedis.NodeStatusPrefix + cfg.ChainName); err == nil {
+				var nodeStatuses []basedef.NodeStatus
+				if err := json.Unmarshal([]byte(dataStr), &nodeStatuses); err != nil {
+					logs.Error("chain %s node status data Unmarshal error: ", cfg.ChainName, err)
+					continue
+				}
+				chainNames = append(chainNames, cfg.ChainName)
+				nodeStatusesMap[cfg.ChainName] = nodeStatuses
+			}
+		}
+
+		sort.Strings(chainNames)
+		tables := make([]string, 0)
+		for _, chainName := range chainNames {
+			nodeStatuses := nodeStatusesMap[chainName]
+			rows := make([]string, len(nodeStatuses))
+			for i, status := range nodeStatuses {
+				rows[i] = fmt.Sprintf(
+					fmt.Sprintf("<tr>%s</tr>", strings.Repeat("<td>%s</td>\n", 4)),
+					status.Url,
+					strconv.FormatUint(status.Height, 10),
+					status.Status,
+					time.Unix(status.Time, 0).Format("2006-01-02 15:04:05"),
+				)
+			}
+			table := fmt.Sprintf(
+				`<h2> %s </h2>
+					<table style="width:100%%">
+						<tr>
+							<th>Url</th>
+							<th>Height</th>
+							<th>Status</th>
+							<th>Time</th>
+						</tr>
+						%s
+					</table>`,
+				chainName, strings.Join(rows, "\n"))
+			tables = append(tables, table)
+		}
+
+		htmlBytes := []byte(fmt.Sprintf(`<html><body>
+				<h1><center>Chain node status</center></h1>
+				%s
+				</body></html>`,
+			strings.Join(tables, "\n")))
+		if c.Ctx.ResponseWriter.Header().Get("Content-Type") == "" {
+			c.Ctx.Output.Header("Content-Type", "text/html; charset=utf-8")
+		}
+		c.Ctx.Output.Body(htmlBytes)
+		return
+	} else {
+		err := fmt.Errorf("access denied")
+		c.Data["json"] = err.Error()
+		c.Ctx.ResponseWriter.WriteHeader(400)
+		c.ServeJSON()
+	}
+}
+
+func (c *BotController) IgnoreNodeStatusAlarm() {
+	node := c.Ctx.Input.Query("node")
+	day := c.Ctx.Input.Query("day")
+	token := c.Ctx.Input.Query("token")
+	var err error
+	resp := ""
+	if token == conf.GlobalConfig.BotConfig.ApiToken {
+		dayNum, err := strconv.Atoi(day)
+		if err == nil && dayNum >= 0 {
+			if dayNum == 0 {
+				_, err = cacheRedis.Redis.Del(cacheRedis.IgnoreNodeStatusAlarmPrefix + node)
+				if err == nil {
+					resp = fmt.Sprintf("success cancel ignore alarm")
+				}
+			} else {
+				_, err := cacheRedis.Redis.Set(cacheRedis.IgnoreNodeStatusAlarmPrefix+node, "ignore", time.Hour*time.Duration(24*dayNum))
+				if err == nil {
+					resp = fmt.Sprintf("success ignore alarm for %d days", dayNum)
+				}
+			}
+		} else {
+			err = fmt.Errorf("invalid parameter day：%s, err: %s", day, err)
+		}
+	} else {
+		err = fmt.Errorf("Access denied")
+	}
+	if err != nil {
+		resp = fmt.Sprintf("Error %s", err.Error())
+	}
+	logs.Info(resp)
+	c.Data["json"] = models.MakeErrorRsp(resp)
+	c.ServeJSON()
+}
+
+func (c *BotController) ListRelayerAccountStatus() {
+	apiToken := c.Ctx.Input.Query("token")
+	if apiToken == conf.GlobalConfig.BotConfig.ApiToken {
+		accountStatusesMap := make(map[string][]basedef.RelayerAccountStatus, 0)
+		chainNames := make([]string, 0)
+		for _, cfg := range conf.GlobalConfig.ChainNodes {
+			if dataStr, err := cacheRedis.Redis.Get(cacheRedis.RelayerAccountStatusPrefix + cfg.ChainName); err == nil {
+				var accountStatuses []basedef.RelayerAccountStatus
+				if err := json.Unmarshal([]byte(dataStr), &accountStatuses); err != nil {
+					logs.Error("%s relayer account status data Unmarshal error: ", cfg.ChainName, err)
+					continue
+				}
+				chainNames = append(chainNames, cfg.ChainName)
+				accountStatusesMap[cfg.ChainName] = accountStatuses
+			}
+		}
+		sort.Strings(chainNames)
+		tables := make([]string, 0)
+		for _, chainName := range chainNames {
+			accountStatuses := accountStatusesMap[chainName]
+			rows := make([]string, len(accountStatuses))
+			for i, status := range accountStatuses {
+				rows[i] = fmt.Sprintf(
+					fmt.Sprintf("<tr>%s</tr>", strings.Repeat("<td>%s</td>\n", 5)),
+					status.Address,
+					strconv.FormatFloat(status.Balance, 'f', 6, 64),
+					strconv.FormatFloat(status.Threshold, 'f', 6, 64),
+					status.Status,
+					time.Unix(status.Time, 0).Format("2006-01-02 15:04:05"),
+				)
+			}
+			table := fmt.Sprintf(
+				`<h2> %s </h2>
+					<table style="width:100%%">
+						<tr>
+							<th>Address</th>
+							<th>Balance</th>
+							<th>Threshold</th>
+							<th>Status</th>
+							<th>Time</th>
+						</tr>
+						%s
+					</table>`,
+				chainName, strings.Join(rows, "\n"))
+			tables = append(tables, table)
+		}
+
+		htmlBytes := []byte(fmt.Sprintf(`<html><body>
+				<h1><center>Relayer Account Status</center></h1>
+				%s
+				</body></html>`,
+			strings.Join(tables, "\n")))
+		if c.Ctx.ResponseWriter.Header().Get("Content-Type") == "" {
+			c.Ctx.Output.Header("Content-Type", "text/html; charset=utf-8")
+		}
+		c.Ctx.Output.Body(htmlBytes)
+		return
+	} else {
+		err := fmt.Errorf("access denied")
 		c.Data["json"] = err.Error()
 		c.Ctx.ResponseWriter.WriteHeader(400)
 		c.ServeJSON()
