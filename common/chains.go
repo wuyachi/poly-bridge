@@ -50,6 +50,7 @@ func SetupChainsSDK(cfg *conf.Config) {
 }
 
 func newChainSdks(config *conf.Config) {
+	sdkMap = make(map[uint64]interface{}, 0)
 	for _, cfg := range config.ChainListenConfig {
 		switch cfg.ChainId {
 		case basedef.ETHEREUM_CROSSCHAIN_ID:
