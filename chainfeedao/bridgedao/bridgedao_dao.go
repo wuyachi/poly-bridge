@@ -19,15 +19,12 @@ package bridgedao
 
 import (
 	"fmt"
-	"github.com/polynetwork/bridge-common/metrics"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
-	"math/big"
 	"poly-bridge/basedef"
 	"poly-bridge/conf"
 	"poly-bridge/models"
-	"poly-bridge/utils/decimal"
 )
 
 type BridgeDao struct {
@@ -70,15 +67,15 @@ func (dao *BridgeDao) SaveFees(fees []*models.ChainFee) error {
 			return res.Error
 		}
 	}
-	chainFees := make([]*models.ChainFee, 0)
-	dao.db.Preload("TokenBasic").Find(&chainFees)
-	for _, v := range chainFees {
-		if v.ProxyFee.Cmp(big.NewInt(0)) > 0 {
-			proxyFee := decimal.NewFromBigInt(&v.ProxyFee.Int, 0).Div(decimal.NewFromInt(basedef.FEE_PRECISION)).Div(decimal.New(1, int32(v.TokenBasic.Precision))).
-				Mul(decimal.New(1, 4)).StringFixed(2)
-			metrics.Record(proxyFee, "proxyFee_chain/10^4.%v", v.ChainId)
-		}
-	}
+	//chainFees := make([]*models.ChainFee, 0)
+	//dao.db.Preload("TokenBasic").Find(&chainFees)
+	//for _, v := range chainFees {
+	//	if v.ProxyFee.Cmp(big.NewInt(0)) > 0 {
+	//		proxyFee := decimal.NewFromBigInt(&v.ProxyFee.Int, 0).Div(decimal.NewFromInt(basedef.FEE_PRECISION)).Div(decimal.New(1, int32(v.TokenBasic.Precision))).
+	//			Mul(decimal.New(1, 4)).StringFixed(2)
+	//		metrics.Record(proxyFee, "proxyFee_chain/10^4.%v", v.ChainId)
+	//	}
+	//}
 	return nil
 }
 
