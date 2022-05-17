@@ -241,6 +241,15 @@
           "Url": "https://rpc-testnet.kcc.network"
         }
       ]
+    },
+    {
+      "ChainName": "Milkomeda",
+      "ChainId": 810,
+      "Nodes": [
+        {
+          "Url": "https://rpc-devnet-cardano-evm.c1.milkomeda.com"
+        }
+      ]
     }
   ],
   "ChainListenConfig": [
@@ -608,6 +617,22 @@
       "ProxyContract": [
         "0AF53d318De279C8e67FcC6914acF387CFaA8B7E"
       ]
+    },
+    {
+      "ChainName": "Milkomeda",
+      "ChainId": 810,
+      "ListenSlot": 1,
+      "Defer": 0,
+      "BatchSize": 100,
+      "WrapperContract": [
+        "",
+        "",
+        "f4B609a3ca7353a8f379069f939964Db351B39c1"
+      ],
+      "CCMContract": "Fcf7A3207b7442F29a9f88e2d7638633B494843f",
+      "ProxyContract": [
+        "d6fc5374649cea121395a4860FdB33F21783c4Af"
+      ]
     }
   ],
   "StatsConfig": {
@@ -774,6 +799,13 @@
       "ChainId": 900,
       "ChainName": "KCC",
       "GasLimit":120000,
+      "ProxyFee":120,
+      "MinFee": 80
+    },
+    {
+      "ChainId": 810,
+      "ChainName": "Milkomeda",
+      "GasLimit":300000,
       "ProxyFee":120,
       "MinFee": 80
     }
