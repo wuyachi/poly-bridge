@@ -20,14 +20,14 @@ package bridgedao
 import (
 	"fmt"
 	"github.com/polynetwork/bridge-common/metrics"
+	"github.com/polynetwork/poly-bridge/basedef"
+	"github.com/polynetwork/poly-bridge/conf"
+	"github.com/polynetwork/poly-bridge/models"
+	"github.com/polynetwork/poly-bridge/utils/decimal"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
 	"math/big"
-	"poly-bridge/basedef"
-	"poly-bridge/conf"
-	"poly-bridge/models"
-	"poly-bridge/utils/decimal"
 )
 
 type BridgeDao struct {

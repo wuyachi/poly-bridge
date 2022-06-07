@@ -20,11 +20,11 @@ package ontologylisten
 import (
 	"encoding/hex"
 	"github.com/beego/beego/v2/core/logs"
+	"github.com/polynetwork/poly-bridge/basedef"
+	"github.com/polynetwork/poly-bridge/chainsdk"
+	"github.com/polynetwork/poly-bridge/conf"
+	"github.com/polynetwork/poly-bridge/models"
 	"math/big"
-	"poly-bridge/basedef"
-	"poly-bridge/chainsdk"
-	"poly-bridge/conf"
-	"poly-bridge/models"
 )
 
 const (

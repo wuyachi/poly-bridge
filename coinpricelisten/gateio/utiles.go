@@ -5,8 +5,8 @@ import (
 	"github.com/antihax/optional"
 	"github.com/beego/beego/v2/core/logs"
 	"github.com/gateio/gateapi-go/v6"
-	"poly-bridge/basedef"
-	"poly-bridge/models"
+	"github.com/polynetwork/poly-bridge/basedef"
+	"github.com/polynetwork/poly-bridge/models"
 )
 
 type GateioSdk struct {

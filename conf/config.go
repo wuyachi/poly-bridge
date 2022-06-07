@@ -19,7 +19,7 @@ package conf
 
 import (
 	"encoding/json"
-	"poly-bridge/basedef"
+	"github.com/polynetwork/poly-bridge/basedef"
 	"strings"
 	"time"
 

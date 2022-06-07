@@ -2,9 +2,9 @@ package meta
 
 import (
 	"fmt"
-	"poly-bridge/conf"
-	"poly-bridge/models"
-	. "poly-bridge/nft_http/meta/common"
+	"github.com/polynetwork/poly-bridge/conf"
+	"github.com/polynetwork/poly-bridge/models"
+	. "github.com/polynetwork/poly-bridge/nft_http/meta/common"
 	"testing"
 
 	"github.com/stretchr/testify/assert"

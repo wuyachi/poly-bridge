@@ -2,7 +2,7 @@ package controllers
 
 import (
 	"fmt"
-	mcm "poly-bridge/nft_http/meta/common"
+	mcm "github.com/polynetwork/poly-bridge/nft_http/meta/common"
 	"sort"
 	"testing"
 	"time"

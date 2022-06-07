@@ -21,8 +21,8 @@ import (
 	"crypto/ecdsa"
 	"encoding/json"
 	"fmt"
+	"github.com/polynetwork/poly-bridge/chainsdk"
 	"math/big"
-	"poly-bridge/chainsdk"
 
 	"github.com/ethereum/go-ethereum/common"
 	polysdk "github.com/polynetwork/poly-go-sdk"

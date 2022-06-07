@@ -3,9 +3,9 @@ package controllers
 import (
 	"errors"
 	"fmt"
+	"github.com/polynetwork/poly-bridge/basedef"
+	"github.com/polynetwork/poly-bridge/models"
 	"gorm.io/gorm"
-	"poly-bridge/basedef"
-	"poly-bridge/models"
 	"time"
 
 	"github.com/beego/beego/v2/core/logs"

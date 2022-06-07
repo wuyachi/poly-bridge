@@ -21,12 +21,12 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/beego/beego/v2/core/logs"
+	"github.com/polynetwork/poly-bridge/basedef"
+	"github.com/polynetwork/poly-bridge/conf"
+	"github.com/polynetwork/poly-bridge/models"
 	"io/ioutil"
 	"math/big"
 	"net/http"
-	"poly-bridge/basedef"
-	"poly-bridge/conf"
-	"poly-bridge/models"
 	"reflect"
 )
 

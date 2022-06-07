@@ -19,9 +19,9 @@ package main
 
 import (
 	"fmt"
-	"poly-bridge/bridge_tools/conf"
-	serverconf "poly-bridge/conf"
-	"poly-bridge/models"
+	"github.com/polynetwork/poly-bridge/bridge_tools/conf"
+	serverconf "github.com/polynetwork/poly-bridge/conf"
+	"github.com/polynetwork/poly-bridge/models"
 
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"

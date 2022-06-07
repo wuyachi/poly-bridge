@@ -19,13 +19,13 @@ package main
 
 import (
 	"github.com/beego/beego/v2/core/logs"
+	"github.com/polynetwork/poly-bridge/basedef"
+	"github.com/polynetwork/poly-bridge/bridge_tools/conf"
+	serverconf "github.com/polynetwork/poly-bridge/conf"
+	"github.com/polynetwork/poly-bridge/crosschaindao"
+	"github.com/polynetwork/poly-bridge/crosschaindao/swapdao"
+	"github.com/polynetwork/poly-bridge/models"
 	"gorm.io/gorm/logger"
-	"poly-bridge/basedef"
-	"poly-bridge/bridge_tools/conf"
-	serverconf "poly-bridge/conf"
-	"poly-bridge/crosschaindao"
-	"poly-bridge/crosschaindao/swapdao"
-	"poly-bridge/models"
 	"strings"
 )
 

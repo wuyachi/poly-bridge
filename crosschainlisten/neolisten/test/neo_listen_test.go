@@ -19,11 +19,11 @@ package test
 
 import (
 	"fmt"
+	"github.com/polynetwork/poly-bridge/basedef"
+	"github.com/polynetwork/poly-bridge/conf"
+	"github.com/polynetwork/poly-bridge/crosschaindao"
+	"github.com/polynetwork/poly-bridge/crosschainlisten"
 	"os"
-	"poly-bridge/basedef"
-	"poly-bridge/conf"
-	"poly-bridge/crosschaindao"
-	"poly-bridge/crosschainlisten"
 	"testing"
 )
 

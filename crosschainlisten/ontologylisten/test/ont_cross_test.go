@@ -23,9 +23,9 @@ import (
 	"github.com/ontio/ontology-go-sdk"
 	"github.com/ontio/ontology/common"
 	"github.com/ontio/ontology/core/types"
-	"poly-bridge/basedef"
-	"poly-bridge/chainsdk"
-	"poly-bridge/conf"
+	"github.com/polynetwork/poly-bridge/basedef"
+	"github.com/polynetwork/poly-bridge/chainsdk"
+	"github.com/polynetwork/poly-bridge/conf"
 	"testing"
 )
 

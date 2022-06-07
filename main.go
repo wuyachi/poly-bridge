@@ -20,15 +20,15 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/polynetwork/poly-bridge/cacheRedis"
 	"os"
-	"poly-bridge/cacheRedis"
 
-	"poly-bridge/basedef"
-	"poly-bridge/common"
-	"poly-bridge/conf"
-	"poly-bridge/explorer"
-	"poly-bridge/http"
-	"poly-bridge/nft_http"
+	"github.com/polynetwork/poly-bridge/basedef"
+	"github.com/polynetwork/poly-bridge/common"
+	"github.com/polynetwork/poly-bridge/conf"
+	"github.com/polynetwork/poly-bridge/explorer"
+	"github.com/polynetwork/poly-bridge/http"
+	"github.com/polynetwork/poly-bridge/nft_http"
 
 	"github.com/beego/beego/v2/core/logs"
 	"github.com/beego/beego/v2/server/web"

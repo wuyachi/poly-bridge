@@ -18,13 +18,13 @@
 package main
 
 import (
+	"github.com/polynetwork/poly-bridge/bridge_tools/conf"
+	serverconf "github.com/polynetwork/poly-bridge/conf"
+	"github.com/polynetwork/poly-bridge/crosschaindao"
+	"github.com/polynetwork/poly-bridge/models"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
-	"poly-bridge/bridge_tools/conf"
-	serverconf "poly-bridge/conf"
-	"poly-bridge/crosschaindao"
-	"poly-bridge/models"
 	"strings"
 )
 

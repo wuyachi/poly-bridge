@@ -20,9 +20,9 @@ package bridgesdk
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/polynetwork/poly-bridge/models"
 	"io/ioutil"
 	"net/http"
-	"poly-bridge/models"
 	"strings"
 )
 

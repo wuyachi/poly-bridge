@@ -13,12 +13,12 @@ import (
 	wallet2 "github.com/joeqian10/neo3-gogogo/wallet"
 	ontologygosdk "github.com/ontio/ontology-go-sdk"
 	common2 "github.com/ontio/ontology/common"
+	"github.com/polynetwork/poly-bridge/basedef"
+	"github.com/polynetwork/poly-bridge/chainsdk"
+	"github.com/polynetwork/poly-bridge/conf"
+	"github.com/polynetwork/poly-bridge/go_abi/eccm_abi"
 	"math"
 	"math/big"
-	"poly-bridge/basedef"
-	"poly-bridge/chainsdk"
-	"poly-bridge/conf"
-	"poly-bridge/go_abi/eccm_abi"
 	"testing"
 )
 

@@ -20,9 +20,9 @@ package chainsdk
 import (
 	"encoding/hex"
 	"fmt"
+	"github.com/polynetwork/poly-bridge/basedef"
 	"math"
 	"math/big"
-	"poly-bridge/basedef"
 	"runtime/debug"
 	"strings"
 	"sync"

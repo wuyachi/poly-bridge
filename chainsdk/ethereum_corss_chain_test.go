@@ -3,9 +3,9 @@ package chainsdk
 import (
 	"github.com/beego/beego/v2/core/logs"
 	"github.com/ethereum/go-ethereum/common"
+	"github.com/polynetwork/poly-bridge/basedef"
+	"github.com/polynetwork/poly-bridge/conf"
 	"github.com/stretchr/testify/assert"
-	"poly-bridge/basedef"
-	"poly-bridge/conf"
 	"testing"
 )
 

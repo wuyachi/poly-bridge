@@ -2,10 +2,10 @@ package meta
 
 import (
 	"errors"
+	"github.com/polynetwork/poly-bridge/models"
+	. "github.com/polynetwork/poly-bridge/nft_http/meta/common"
+	"github.com/polynetwork/poly-bridge/nft_http/meta/standard"
 	"gorm.io/gorm"
-	"poly-bridge/models"
-	. "poly-bridge/nft_http/meta/common"
-	"poly-bridge/nft_http/meta/standard"
 )
 
 type MetaFetcher interface {

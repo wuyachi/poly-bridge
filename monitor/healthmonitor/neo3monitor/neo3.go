@@ -7,12 +7,12 @@ import (
 	"github.com/joeqian10/neo3-gogogo/keys"
 	"github.com/joeqian10/neo3-gogogo/tx"
 	"github.com/joeqian10/neo3-gogogo/wallet"
+	"github.com/polynetwork/poly-bridge/basedef"
+	"github.com/polynetwork/poly-bridge/cacheRedis"
+	"github.com/polynetwork/poly-bridge/chainsdk"
+	"github.com/polynetwork/poly-bridge/conf"
 	"math"
 	"math/big"
-	"poly-bridge/basedef"
-	"poly-bridge/cacheRedis"
-	"poly-bridge/chainsdk"
-	"poly-bridge/conf"
 	"time"
 )
 

@@ -20,10 +20,10 @@ package bridgeeffect
 import (
 	"encoding/json"
 	"fmt"
-	"poly-bridge/basedef"
-	"poly-bridge/cacheRedis"
-	"poly-bridge/conf"
-	"poly-bridge/models"
+	"github.com/polynetwork/poly-bridge/basedef"
+	"github.com/polynetwork/poly-bridge/cacheRedis"
+	"github.com/polynetwork/poly-bridge/conf"
+	"github.com/polynetwork/poly-bridge/models"
 	"time"
 
 	"github.com/beego/beego/v2/core/logs"

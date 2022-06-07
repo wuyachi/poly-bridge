@@ -18,8 +18,8 @@
 package nft_http
 
 import (
-	"poly-bridge/conf"
-	"poly-bridge/nft_http/controllers"
+	"github.com/polynetwork/poly-bridge/conf"
+	"github.com/polynetwork/poly-bridge/nft_http/controllers"
 
 	"github.com/beego/beego/v2/server/web"
 )

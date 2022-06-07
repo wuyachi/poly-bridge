@@ -1,9 +1,9 @@
 package standard
 
 import (
-	"poly-bridge/models"
-	. "poly-bridge/nft_http/meta/common"
-	"poly-bridge/nft_http/meta/utils"
+	"github.com/polynetwork/poly-bridge/models"
+	. "github.com/polynetwork/poly-bridge/nft_http/meta/common"
+	"github.com/polynetwork/poly-bridge/nft_http/meta/utils"
 )
 
 type StandardFetcher struct {

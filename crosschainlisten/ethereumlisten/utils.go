@@ -4,11 +4,11 @@ import (
 	"encoding/hex"
 	"strings"
 
-	"poly-bridge/basedef"
-	"poly-bridge/go_abi/eccm_abi"
-	nftlp "poly-bridge/go_abi/nft_lock_proxy_abi"
-	nftwp "poly-bridge/go_abi/nft_wrap_abi"
-	"poly-bridge/models"
+	"github.com/polynetwork/poly-bridge/basedef"
+	"github.com/polynetwork/poly-bridge/go_abi/eccm_abi"
+	nftlp "github.com/polynetwork/poly-bridge/go_abi/nft_lock_proxy_abi"
+	nftwp "github.com/polynetwork/poly-bridge/go_abi/nft_wrap_abi"
+	"github.com/polynetwork/poly-bridge/models"
 )
 
 func assembleSrcTransaction(

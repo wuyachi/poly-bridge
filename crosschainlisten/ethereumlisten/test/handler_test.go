@@ -1,10 +1,10 @@
 package test
 
 import (
-	"poly-bridge/basedef"
-	"poly-bridge/conf"
-	"poly-bridge/crosschainlisten"
-	"poly-bridge/models"
+	"github.com/polynetwork/poly-bridge/basedef"
+	"github.com/polynetwork/poly-bridge/conf"
+	"github.com/polynetwork/poly-bridge/crosschainlisten"
+	"github.com/polynetwork/poly-bridge/models"
 	"testing"
 
 	"github.com/stretchr/testify/assert"

@@ -23,11 +23,11 @@ import (
 	"fmt"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/common/hexutil"
+	"github.com/polynetwork/poly-bridge/basedef"
+	"github.com/polynetwork/poly-bridge/conf"
+	"github.com/polynetwork/poly-bridge/utils/decimal"
 	"math/big"
 	"net/http"
-	"poly-bridge/basedef"
-	"poly-bridge/conf"
-	"poly-bridge/utils/decimal"
 	"strings"
 )
 
@@ -242,7 +242,7 @@ func FormatFee(chain uint64, fee *BigInt) string {
 		precision_new := decimal.New(1, 18)
 		return fee_new.Div(precision_new).String() + " HOO"
 	case basedef.STARCOIN_CROSSCHAIN_ID:
-		precision_new := decimal.New(1, 9)		
+		precision_new := decimal.New(1, 9)
 		return fee_new.Div(precision_new).String() + " STC"
 	case basedef.KAVA_CROSSCHAIN_ID:
 		precision_new := decimal.New(1, 18)

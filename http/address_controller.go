@@ -20,7 +20,7 @@ package http
 import (
 	"encoding/json"
 
-	"poly-bridge/models"
+	"github.com/polynetwork/poly-bridge/models"
 
 	"github.com/beego/beego/v2/server/web"
 )

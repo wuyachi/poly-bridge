@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/beego/beego/v2/server/web"
-	"poly-bridge/models"
+	"github.com/polynetwork/poly-bridge/models"
 )
 
 type WrapperController struct {

@@ -20,12 +20,12 @@ package test
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/polynetwork/poly-bridge/conf"
+	"github.com/polynetwork/poly-bridge/crosschaineffect"
+	"github.com/polynetwork/poly-bridge/models"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"os"
-	"poly-bridge/conf"
-	"poly-bridge/crosschaineffect"
-	"poly-bridge/models"
 	"testing"
 )
 

@@ -21,9 +21,9 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/beego/beego/v2/core/logs"
-	"poly-bridge/basedef"
-	"poly-bridge/cacheRedis"
-	"poly-bridge/models"
+	"github.com/polynetwork/poly-bridge/basedef"
+	"github.com/polynetwork/poly-bridge/cacheRedis"
+	"github.com/polynetwork/poly-bridge/models"
 	"strconv"
 
 	"github.com/beego/beego/v2/server/web"

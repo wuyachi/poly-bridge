@@ -3,10 +3,10 @@ package fee
 import (
 	"fmt"
 	"github.com/beego/beego/v2/core/logs"
+	"github.com/polynetwork/poly-bridge/basedef"
+	"github.com/polynetwork/poly-bridge/conf"
+	"github.com/polynetwork/poly-bridge/models"
 	"math/big"
-	"poly-bridge/basedef"
-	"poly-bridge/conf"
-	"poly-bridge/models"
 )
 
 func GetL1Fee(ethChainFee *models.ChainFee, chainId uint64) (l1MinFee, l1ProxyFee, l1FeeAmount *big.Float, err error) {

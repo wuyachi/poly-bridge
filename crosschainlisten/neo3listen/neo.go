@@ -24,10 +24,10 @@ import (
 	"math/big"
 
 	neo3_models "github.com/joeqian10/neo3-gogogo/rpc/models"
-	"poly-bridge/basedef"
-	"poly-bridge/chainsdk"
-	"poly-bridge/conf"
-	"poly-bridge/models"
+	"github.com/polynetwork/poly-bridge/basedef"
+	"github.com/polynetwork/poly-bridge/chainsdk"
+	"github.com/polynetwork/poly-bridge/conf"
+	"github.com/polynetwork/poly-bridge/models"
 
 	"github.com/beego/beego/v2/core/logs"
 )

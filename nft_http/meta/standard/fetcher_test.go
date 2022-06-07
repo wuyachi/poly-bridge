@@ -1,8 +1,8 @@
 package standard
 
 import (
+	. "github.com/polynetwork/poly-bridge/nft_http/meta/common"
 	"github.com/stretchr/testify/assert"
-	. "poly-bridge/nft_http/meta/common"
 	"testing"
 )
 

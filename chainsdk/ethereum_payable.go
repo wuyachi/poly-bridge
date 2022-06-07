@@ -26,11 +26,11 @@ import (
 	"math/big"
 	"strings"
 
-	erc20 "poly-bridge/go_abi/mintable_erc20_abi"
-	nftmapping "poly-bridge/go_abi/nft_mapping_abi"
-	nftquery "poly-bridge/go_abi/nft_query_abi"
-	nftwrap "poly-bridge/go_abi/nft_wrap_abi"
-	xecdsa "poly-bridge/utils/ecdsa"
+	erc20 "github.com/polynetwork/poly-bridge/go_abi/mintable_erc20_abi"
+	nftmapping "github.com/polynetwork/poly-bridge/go_abi/nft_mapping_abi"
+	nftquery "github.com/polynetwork/poly-bridge/go_abi/nft_query_abi"
+	nftwrap "github.com/polynetwork/poly-bridge/go_abi/nft_wrap_abi"
+	xecdsa "github.com/polynetwork/poly-bridge/utils/ecdsa"
 
 	"github.com/ethereum/go-ethereum"
 	"github.com/ethereum/go-ethereum/accounts/abi"

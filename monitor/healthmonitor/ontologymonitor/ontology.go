@@ -5,9 +5,9 @@ import (
 	"github.com/beego/beego/v2/core/logs"
 	"github.com/ontio/ontology-go-sdk"
 	"github.com/ontio/ontology/common"
+	"github.com/polynetwork/poly-bridge/basedef"
+	"github.com/polynetwork/poly-bridge/conf"
 	"math"
-	"poly-bridge/basedef"
-	"poly-bridge/conf"
 	"time"
 )
 

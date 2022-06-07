@@ -2,11 +2,11 @@ package test
 
 import (
 	"fmt"
+	"github.com/polynetwork/poly-bridge/basedef"
+	"github.com/polynetwork/poly-bridge/coinpricedao"
+	"github.com/polynetwork/poly-bridge/coinpricelisten"
+	"github.com/polynetwork/poly-bridge/conf"
 	"os"
-	"poly-bridge/basedef"
-	"poly-bridge/coinpricedao"
-	"poly-bridge/coinpricelisten"
-	"poly-bridge/conf"
 	"testing"
 )
 

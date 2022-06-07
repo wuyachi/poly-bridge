@@ -1,7 +1,7 @@
 package models
 
 import (
-	"poly-bridge/conf"
+	"github.com/polynetwork/poly-bridge/conf"
 	"testing"
 )
 

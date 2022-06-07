@@ -3,7 +3,7 @@ package controllers
 //
 //import (
 //	"encoding/json"
-//	"poly-bridge/conf"
+//	"github.com/polynetwork/poly-bridge/conf"
 //	"testing"
 //
 //	"github.com/beego/beego/v2/server/web"

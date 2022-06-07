@@ -2,7 +2,7 @@ package standard
 
 import (
 	"encoding/json"
-	"poly-bridge/models"
+	"github.com/polynetwork/poly-bridge/models"
 )
 
 type Profile struct {

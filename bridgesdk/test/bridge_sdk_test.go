@@ -20,8 +20,8 @@ package test
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/polynetwork/poly-bridge/bridgesdk"
 	"math/big"
-	"poly-bridge/bridgesdk"
 	"testing"
 	"time"
 )

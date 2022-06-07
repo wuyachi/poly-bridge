@@ -2,11 +2,11 @@ package test
 
 import (
 	"fmt"
+	"github.com/polynetwork/poly-bridge/basedef"
+	"github.com/polynetwork/poly-bridge/chainfeedao"
+	"github.com/polynetwork/poly-bridge/chainfeelisten"
+	"github.com/polynetwork/poly-bridge/conf"
 	"os"
-	"poly-bridge/basedef"
-	"poly-bridge/chainfeedao"
-	"poly-bridge/chainfeelisten"
-	"poly-bridge/conf"
 	"testing"
 )
 

@@ -20,9 +20,9 @@ package stakedao
 import (
 	"encoding/json"
 	"fmt"
-	"poly-bridge/basedef"
-	serverconf "poly-bridge/conf"
-	"poly-bridge/models"
+	"github.com/polynetwork/poly-bridge/basedef"
+	serverconf "github.com/polynetwork/poly-bridge/conf"
+	"github.com/polynetwork/poly-bridge/models"
 )
 
 type StakeDao struct {

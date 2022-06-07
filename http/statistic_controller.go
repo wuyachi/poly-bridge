@@ -20,8 +20,8 @@ package http
 import (
 	"encoding/json"
 	"fmt"
-	"poly-bridge/basedef"
-	"poly-bridge/models"
+	"github.com/polynetwork/poly-bridge/basedef"
+	"github.com/polynetwork/poly-bridge/models"
 
 	"github.com/beego/beego/v2/server/web"
 )

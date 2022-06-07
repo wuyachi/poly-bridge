@@ -18,10 +18,10 @@
 package ontologyfee
 
 import (
+	"github.com/polynetwork/poly-bridge/basedef"
+	"github.com/polynetwork/poly-bridge/chainsdk"
+	"github.com/polynetwork/poly-bridge/conf"
 	"math/big"
-	"poly-bridge/basedef"
-	"poly-bridge/chainsdk"
-	"poly-bridge/conf"
 )
 
 type OntologyFee struct {

@@ -2,10 +2,10 @@ package chainsdk
 
 import (
 	"github.com/ethereum/go-ethereum/core/types"
+	nftmp "github.com/polynetwork/poly-bridge/go_abi/nft_mapping_abi"
+	nftquery "github.com/polynetwork/poly-bridge/go_abi/nft_query_abi"
+	nftwrap "github.com/polynetwork/poly-bridge/go_abi/nft_wrap_abi"
 	"math/big"
-	nftmp "poly-bridge/go_abi/nft_mapping_abi"
-	nftquery "poly-bridge/go_abi/nft_query_abi"
-	nftwrap "poly-bridge/go_abi/nft_wrap_abi"
 	"strings"
 	"testing"
 

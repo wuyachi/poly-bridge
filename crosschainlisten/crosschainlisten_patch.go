@@ -4,8 +4,8 @@ import (
 	"context"
 	"github.com/beego/beego/v2/core/logs"
 	"github.com/devfans/cogroup"
-	"poly-bridge/conf"
-	"poly-bridge/crosschaindao/bridgedao"
+	"github.com/polynetwork/poly-bridge/conf"
+	"github.com/polynetwork/poly-bridge/crosschaindao/bridgedao"
 	"time"
 )
 

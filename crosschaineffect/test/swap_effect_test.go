@@ -20,11 +20,11 @@ package test
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/polynetwork/poly-bridge/basedef"
+	"github.com/polynetwork/poly-bridge/conf"
+	"github.com/polynetwork/poly-bridge/crosschaindao"
+	"github.com/polynetwork/poly-bridge/models"
 	"os"
-	"poly-bridge/basedef"
-	"poly-bridge/conf"
-	"poly-bridge/crosschaindao"
-	"poly-bridge/models"
 	"testing"
 )
 

@@ -19,10 +19,10 @@ package main
 
 import (
 	"fmt"
+	"github.com/polynetwork/poly-bridge/bridge_tools/conf"
+	serverconf "github.com/polynetwork/poly-bridge/conf"
 	"github.com/urfave/cli"
 	"os"
-	"poly-bridge/bridge_tools/conf"
-	serverconf "poly-bridge/conf"
 	"runtime"
 	"strings"
 )

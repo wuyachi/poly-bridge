@@ -3,10 +3,10 @@ package zilliqamonitor
 import (
 	"fmt"
 	"github.com/beego/beego/v2/core/logs"
+	"github.com/polynetwork/poly-bridge/basedef"
+	"github.com/polynetwork/poly-bridge/chainsdk"
+	"github.com/polynetwork/poly-bridge/conf"
 	"math"
-	"poly-bridge/basedef"
-	"poly-bridge/chainsdk"
-	"poly-bridge/conf"
 	"time"
 )
 

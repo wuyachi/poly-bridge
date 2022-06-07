@@ -18,7 +18,7 @@
 package controllers
 
 import (
-	"poly-bridge/models"
+	"github.com/polynetwork/poly-bridge/models"
 
 	"github.com/beego/beego/v2/server/web"
 )

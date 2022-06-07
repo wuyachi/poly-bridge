@@ -20,9 +20,9 @@ package models
 import (
 	"fmt"
 	"github.com/beego/beego/v2/core/logs"
+	"github.com/polynetwork/poly-bridge/basedef"
+	"github.com/polynetwork/poly-bridge/utils/decimal"
 	"math/big"
-	"poly-bridge/basedef"
-	"poly-bridge/utils/decimal"
 	"time"
 )
 

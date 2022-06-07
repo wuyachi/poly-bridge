@@ -20,13 +20,13 @@ package test
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/polynetwork/poly-bridge/basedef"
+	"github.com/polynetwork/poly-bridge/chainfeedao"
+	"github.com/polynetwork/poly-bridge/conf"
+	"github.com/polynetwork/poly-bridge/models"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"os"
-	"poly-bridge/basedef"
-	"poly-bridge/chainfeedao"
-	"poly-bridge/conf"
-	"poly-bridge/models"
 	"testing"
 )
 

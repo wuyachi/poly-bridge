@@ -3,12 +3,12 @@ package crosschainstats
 import (
 	"fmt"
 	"github.com/beego/beego/v2/core/logs"
+	"github.com/polynetwork/poly-bridge/basedef"
+	"github.com/polynetwork/poly-bridge/common"
+	"github.com/polynetwork/poly-bridge/conf"
+	"github.com/polynetwork/poly-bridge/models"
+	"github.com/polynetwork/poly-bridge/utils/decimal"
 	"math/big"
-	"poly-bridge/basedef"
-	"poly-bridge/common"
-	"poly-bridge/conf"
-	"poly-bridge/models"
-	"poly-bridge/utils/decimal"
 	"strings"
 	"time"
 )

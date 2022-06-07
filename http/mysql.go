@@ -19,10 +19,10 @@ package http
 
 import (
 	"fmt"
+	"github.com/polynetwork/poly-bridge/conf"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
-	"poly-bridge/conf"
 )
 
 var db *gorm.DB

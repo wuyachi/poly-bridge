@@ -3,13 +3,13 @@ package main
 import (
 	"fmt"
 	"github.com/beego/beego/v2/core/logs"
+	"github.com/polynetwork/poly-bridge/basedef"
+	"github.com/polynetwork/poly-bridge/cacheRedis"
+	"github.com/polynetwork/poly-bridge/conf"
+	"github.com/polynetwork/poly-bridge/monitor/healthmonitor"
 	"github.com/urfave/cli"
 	"os"
 	"os/signal"
-	"poly-bridge/basedef"
-	"poly-bridge/cacheRedis"
-	"poly-bridge/conf"
-	"poly-bridge/monitor/healthmonitor"
 	"runtime"
 	"syscall"
 )

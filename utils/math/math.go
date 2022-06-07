@@ -2,9 +2,9 @@ package math
 
 import (
 	"fmt"
+	"github.com/polynetwork/poly-bridge/utils/decimal"
 	"math"
 	"math/big"
-	"poly-bridge/utils/decimal"
 
 	emath "github.com/ethereum/go-ethereum/common/math"
 )

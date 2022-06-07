@@ -19,9 +19,9 @@ package controllers
 
 import (
 	"fmt"
+	"github.com/polynetwork/poly-bridge/basedef"
+	"github.com/polynetwork/poly-bridge/models"
 	"math/big"
-	"poly-bridge/basedef"
-	"poly-bridge/models"
 
 	"github.com/beego/beego/v2/server/web"
 )

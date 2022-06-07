@@ -27,10 +27,10 @@ import (
 	"strings"
 	"syscall"
 
-	"poly-bridge/basedef"
-	"poly-bridge/conf"
-	"poly-bridge/crosschaindao"
-	"poly-bridge/crosschainlisten"
+	"github.com/polynetwork/poly-bridge/basedef"
+	"github.com/polynetwork/poly-bridge/conf"
+	"github.com/polynetwork/poly-bridge/crosschaindao"
+	"github.com/polynetwork/poly-bridge/crosschainlisten"
 
 	"github.com/beego/beego/v2/core/logs"
 	"github.com/urfave/cli"

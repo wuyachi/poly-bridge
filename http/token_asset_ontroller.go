@@ -3,9 +3,9 @@ package http
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/polynetwork/poly-bridge/common"
+	"github.com/polynetwork/poly-bridge/models"
 	"math/big"
-	"poly-bridge/common"
-	"poly-bridge/models"
 	"time"
 
 	"github.com/beego/beego/v2/core/logs"

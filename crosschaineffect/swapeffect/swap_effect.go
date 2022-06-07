@@ -19,9 +19,9 @@ package swapeffect
 
 import (
 	"encoding/json"
-	"poly-bridge/basedef"
-	"poly-bridge/conf"
-	"poly-bridge/models"
+	"github.com/polynetwork/poly-bridge/basedef"
+	"github.com/polynetwork/poly-bridge/conf"
+	"github.com/polynetwork/poly-bridge/models"
 	"time"
 
 	"github.com/beego/beego/v2/core/logs"

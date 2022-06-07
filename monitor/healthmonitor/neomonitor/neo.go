@@ -5,11 +5,11 @@ import (
 	"github.com/beego/beego/v2/core/logs"
 	"github.com/joeqian10/neo-gogogo/tx"
 	"github.com/joeqian10/neo-gogogo/wallet"
+	"github.com/polynetwork/poly-bridge/basedef"
+	"github.com/polynetwork/poly-bridge/cacheRedis"
+	"github.com/polynetwork/poly-bridge/chainsdk"
+	"github.com/polynetwork/poly-bridge/conf"
 	"math"
-	"poly-bridge/basedef"
-	"poly-bridge/cacheRedis"
-	"poly-bridge/chainsdk"
-	"poly-bridge/conf"
 	"time"
 )
 

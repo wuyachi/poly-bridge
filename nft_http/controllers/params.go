@@ -1,9 +1,9 @@
 package controllers
 
 import (
-	"poly-bridge/basedef"
-	"poly-bridge/models"
-	"poly-bridge/utils/decimal"
+	"github.com/polynetwork/poly-bridge/basedef"
+	"github.com/polynetwork/poly-bridge/models"
+	"github.com/polynetwork/poly-bridge/utils/decimal"
 )
 
 type PolyBridgeInfoResp struct {

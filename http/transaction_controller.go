@@ -20,11 +20,11 @@ package http
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/polynetwork/poly-bridge/basedef"
+	"github.com/polynetwork/poly-bridge/cacheRedis"
+	"github.com/polynetwork/poly-bridge/models"
 	"io/ioutil"
 	"net/http"
-	"poly-bridge/basedef"
-	"poly-bridge/cacheRedis"
-	"poly-bridge/models"
 	"time"
 
 	"github.com/beego/beego/v2/core/logs"

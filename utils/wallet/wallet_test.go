@@ -2,7 +2,7 @@ package wallet
 
 import (
 	"encoding/hex"
-	"poly-bridge/utils/leveldb"
+	"github.com/polynetwork/poly-bridge/utils/leveldb"
 	"testing"
 
 	"github.com/ethereum/go-ethereum/crypto"

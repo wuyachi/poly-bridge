@@ -20,13 +20,13 @@ package explorerdao
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/polynetwork/poly-bridge/basedef"
+	"github.com/polynetwork/poly-bridge/conf"
+	serverconf "github.com/polynetwork/poly-bridge/conf"
+	"github.com/polynetwork/poly-bridge/models"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
-	"poly-bridge/basedef"
-	"poly-bridge/conf"
-	serverconf "poly-bridge/conf"
-	"poly-bridge/models"
 )
 
 type Chain struct {

@@ -3,14 +3,14 @@ package switcheolisten
 import (
 	"encoding/hex"
 	"fmt"
-	"poly-bridge/utils/decimal"
+	"github.com/polynetwork/poly-bridge/utils/decimal"
 	"strconv"
 	"strings"
 
-	"poly-bridge/basedef"
-	"poly-bridge/chainsdk"
-	"poly-bridge/conf"
-	"poly-bridge/models"
+	"github.com/polynetwork/poly-bridge/basedef"
+	"github.com/polynetwork/poly-bridge/chainsdk"
+	"github.com/polynetwork/poly-bridge/conf"
+	"github.com/polynetwork/poly-bridge/models"
 
 	"github.com/beego/beego/v2/core/logs"
 )

@@ -19,9 +19,9 @@ package controllers
 
 import (
 	"fmt"
-	"poly-bridge/models"
-	"poly-bridge/nft_http/meta"
-	"poly-bridge/utils/net"
+	"github.com/polynetwork/poly-bridge/models"
+	"github.com/polynetwork/poly-bridge/nft_http/meta"
+	"github.com/polynetwork/poly-bridge/utils/net"
 
 	"github.com/beego/beego/v2/core/logs"
 	"github.com/beego/beego/v2/server/web"

@@ -20,7 +20,7 @@ package main
 import (
 	"strings"
 
-	"poly-bridge/basedef"
+	"github.com/polynetwork/poly-bridge/basedef"
 
 	"github.com/urfave/cli"
 )

@@ -22,17 +22,17 @@ import (
 	"fmt"
 
 	"github.com/polynetwork/bridge-common/metrics"
+	"github.com/polynetwork/poly-bridge/basedef"
+	"github.com/polynetwork/poly-bridge/common"
+	"github.com/polynetwork/poly-bridge/conf"
+	"github.com/polynetwork/poly-bridge/crosschaindao/bridgedao"
+	"github.com/polynetwork/poly-bridge/models"
 	"math/big"
-	"poly-bridge/basedef"
-	"poly-bridge/common"
-	"poly-bridge/conf"
-	"poly-bridge/crosschaindao/bridgedao"
-	"poly-bridge/models"
 	"sync"
 	"time"
 
 	"github.com/beego/beego/v2/core/logs"
-	"poly-bridge/utils/decimal"
+	"github.com/polynetwork/poly-bridge/utils/decimal"
 )
 
 type Stats struct {

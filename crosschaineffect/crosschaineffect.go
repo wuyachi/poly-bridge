@@ -19,11 +19,11 @@ package crosschaineffect
 
 import (
 	"github.com/beego/beego/v2/core/logs"
-	"poly-bridge/basedef"
-	"poly-bridge/conf"
-	"poly-bridge/crosschaineffect/bridgeeffect"
-	"poly-bridge/crosschaineffect/explorereffect"
-	"poly-bridge/crosschaineffect/swapeffect"
+	"github.com/polynetwork/poly-bridge/basedef"
+	"github.com/polynetwork/poly-bridge/conf"
+	"github.com/polynetwork/poly-bridge/crosschaineffect/bridgeeffect"
+	"github.com/polynetwork/poly-bridge/crosschaineffect/explorereffect"
+	"github.com/polynetwork/poly-bridge/crosschaineffect/swapeffect"
 	"runtime/debug"
 	"time"
 )
