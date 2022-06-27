@@ -57,6 +57,7 @@ func GetRouter() web.LinkNamespace {
 		web.NSRouter("/getTVLKava/", &DefiLlamaController{}, "get:GetTVLKava"),
 		web.NSRouter("/getTVLCube/", &DefiLlamaController{}, "get:GetTVLCube"),
 		web.NSRouter("/getTVLZkSync/", &DefiLlamaController{}, "get:GetTVLZkSync"),
+		web.NSRouter("/getTVLCelo/", &DefiLlamaController{}, "get:GetTVLCelo"),
 	)
 	return ns
 }
