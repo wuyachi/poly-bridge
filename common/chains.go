@@ -44,6 +44,7 @@ var (
 	celoSdk       *chainsdk.EthereumSdkPro
 	cloverSdk     *chainsdk.EthereumSdkPro
 	confluxSdk    *chainsdk.EthereumSdkPro
+	astarSdk      *chainsdk.EthereumSdkPro
 	sdkMap        map[uint64]interface{}
 	config        *conf.Config
 )
@@ -343,6 +344,15 @@ func newChainSdks(config *conf.Config) {
 		urls := chainConfig.GetNodesUrl()
 		confluxSdk = chainsdk.NewEthereumSdkPro(urls, chainConfig.ListenSlot, chainConfig.ChainId)
 		sdkMap[basedef.CONFLUX_CROSSCHAIN_ID] = confluxSdk
+	}
+	{
+		chainConfig := config.GetChainListenConfig(basedef.ASTAR_CROSSCHAIN_ID)
+		if chainConfig == nil {
+			panic("astar chain is invalid")
+		}
+		urls := chainConfig.GetNodesUrl()
+		astarSdk = chainsdk.NewEthereumSdkPro(urls, chainConfig.ListenSlot, chainConfig.ChainId)
+		sdkMap[basedef.ASTAR_CROSSCHAIN_ID] = astarSdk
 	}
 }
 
@@ -760,6 +770,20 @@ func GetBalance(chainId uint64, hash string) (*big.Int, error) {
 			errMap[err] = true
 		}
 	}
+	if chainId == basedef.ASTAR_CROSSCHAIN_ID {
+		chainConfig := config.GetChainListenConfig(basedef.ASTAR_CROSSCHAIN_ID)
+		if chainConfig == nil {
+			panic("astar chain is invalid")
+		}
+		for _, v := range chainConfig.ProxyContract {
+			if len(strings.TrimSpace(v)) == 0 {
+				continue
+			}
+			balance, err := astarSdk.Erc20Balance(hash, v)
+			maxFun(balance)
+			errMap[err] = true
+		}
+	}
 	if maxBalance.Cmp(big.NewInt(0)) > 0 {
 		return maxBalance, nil
 	}
@@ -961,6 +985,13 @@ func GetTotalSupply(chainId uint64, hash string) (*big.Int, error) {
 		}
 		return confluxSdk.Erc20TotalSupply(hash)
 	}
+	if chainId == basedef.ASTAR_CROSSCHAIN_ID {
+		chainConfig := config.GetChainListenConfig(basedef.ASTAR_CROSSCHAIN_ID)
+		if chainConfig == nil {
+			panic("astar chain GetTotalSupply invalid")
+		}
+		return astarSdk.Erc20TotalSupply(hash)
+	}
 	return new(big.Int).SetUint64(0), nil
 }
 
@@ -1030,6 +1061,8 @@ func GetProxyBalance(chainId uint64, hash string, proxy string) (*big.Int, error
 		return cloverSdk.Erc20Balance(hash, proxy)
 	case basedef.CONFLUX_CROSSCHAIN_ID:
 		return confluxSdk.Erc20Balance(hash, proxy)
+	case basedef.ASTAR_CROSSCHAIN_ID:
+		return astarSdk.Erc20Balance(hash, proxy)
 	default:
 		return new(big.Int).SetUint64(0), nil
 	}

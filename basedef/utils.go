@@ -121,6 +121,9 @@ func Hash2Address(chainId uint64, value string) string {
 	} else if chainId == CONFLUX_CROSSCHAIN_ID {
 		addr := common.HexToAddress(value)
 		return strings.ToLower(addr.String()[2:])
+	} else if chainId == ASTAR_CROSSCHAIN_ID {
+		addr := common.HexToAddress(value)
+		return strings.ToLower(addr.String()[2:])
 	}
 	return value
 }
@@ -239,6 +242,9 @@ func Address2Hash(chainId uint64, value string) (string, error) {
 	} else if chainId == CONFLUX_CROSSCHAIN_ID {
 		addr := common.HexToAddress(value)
 		return strings.ToLower(addr.String()[2:]), nil
+	} else if chainId == ASTAR_CROSSCHAIN_ID {
+		addr := common.HexToAddress(value)
+		return strings.ToLower(addr.String()[2:]), nil
 	}
 	return value, nil
 }
@@ -323,6 +329,8 @@ func GetChainName(id uint64) string {
 		return "CLV P-Chain"
 	case CONFLUX_CROSSCHAIN_ID:
 		return "Conflux eSpace"
+	case ASTAR_CROSSCHAIN_ID:
+		return "Astar"
 
 	default:
 		return fmt.Sprintf("Unknown(%d)", id)

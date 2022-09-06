@@ -325,3 +325,12 @@ func (c *DefiLlamaController) GetTVLConflux() {
 	c.Data["json"] = tvlAmount
 	c.ServeJSON()
 }
+
+func (c *DefiLlamaController) GetTVLAstar() {
+	tvlAmount, err := getTVLAmount(basedef.ASTAR_CROSSCHAIN_ID)
+	if err != nil {
+		logs.Error("GetTVLAstar err", err)
+	}
+	c.Data["json"] = tvlAmount
+	c.ServeJSON()
+}
