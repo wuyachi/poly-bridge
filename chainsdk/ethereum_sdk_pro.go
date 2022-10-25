@@ -608,13 +608,16 @@ func (pro *EthereumSdkPro) GetBoundLockProxy(lockProxies []string, srcTokenHash,
 			logs.Info("GetBoundAssetHash addrHash=%s", addrHash)
 
 			switch chainId {
-			case basedef.STARCOIN_CROSSCHAIN_ID, basedef.APTOS_CROSSCHAIN_ID:
+			case basedef.STARCOIN_CROSSCHAIN_ID:
 				srcTokenHashByteString := strings.ToLower(hex.EncodeToString([]byte(srcTokenHash)))
-				if chainId == basedef.APTOS_CROSSCHAIN_ID {
-					logs.Info("aptos GetBoundLockProxy")
-					logs.Info("srcTokenHashByteString %s", srcTokenHashByteString)
-					logs.Info("bind asset %s", strings.ToLower(addrHash))
+				if strings.Contains(srcTokenHashByteString, strings.ToLower(addrHash)) {
+					return proxy, nil
 				}
+			case basedef.APTOS_CROSSCHAIN_ID:
+				srcTokenHashByteString := strings.ToLower(hex.EncodeToString([]byte(fmt.Sprintf("0x1::coin::Coin<%s>", srcTokenHash))))
+				logs.Info("aptos GetBoundLockProxy")
+				logs.Info("srcTokenHashByteString %s", srcTokenHashByteString)
+				logs.Info("bind asset %s", strings.ToLower(addrHash))
 				logs.Info("srcTokenHashByteString =%s", srcTokenHashByteString)
 				if strings.Contains(srcTokenHashByteString, strings.ToLower(addrHash)) {
 					return proxy, nil
