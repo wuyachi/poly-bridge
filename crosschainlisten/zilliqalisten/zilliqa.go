@@ -27,8 +27,7 @@ type ZilliqaChainListen struct {
 func NewZilliqaChainListen(cfg *conf.ChainListenConfig) *ZilliqaChainListen {
 	zilListen := &ZilliqaChainListen{}
 	zilListen.zliCfg = cfg
-	urls := cfg.GetNodesUrl()
-	sdk := chainsdk.NewZilliqaSdkPro(urls, cfg.ListenSlot, cfg.ChainId)
+	sdk := chainsdk.NewZilliqaSdkPro(cfg.Nodes, cfg.ListenSlot, cfg.ChainId)
 	zilListen.zliSdk = sdk
 	return zilListen
 }
@@ -70,7 +69,7 @@ func (this *ZilliqaChainListen) GetExtendLatestHeight() (uint64, error) {
 		return this.GetLatestHeight()
 	}
 	for _, v := range this.zliCfg.ExtendNodes {
-		height, err := this.getExtendLatestHeight(v.Url)
+		height, err := this.getExtendLatestHeight(v)
 		if err == nil {
 			return height, nil
 		}

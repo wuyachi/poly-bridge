@@ -69,8 +69,7 @@ func NewEthereumChainListen(cfg *conf.ChainListenConfig) *EthereumChainListen {
 	ethListen := &EthereumChainListen{}
 	ethListen.ethCfg = cfg
 	//
-	urls := cfg.GetNodesUrl()
-	sdk := chainsdk.NewEthereumSdkPro(urls, cfg.ListenSlot, cfg.ChainId)
+	sdk := chainsdk.NewEthereumSdkPro(cfg.Nodes, cfg.ListenSlot, cfg.ChainId)
 	ethListen.ethSdk = sdk
 	ethListen.eventPolyWrapperLockId = common.HexToHash("0x2b0591052cc6602e870d3994f0a1b173fdac98c215cb3b0baf84eaca5a0aa81e")
 	ethListen.eventNftPolyWrapperLockId = common.HexToHash("0x3a15d8cf4b167dd8963989f8038f2333a4889f74033bb53bfb767a5cced072e2")
@@ -603,7 +602,7 @@ func (this *EthereumChainListen) GetExtendLatestHeight() (uint64, error) {
 }
 
 func (this *EthereumChainListen) getExtendLatestHeight(node int) (uint64, error) {
-	req, err := http.NewRequest("GET", this.ethCfg.ExtendNodes[node].Url, nil)
+	req, err := http.NewRequest("GET", this.ethCfg.ExtendNodes[node], nil)
 	if err != nil {
 		return 0, err
 	}
@@ -611,7 +610,7 @@ func (this *EthereumChainListen) getExtendLatestHeight(node int) (uint64, error)
 	q := url.Values{}
 	q.Add("module", "proxy")
 	q.Add("action", "eth_blockNumber")
-	q.Add("apikey", this.ethCfg.ExtendNodes[node].Key)
+	//q.Add("apikey", this.ethCfg.ExtendNodes[node].Key)
 	req.URL.RawQuery = q.Encode()
 	client := &http.Client{}
 	resp, err := client.Do(req)

@@ -182,7 +182,7 @@ func selectNodeAndWrapper(chainId uint64) (
 	}
 
 	if pro, ok = sdks[chainId]; !ok {
-		urls := cfg.GetNodesUrl()
+		urls := cfg.Nodes
 		if len(urls) == 0 {
 			err = chainIdErr
 			return

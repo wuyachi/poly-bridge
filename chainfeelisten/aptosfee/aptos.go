@@ -1,28 +1,33 @@
 package aptosfee
 
 import (
+	"context"
+	"fmt"
+	"github.com/polynetwork/bridge-common/chains/aptos"
 	"math/big"
 	"poly-bridge/basedef"
-	"poly-bridge/chainsdk"
 	"poly-bridge/conf"
+	"time"
 )
 
 type AptosFee struct {
 	aptosCfg *conf.FeeListenConfig
-	aptosSdk *chainsdk.AptosSdkPro
+	aptosSdk *aptos.SDK
 }
 
 func NewAptosFee(aptosCfg *conf.FeeListenConfig, feeUpdateSlot int64) *AptosFee {
 	aptosFee := &AptosFee{}
 	aptosFee.aptosCfg = aptosCfg
-	urls := aptosCfg.GetNodesUrl()
-	sdk := chainsdk.NewAptosSdkPro(urls, uint64(feeUpdateSlot), aptosCfg.ChainId)
+	sdk, err := aptos.WithOptions(aptosCfg.ChainId, aptosCfg.Nodes, time.Minute, 1)
+	if err != nil {
+		panic(fmt.Sprintf("Create chain sdk failed. chain=%d, err=%s", aptosCfg.ChainId, err))
+	}
 	aptosFee.aptosSdk = sdk
 	return aptosFee
 }
 
 func (this *AptosFee) GetFee() (*big.Int, *big.Int, *big.Int, error) {
-	suggestGasPrice, err := this.aptosSdk.GetGasPrice()
+	suggestGasPrice, err := this.aptosSdk.Node().EstimateGasPrice(context.Background())
 	if err != nil {
 		return nil, nil, nil, err
 	}

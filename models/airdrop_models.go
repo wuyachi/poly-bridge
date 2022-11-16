@@ -139,7 +139,7 @@ func MakeAirDropClaimRsp(airDropNfts []*AirDropNft) (*AirDropClaimRsp, map[int]b
 			airDropClaimNft.IsClaimTb = v.IsClaimTb
 			airDropClaimNft.NftTbContract = conf.GlobalConfig.NftConfig.TbContract
 			if !v.IsClaimTb {
-				_, err := common.GetNftOwner(v.BindChainId, airDropClaimNft.NftTbContract, int(airDropClaimNft.NftTbId))
+				_, err := common.GetNftOwner(v.BindChainId, airDropClaimNft.NftTbContract, airDropClaimNft.NftTbId)
 				if err != nil {
 					airDropClaimNft.NftTbSig = v.NftTbSig
 					txtTbName := strings.ReplaceAll(conf.GlobalConfig.NftConfig.TbName, " ", "_")
@@ -158,7 +158,7 @@ func MakeAirDropClaimRsp(airDropNfts []*AirDropNft) (*AirDropClaimRsp, map[int]b
 		airDropClaimNft.IsClaimDf = v.IsClaimDf
 		airDropClaimNft.NftDfContract = conf.GlobalConfig.NftConfig.DfContract
 		if !v.IsClaimDf {
-			_, err := common.GetNftOwner(v.BindChainId, airDropClaimNft.NftDfContract, int(airDropClaimNft.NftDfId))
+			_, err := common.GetNftOwner(v.BindChainId, airDropClaimNft.NftDfContract, airDropClaimNft.NftDfId)
 			if err != nil {
 				airDropClaimNft.NftDfSig = v.NftDfSig
 				txtDfName := strings.ReplaceAll(conf.GlobalConfig.NftConfig.DfName, " ", "_")

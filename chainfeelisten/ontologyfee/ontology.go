@@ -18,23 +18,26 @@
 package ontologyfee
 
 import (
+	"fmt"
+	"github.com/polynetwork/bridge-common/chains/ont"
 	"math/big"
 	"poly-bridge/basedef"
-	"poly-bridge/chainsdk"
 	"poly-bridge/conf"
+	"time"
 )
 
 type OntologyFee struct {
 	ontologyCfg *conf.FeeListenConfig
-	ontologySdk *chainsdk.OntologySdkPro
+	ontologySdk *ont.SDK
 }
 
 func NewOntologyFee(ontologyCfg *conf.FeeListenConfig, feeUpdateSlot int64) *OntologyFee {
 	ontologyFee := &OntologyFee{}
 	ontologyFee.ontologyCfg = ontologyCfg
-	//
-	urls := ontologyCfg.GetNodesUrl()
-	sdk := chainsdk.NewOntologySdkPro(urls, uint64(feeUpdateSlot), ontologyCfg.ChainId)
+	sdk, err := ont.WithOptions(ontologyCfg.ChainId, ontologyCfg.Nodes, time.Minute, 1)
+	if err != nil {
+		panic(fmt.Sprintf("Create chain sdk failed. chain=%d, err=%s", ontologyCfg.ChainId, err))
+	}
 	ontologyFee.ontologySdk = sdk
 	return ontologyFee
 }

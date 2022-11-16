@@ -1,28 +1,33 @@
 package starcoinfee
 
 import (
+	"context"
+	"fmt"
+	"github.com/polynetwork/bridge-common/chains/starcoin"
 	"math/big"
 	"poly-bridge/basedef"
-	"poly-bridge/chainsdk"
 	"poly-bridge/conf"
+	"time"
 )
 
 type StarcoinFee struct {
 	starcoinCfg *conf.FeeListenConfig
-	starcoinSdk *chainsdk.StarcoinSdkPro
+	starcoinSdk *starcoin.SDK
 }
 
 func NewStarcoinFee(starcoinCfg *conf.FeeListenConfig, feeUpdateSlot int64) *StarcoinFee {
 	StarcoinFee := &StarcoinFee{}
 	StarcoinFee.starcoinCfg = starcoinCfg
-	urls := starcoinCfg.GetNodesUrl()
-	sdk := chainsdk.NewStarcoinSdkPro(urls, uint64(feeUpdateSlot), starcoinCfg.ChainId)
+	sdk, err := starcoin.WithOptions(starcoinCfg.ChainId, starcoinCfg.Nodes, time.Minute, 1)
+	if err != nil {
+		panic(fmt.Sprintf("Create chain sdk failed. chain=%d, err=%s", starcoinCfg.ChainId, err))
+	}
 	StarcoinFee.starcoinSdk = sdk
 	return StarcoinFee
 }
 
 func (this *StarcoinFee) GetFee() (*big.Int, *big.Int, *big.Int, error) {
-	suggestGasPrice, err := this.starcoinSdk.GetGasPrice()
+	suggestGasPrice, err := this.starcoinSdk.Node().GetGasUnitPrice(context.Background())
 	if err != nil {
 		return nil, nil, nil, err
 	}

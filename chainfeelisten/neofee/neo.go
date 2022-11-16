@@ -18,23 +18,26 @@
 package neofee
 
 import (
+	"fmt"
+	"github.com/polynetwork/bridge-common/chains/neo"
 	"math/big"
 	"poly-bridge/basedef"
-	"poly-bridge/chainsdk"
 	"poly-bridge/conf"
+	"time"
 )
 
 type NeoFee struct {
 	neoCfg *conf.FeeListenConfig
-	neoSdk *chainsdk.NeoSdkPro
+	neoSdk *neo.SDK
 }
 
 func NewNeoFee(neoCfg *conf.FeeListenConfig, feeUpdateSlot int64) *NeoFee {
 	neoFee := &NeoFee{}
 	neoFee.neoCfg = neoCfg
-	//
-	urls := neoCfg.GetNodesUrl()
-	sdk := chainsdk.NewNeoSdkPro(urls, uint64(feeUpdateSlot), neoCfg.ChainId)
+	sdk, err := neo.WithOptions(neoCfg.ChainId, neoCfg.Nodes, time.Minute, 1)
+	if err != nil {
+		panic(fmt.Sprintf("Create chain sdk failed. chain=%d, err=%s", neoCfg.ChainId, err))
+	}
 	neoFee.neoSdk = sdk
 	return neoFee
 }

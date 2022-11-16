@@ -15,7 +15,7 @@ type RippleFee struct {
 func NewRippleFee(rippleCfg *conf.FeeListenConfig, feeUpdateSlot int64) *RippleFee {
 	RippleFee := &RippleFee{}
 	RippleFee.rippleCfg = rippleCfg
-	urls := rippleCfg.GetNodesUrl()
+	urls := rippleCfg.Nodes
 	sdk := chainsdk.NewRippleSdkPro(urls, uint64(feeUpdateSlot), rippleCfg.ChainId)
 	RippleFee.rippleSdk = sdk
 	return RippleFee

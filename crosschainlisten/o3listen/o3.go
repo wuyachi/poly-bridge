@@ -55,9 +55,7 @@ type O3ChainListen struct {
 func NewO3ChainListen(cfg *conf.ChainListenConfig) *O3ChainListen {
 	ethListen := &O3ChainListen{}
 	ethListen.ethCfg = cfg
-	//
-	urls := cfg.GetNodesUrl()
-	sdk := chainsdk.NewEthereumSdkPro(urls, cfg.ListenSlot, cfg.ChainId)
+	sdk := chainsdk.NewEthereumSdkPro(cfg.Nodes, cfg.ListenSlot, cfg.ChainId)
 	ethListen.ethSdk = sdk
 	return ethListen
 }
@@ -444,7 +442,7 @@ func (this *O3ChainListen) GetExtendLatestHeight() (uint64, error) {
 }
 
 func (this *O3ChainListen) getExtendLatestHeight(node int) (uint64, error) {
-	req, err := http.NewRequest("GET", this.ethCfg.ExtendNodes[node].Url, nil)
+	req, err := http.NewRequest("GET", this.ethCfg.ExtendNodes[node], nil)
 	if err != nil {
 		return 0, err
 	}
@@ -452,7 +450,7 @@ func (this *O3ChainListen) getExtendLatestHeight(node int) (uint64, error) {
 	q := url.Values{}
 	q.Add("module", "proxy")
 	q.Add("action", "eth_blockNumber")
-	q.Add("apikey", this.ethCfg.ExtendNodes[node].Key)
+	//q.Add("apikey", this.ethCfg.ExtendNodes[node].Key)
 	req.URL.RawQuery = q.Encode()
 	client := &http.Client{}
 	resp, err := client.Do(req)

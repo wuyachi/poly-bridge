@@ -19,8 +19,7 @@ type AptosChainListen struct {
 func NewAptosChainListen(cfg *conf.ChainListenConfig) *AptosChainListen {
 	aptosListen := &AptosChainListen{}
 	aptosListen.aptosCfg = cfg
-	urls := cfg.GetNodesUrl()
-	sdk := chainsdk.NewAptosSdkPro(urls, cfg.ListenSlot, cfg.ChainId)
+	sdk := chainsdk.NewAptosSdkPro(cfg.Nodes, cfg.ListenSlot, cfg.ChainId)
 	aptosListen.aptosSdk = sdk
 	return aptosListen
 }

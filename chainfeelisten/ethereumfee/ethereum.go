@@ -18,29 +18,33 @@
 package ethereumfee
 
 import (
+	"context"
+	"fmt"
+	"github.com/polynetwork/bridge-common/chains/eth"
 	"math/big"
 	"poly-bridge/basedef"
-	"poly-bridge/chainsdk"
 	"poly-bridge/conf"
+	"time"
 )
 
 type EthereumFee struct {
 	ethCfg *conf.FeeListenConfig
-	ethSdk *chainsdk.EthereumSdkPro
+	ethSdk *eth.SDK
 }
 
 func NewEthereumFee(ethCfg *conf.FeeListenConfig, feeUpdateSlot int64) *EthereumFee {
 	ethereumFee := &EthereumFee{}
 	ethereumFee.ethCfg = ethCfg
-	//
-	urls := ethCfg.GetNodesUrl()
-	sdk := chainsdk.NewEthereumSdkPro(urls, uint64(feeUpdateSlot), ethCfg.ChainId)
+	sdk, err := eth.WithOptions(ethCfg.ChainId, ethCfg.Nodes, time.Minute, 1)
+	if err != nil {
+		panic(fmt.Sprintf("Create chain sdk failed. chain=%d, err=%s", ethCfg.ChainId, err))
+	}
 	ethereumFee.ethSdk = sdk
 	return ethereumFee
 }
 
 func (this *EthereumFee) GetFee() (*big.Int, *big.Int, *big.Int, error) {
-	gasPrice, err := this.ethSdk.SuggestGasPrice()
+	gasPrice, err := this.ethSdk.Node().SuggestGasPrice(context.Background())
 	if err != nil {
 		return nil, nil, nil, err
 	}

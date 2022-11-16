@@ -22,8 +22,7 @@ type RippleChainListen struct {
 func NewRippleChainListen(cfg *conf.ChainListenConfig) *RippleChainListen {
 	rippleListen := &RippleChainListen{}
 	rippleListen.rippleCfg = cfg
-	urls := cfg.GetNodesUrl()
-	sdk := chainsdk.NewRippleSdkPro(urls, cfg.ListenSlot, cfg.ChainId)
+	sdk := chainsdk.NewRippleSdkPro(cfg.Nodes, cfg.ListenSlot, cfg.ChainId)
 	rippleListen.rippleSdk = sdk
 	return rippleListen
 }
@@ -69,7 +68,7 @@ func (this *RippleChainListen) GetExtendLatestHeight() (uint64, error) {
 		return this.GetLatestHeight()
 	}
 	for _, v := range this.rippleCfg.ExtendNodes {
-		height, err := this.getExtendLatestHeight(v.Url)
+		height, err := this.getExtendLatestHeight(v)
 		if err == nil {
 			return height, nil
 		}

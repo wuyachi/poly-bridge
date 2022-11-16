@@ -50,8 +50,7 @@ type NeoChainListen struct {
 func NewNeoChainListen(cfg *conf.ChainListenConfig) *NeoChainListen {
 	ethListen := &NeoChainListen{}
 	ethListen.neoCfg = cfg
-	urls := cfg.GetNodesUrl()
-	sdk := chainsdk.NewNeoSdkPro(urls, cfg.ListenSlot, cfg.ChainId)
+	sdk := chainsdk.NewNeoSdkPro(cfg.Nodes, cfg.ListenSlot, cfg.ChainId)
 	ethListen.neoSdk = sdk
 	return ethListen
 }
@@ -323,7 +322,7 @@ func (this *NeoChainListen) GetExtendLatestHeight() (uint64, error) {
 
 func (this *NeoChainListen) getExtendLatestHeight(node int) (uint64, error) {
 	requestJson := `{"jsonrpc": "2.0", "method": "getblockcount", "params": [], "id": 1}`
-	req, err := http.NewRequest("POST", this.neoCfg.ExtendNodes[node].Url, strings.NewReader(requestJson))
+	req, err := http.NewRequest("POST", this.neoCfg.ExtendNodes[node], strings.NewReader(requestJson))
 	if err != nil {
 		return 0, err
 	}
