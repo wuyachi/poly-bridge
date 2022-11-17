@@ -43,6 +43,8 @@ func zionSetUp(cfg *conf.Config) {
 		createZionTables(db)
 	case "migrateBridgeBasicTables":
 		migrateBridgeBasicTables(poly, db)
+	case "syncBridgeBasicTables":
+		syncBridgeBasicTables(poly, db)
 	default:
 		logs.Error("Invalid step %s", step)
 	}
