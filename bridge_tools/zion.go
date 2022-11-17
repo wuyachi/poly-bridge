@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"github.com/beego/beego/v2/core/logs"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
@@ -48,6 +49,7 @@ func zionSetUp(cfg *conf.Config) {
 }
 
 func createZionTables(db *gorm.DB) {
+	fmt.Println("start createZionTables")
 	db.DisableForeignKeyConstraintWhenMigrating = true
 	err := db.Debug().AutoMigrate(
 		&models.AirDropInfo{},
@@ -77,4 +79,5 @@ func createZionTables(db *gorm.DB) {
 		&models.WrapperTransaction{},
 	)
 	checkError(err, "Creating tables")
+	fmt.Println("createZionTables success")
 }

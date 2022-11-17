@@ -201,6 +201,10 @@ func startServer(ctx *cli.Context) {
 			return
 		}
 		RemoveDyingToken(tokenBasicName)
+	case 9:
+		configServerFile := ctx.GlobalString(getFlagName(configServerPathFlag))
+		serverConfig := serverconf.NewConfig(configServerFile)
+		zionSetUp(serverConfig)
 	}
 
 }
