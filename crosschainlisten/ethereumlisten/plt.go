@@ -18,6 +18,7 @@
 package ethereumlisten
 
 import (
+	"context"
 	"encoding/hex"
 	"fmt"
 	"math/big"
@@ -75,7 +76,7 @@ func (this *EthereumChainListen) GetPaletteLockProxyLockEvent(hash common.Hash) 
 	)
 
 	proxyAddr := common.HexToAddress("0x0000000000000000000000000000000000000103")
-	if receipt, err = this.ethSdk.GetTransactionReceipt(hash); err != nil {
+	if receipt, err = this.ethSdk.Node().TransactionReceipt(context.Background(), hash); err != nil {
 		return
 	}
 
@@ -122,7 +123,7 @@ func (this *EthereumChainListen) GetPaletteLockProxyUnlockEvent(hash common.Hash
 
 	proxyAddr := common.HexToAddress("0x0000000000000000000000000000000000000103")
 
-	if receipt, err = this.ethSdk.GetTransactionReceipt(hash); err != nil {
+	if receipt, err = this.ethSdk.Node().TransactionReceipt(context.Background(), hash); err != nil {
 		return
 	}
 	if length := len(receipt.Logs); length < 3 {

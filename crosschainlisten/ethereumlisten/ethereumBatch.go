@@ -76,7 +76,7 @@ func (this *EthereumChainListen) HandleNewBatchBlock(start, end uint64) ([]*mode
 		filterContracts = append(filterContracts, swapContract)
 	}
 
-	contractlogs, err := this.ethSdk.FilterLog(big.NewInt(int64(start)), big.NewInt(int64(end)), filterContracts)
+	contractlogs, err := this.ethSdk.Node().FilterLog(big.NewInt(int64(start)), big.NewInt(int64(end)), filterContracts)
 	if err != nil {
 		return nil, nil, nil, nil, 0, 0, err
 	}
@@ -118,7 +118,7 @@ func (this *EthereumChainListen) HandleNewBatchBlock(start, end uint64) ([]*mode
 	}
 
 	for k, _ := range blockTimer {
-		timestamp, err := this.ethSdk.GetBlockTimeByNumber(k)
+		timestamp, err := this.ethSdk.Node().GetBlockTimeByNumber(this.GetChainId(), k)
 		if err != nil {
 			return nil, nil, nil, nil, 0, 0, err
 		}
@@ -289,7 +289,7 @@ func (this *EthereumChainListen) ParseWrapperEventByLog(contractlogs []types.Log
 	if len(wrapperContracts) == 0 {
 		return nil, nil
 	}
-	wrapperContractAbi, err := wrapper_abi.NewPolyWrapper(wrapperContracts[0], nil)
+	wrapperContractAbi, err := wrapper_abi.NewPolyWrapperV3(wrapperContracts[0], nil)
 	if err != nil {
 		return nil, fmt.Errorf("ParseWrapperEventByLog NewPolyWrapper, error: %s", err.Error())
 	}
@@ -362,7 +362,7 @@ func (this *EthereumChainListen) getECCMEvents(contractlogs []types.Log, ccmCont
 		return nil, nil, nil
 	}
 
-	ccmContractAbi, err := eccm_abi.NewEthCrossChainManager(ccmContract, nil)
+	ccmContractAbi, err := eccm_abi.NewEthCrossChainManagerImplementation(ccmContract, nil)
 	if err != nil {
 		return nil, nil, fmt.Errorf("getECCMEvents NewEthCrossChainManager, error: %s", err.Error())
 	}

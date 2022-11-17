@@ -25,8 +25,6 @@ import (
 	"fmt"
 	"math/big"
 	"poly-bridge/go_abi/eccd_abi"
-	"poly-bridge/go_abi/eccm_abi"
-	"poly-bridge/go_abi/eccmp_abi"
 	erc20lp "poly-bridge/go_abi/lock_proxy_abi"
 	nftlp "poly-bridge/go_abi/nft_lock_proxy_abi"
 	nftmapping "poly-bridge/go_abi/nft_mapping_abi"
@@ -85,20 +83,20 @@ func (s *EthereumSdk) DeployECCDContract(key *ecdsa.PrivateKey) (common.Address,
 //	return contractAddress, nil
 //}
 
-func (s *EthereumSdk) DeployECCMPContract(key *ecdsa.PrivateKey, eccmAddress common.Address) (common.Address, error) {
-	auth, err := s.makeAuth(key, DefaultDeployGasLimit)
-	if err != nil {
-		return EmptyAddress, err
-	}
-	contractAddress, tx, _, err := eccmp_abi.DeployEthCrossChainManagerProxy(auth, s.backend(), eccmAddress)
-	if err != nil {
-		return EmptyAddress, err
-	}
-	if err := s.waitTxConfirm(tx.Hash()); err != nil {
-		return EmptyAddress, err
-	}
-	return contractAddress, nil
-}
+//func (s *EthereumSdk) DeployECCMPContract(key *ecdsa.PrivateKey, eccmAddress common.Address) (common.Address, error) {
+//	auth, err := s.makeAuth(key, DefaultDeployGasLimit)
+//	if err != nil {
+//		return EmptyAddress, err
+//	}
+//	contractAddress, tx, _, err := eccmp_abi.DeployEthCrossChainManagerProxy(auth, s.backend(), eccmAddress)
+//	if err != nil {
+//		return EmptyAddress, err
+//	}
+//	if err := s.waitTxConfirm(tx.Hash()); err != nil {
+//		return EmptyAddress, err
+//	}
+//	return contractAddress, nil
+//}
 
 func (s *EthereumSdk) DeployNFTLockProxy(key *ecdsa.PrivateKey) (common.Address, error) {
 	auth, err := s.makeAuth(key, DefaultDeployGasLimit)
@@ -341,65 +339,65 @@ func (s *EthereumSdk) GetECCDOwnership(eccdAddr common.Address) (common.Address,
 	return eccd.Owner(nil)
 }
 
-func (s *EthereumSdk) TransferECCMOwnership(key *ecdsa.PrivateKey, eccm, ccmp common.Address) (common.Hash, error) {
+//func (s *EthereumSdk) TransferECCMOwnership(key *ecdsa.PrivateKey, eccm, ccmp common.Address) (common.Hash, error) {
+//
+//	eccmContract, err := eccm_abi.NewEthCrossChainManagerImplementation(eccm, s.backend())
+//	if err != nil {
+//		return EmptyHash, err
+//	}
+//	auth, err := s.makeAuth(key, DefaultGasLimit)
+//	if err != nil {
+//		return EmptyHash, err
+//	}
+//	tx, err := eccmContract.TransferOwnership(auth, ccmp)
+//	if err != nil {
+//		return EmptyHash, fmt.Errorf("TransferECCMOwnership err: %v", err)
+//	}
+//	if err := s.waitTxConfirm(tx.Hash()); err != nil {
+//		return EmptyHash, err
+//	}
+//	return tx.Hash(), nil
+//}
 
-	eccmContract, err := eccm_abi.NewEthCrossChainManager(eccm, s.backend())
-	if err != nil {
-		return EmptyHash, err
-	}
-	auth, err := s.makeAuth(key, DefaultGasLimit)
-	if err != nil {
-		return EmptyHash, err
-	}
-	tx, err := eccmContract.TransferOwnership(auth, ccmp)
-	if err != nil {
-		return EmptyHash, fmt.Errorf("TransferECCMOwnership err: %v", err)
-	}
-	if err := s.waitTxConfirm(tx.Hash()); err != nil {
-		return EmptyHash, err
-	}
-	return tx.Hash(), nil
-}
+//func (s *EthereumSdk) GetECCMOwnership(eccmAddr common.Address) (common.Address, error) {
+//	eccm, err := eccm_abi.NewEthCrossChainManagerImplementation(eccmAddr, s.backend())
+//	if err != nil {
+//		return EmptyAddress, err
+//	}
+//	return eccm.Owner(nil)
+//}
 
-func (s *EthereumSdk) GetECCMOwnership(eccmAddr common.Address) (common.Address, error) {
-	eccm, err := eccm_abi.NewEthCrossChainManager(eccmAddr, s.backend())
-	if err != nil {
-		return EmptyAddress, err
-	}
-	return eccm.Owner(nil)
-}
+//func (s *EthereumSdk) TransferCCMPOwnership(
+//	key *ecdsa.PrivateKey,
+//	ccmpAddr, newOwner common.Address,
+//) (common.Hash, error) {
+//
+//	ccmp, err := eccmp_abi.NewEthCrossChainManagerProxy(ccmpAddr, s.backend())
+//	if err != nil {
+//		return EmptyHash, err
+//	}
+//
+//	auth, err := s.makeAuth(key, DefaultGasLimit)
+//	if err != nil {
+//		return EmptyHash, err
+//	}
+//	tx, err := ccmp.TransferOwnership(auth, newOwner)
+//	if err != nil {
+//		return EmptyHash, err
+//	}
+//	if err := s.waitTxConfirm(tx.Hash()); err != nil {
+//		return EmptyHash, err
+//	}
+//	return tx.Hash(), nil
+//}
 
-func (s *EthereumSdk) TransferCCMPOwnership(
-	key *ecdsa.PrivateKey,
-	ccmpAddr, newOwner common.Address,
-) (common.Hash, error) {
-
-	ccmp, err := eccmp_abi.NewEthCrossChainManagerProxy(ccmpAddr, s.backend())
-	if err != nil {
-		return EmptyHash, err
-	}
-
-	auth, err := s.makeAuth(key, DefaultGasLimit)
-	if err != nil {
-		return EmptyHash, err
-	}
-	tx, err := ccmp.TransferOwnership(auth, newOwner)
-	if err != nil {
-		return EmptyHash, err
-	}
-	if err := s.waitTxConfirm(tx.Hash()); err != nil {
-		return EmptyHash, err
-	}
-	return tx.Hash(), nil
-}
-
-func (s *EthereumSdk) GetCCMPOwnership(ccmpAddr common.Address) (common.Address, error) {
-	ccmp, err := eccmp_abi.NewEthCrossChainManagerProxy(ccmpAddr, s.backend())
-	if err != nil {
-		return EmptyAddress, err
-	}
-	return ccmp.Owner(nil)
-}
+//func (s *EthereumSdk) GetCCMPOwnership(ccmpAddr common.Address) (common.Address, error) {
+//	ccmp, err := eccmp_abi.NewEthCrossChainManagerProxy(ccmpAddr, s.backend())
+//	if err != nil {
+//		return EmptyAddress, err
+//	}
+//	return ccmp.Owner(nil)
+//}
 
 func (s *EthereumSdk) TransferNFTProxyOwnership(
 	key *ecdsa.PrivateKey,
@@ -433,26 +431,26 @@ func (s *EthereumSdk) NFTProxyOwnership(proxyAddr common.Address) (common.Addres
 	return proxy.Owner(nil)
 }
 
-func (s *EthereumSdk) InitGenesisBlock(key *ecdsa.PrivateKey, eccmAddr common.Address, rawHdr, publickeys []byte) (common.Hash, error) {
-	eccm, err := eccm_abi.NewEthCrossChainManager(eccmAddr, s.backend())
-	if err != nil {
-		return EmptyHash, err
-	}
-
-	auth, err := s.makeAuth(key, DefaultGasLimit)
-	if err != nil {
-		return EmptyHash, err
-	}
-	tx, err := eccm.InitGenesisBlock(auth, rawHdr, publickeys)
-	if err != nil {
-		return EmptyHash, err
-	}
-
-	if err := s.waitTxConfirm(tx.Hash()); err != nil {
-		return EmptyHash, err
-	}
-	return tx.Hash(), nil
-}
+//func (s *EthereumSdk) InitGenesisBlock(key *ecdsa.PrivateKey, eccmAddr common.Address, rawHdr, publickeys []byte) (common.Hash, error) {
+//	eccm, err := eccm_abi.NewEthCrossChainManager(eccmAddr, s.backend())
+//	if err != nil {
+//		return EmptyHash, err
+//	}
+//
+//	auth, err := s.makeAuth(key, DefaultGasLimit)
+//	if err != nil {
+//		return EmptyHash, err
+//	}
+//	tx, err := eccm.InitGenesisBlock(auth, rawHdr, publickeys)
+//	if err != nil {
+//		return EmptyHash, err
+//	}
+//
+//	if err := s.waitTxConfirm(tx.Hash()); err != nil {
+//		return EmptyHash, err
+//	}
+//	return tx.Hash(), nil
+//}
 
 func (s *EthereumSdk) DeployWrapContract(key *ecdsa.PrivateKey, chainId uint64) (common.Address, error) {
 	auth, err := s.makeAuth(key, DefaultDeployGasLimit)

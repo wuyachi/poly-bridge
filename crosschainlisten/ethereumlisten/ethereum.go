@@ -22,11 +22,11 @@ import (
 	"encoding/hex"
 	"encoding/json"
 	"fmt"
+	"github.com/polynetwork/bridge-common/chains/eth"
 	"io/ioutil"
 	"net/http"
 	"net/url"
 	"poly-bridge/basedef"
-	"poly-bridge/chainsdk"
 	"poly-bridge/conf"
 	"poly-bridge/go_abi/eccm_abi"
 	"poly-bridge/go_abi/lock_proxy_abi"
@@ -34,6 +34,7 @@ import (
 	"poly-bridge/go_abi/wrapper_abi"
 	"poly-bridge/models"
 	"strings"
+	"time"
 
 	"github.com/beego/beego/v2/core/logs"
 	"github.com/ethereum/go-ethereum/accounts/abi/bind"
@@ -50,7 +51,7 @@ const (
 
 type EthereumChainListen struct {
 	ethCfg                               *conf.ChainListenConfig
-	ethSdk                               *chainsdk.EthereumSdkPro
+	ethSdk                               *eth.SDK
 	eventPolyWrapperLockId               common.Hash
 	eventNftPolyWrapperLockId            common.Hash
 	eventCrossChainEventId               common.Hash
@@ -69,7 +70,12 @@ func NewEthereumChainListen(cfg *conf.ChainListenConfig) *EthereumChainListen {
 	ethListen := &EthereumChainListen{}
 	ethListen.ethCfg = cfg
 	//
-	sdk := chainsdk.NewEthereumSdkPro(cfg.Nodes, cfg.ListenSlot, cfg.ChainId)
+
+	sdk, err := eth.WithOptions(cfg.ChainId, cfg.Nodes, time.Minute, 1)
+	if err != nil {
+		logs.Error("Create chain sdk failed", "chain", cfg.ChainId, "error", err)
+		return nil
+	}
 	ethListen.ethSdk = sdk
 	ethListen.eventPolyWrapperLockId = common.HexToHash("0x2b0591052cc6602e870d3994f0a1b173fdac98c215cb3b0baf84eaca5a0aa81e")
 	ethListen.eventNftPolyWrapperLockId = common.HexToHash("0x3a15d8cf4b167dd8963989f8038f2333a4889f74033bb53bfb767a5cced072e2")
@@ -88,7 +94,7 @@ func NewEthereumChainListen(cfg *conf.ChainListenConfig) *EthereumChainListen {
 }
 
 func (this *EthereumChainListen) GetLatestHeight() (uint64, error) {
-	return this.ethSdk.GetLatestHeight()
+	return this.ethSdk.Node().GetLatestHeight()
 }
 
 func (this *EthereumChainListen) GetChainListenSlot() uint64 {
@@ -134,7 +140,7 @@ func (this *EthereumChainListen) HandleNewBlock(height uint64) ([]*models.Wrappe
 
 	blockTimer := make(map[uint64]uint64)
 	for i := startHeight; i <= endHeight; i++ {
-		timestamp, err := this.ethSdk.GetBlockTimeByNumber(i)
+		timestamp, err := this.ethSdk.Node().GetBlockTimeByNumber(this.GetChainId(), i)
 		if err != nil {
 			return nil, nil, nil, nil, nil, nil, 0, 0, err
 		}
@@ -343,11 +349,11 @@ func (this *EthereumChainListen) getWrapperEventByBlockNumber1(contractAddr stri
 		return nil, nil
 	}
 	wrapperAddress := common.HexToAddress(contractAddr)
-	client := this.ethSdk.GetClient()
+	client := this.ethSdk.Node()
 	if client == nil {
 		return nil, fmt.Errorf("getWrapperEventByBlockNumber1 GetClient error: nil")
 	}
-	wrapperContract, err := wrapper_abi.NewPolyWrapper(wrapperAddress, client)
+	wrapperContract, err := wrapper_abi.NewPolyWrapperV3(wrapperAddress, client)
 	if err != nil {
 		return nil, fmt.Errorf("GetSmartContractEventByBlock, error: %s", err.Error())
 	}
@@ -402,11 +408,11 @@ func (this *EthereumChainListen) getWrapperEventByBlockNumber1(contractAddr stri
 
 func (this *EthereumChainListen) getECCMEventByBlockNumber(contractAddr string, startHeight uint64, endHeight uint64) ([]*models.ECCMLockEvent, []*models.ECCMUnlockEvent, error) {
 	eccmContractAddress := common.HexToAddress(contractAddr)
-	client := this.ethSdk.GetClient()
+	client := this.ethSdk.Node()
 	if client == nil {
 		return nil, nil, fmt.Errorf("getECCMEventByBlockNumber GetClient error: nil")
 	}
-	eccmContract, err := eccm_abi.NewEthCrossChainManager(eccmContractAddress, client)
+	eccmContract, err := eccm_abi.NewEthCrossChainManagerImplementation(eccmContractAddress, client)
 	if err != nil {
 		return nil, nil, fmt.Errorf("GetSmartContractEventByBlock, error: %s", err.Error())
 	}
@@ -419,7 +425,7 @@ func (this *EthereumChainListen) getECCMEventByBlockNumber(contractAddr string, 
 	eccmLockEvents := make([]*models.ECCMLockEvent, 0)
 	crossChainEvents, err := eccmContract.FilterCrossChainEvent(opt, nil)
 	if err != nil {
-		this.ethSdk.SetClientHeightZero(client)
+		//this.ethSdk.SetClientHeightZero(client)
 		return nil, nil, fmt.Errorf("GetSmartContractEventByBlock, filter lock events :%s", err.Error())
 	}
 	for crossChainEvents.Next() {
@@ -472,7 +478,7 @@ func (this *EthereumChainListen) getECCMEventByBlockNumber(contractAddr string, 
 }
 
 func (this *EthereumChainListen) getTxSenderByTxHash(txHash common.Hash) (common.Address, error) {
-	client := this.ethSdk.GetClient()
+	client := this.ethSdk.Node()
 	if client == nil {
 		return common.Address{}, fmt.Errorf("getTxSenderByTxHash GetClient error: nil")
 	}
@@ -517,7 +523,7 @@ func (this *EthereumChainListen) getProxyEventByBlockNumber(startHeight uint64, 
 
 func (this *EthereumChainListen) getProxyEventByBlockNumber1(contractAddr string, startHeight uint64, endHeight uint64) ([]*models.ProxyLockEvent, []*models.ProxyUnlockEvent, error) {
 	proxyAddress := common.HexToAddress(contractAddr)
-	client := this.ethSdk.GetClient()
+	client := this.ethSdk.Node()
 	if client == nil {
 		return nil, nil, fmt.Errorf("getProxyEventByBlockNumber GetClient error: nil")
 	}
@@ -571,11 +577,11 @@ func (this *EthereumChainListen) getProxyEventByBlockNumber1(contractAddr string
 	return proxyLockEvents, proxyUnlockEvents, nil
 }
 func (this *EthereumChainListen) GetConsumeGas(hash common.Hash) uint64 {
-	tx, err := this.ethSdk.GetTransactionByHash(hash)
+	tx, _, err := this.ethSdk.Node().TransactionByHash(context.Background(), hash)
 	if err != nil {
 		return 0
 	}
-	receipt, err := this.ethSdk.GetTransactionReceipt(hash)
+	receipt, err := this.ethSdk.Node().TransactionReceipt(context.Background(), hash)
 	if err != nil {
 		return 0
 	}
@@ -643,7 +649,7 @@ func (this *EthereumChainListen) getSwapEventByBlockNumber(contractAddr string, 
 		return nil, nil, nil
 	}
 	swapperContractAddress := common.HexToAddress(contractAddr)
-	client := this.ethSdk.GetClient()
+	client := this.ethSdk.Node()
 	if client == nil {
 		return nil, nil, fmt.Errorf("getSwapEventByBlockNumber GetClient error: nil")
 	}

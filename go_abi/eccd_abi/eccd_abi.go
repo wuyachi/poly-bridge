@@ -172,18 +172,22 @@ func (_Context *ContextTransactorRaw) Transact(opts *bind.TransactOpts, method s
 }
 
 // EthCrossChainDataABI is the input ABI used to generate the binding from.
-const EthCrossChainDataABI = "[{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"previousOwner\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"OwnershipTransferred\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"address\",\"name\":\"account\",\"type\":\"address\"}],\"name\":\"Paused\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"address\",\"name\":\"account\",\"type\":\"address\"}],\"name\":\"Unpaused\",\"type\":\"event\"},{\"constant\":true,\"inputs\":[],\"name\":\"ConKeepersPkBytes\",\"outputs\":[{\"internalType\":\"bytes\",\"name\":\"\",\"type\":\"bytes\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"CurEpochStartHeight\",\"outputs\":[{\"internalType\":\"uint32\",\"name\":\"\",\"type\":\"uint32\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"EthToPolyTxHashIndex\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"EthToPolyTxHashMap\",\"outputs\":[{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"},{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"}],\"name\":\"ExtraData\",\"outputs\":[{\"internalType\":\"bytes\",\"name\":\"\",\"type\":\"bytes\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"internalType\":\"uint64\",\"name\":\"fromChainId\",\"type\":\"uint64\"},{\"internalType\":\"bytes32\",\"name\":\"fromChainTx\",\"type\":\"bytes32\"}],\"name\":\"checkIfFromChainTxExist\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"getCurEpochConPubKeyBytes\",\"outputs\":[{\"internalType\":\"bytes\",\"name\":\"\",\"type\":\"bytes\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"getCurEpochStartHeight\",\"outputs\":[{\"internalType\":\"uint32\",\"name\":\"\",\"type\":\"uint32\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"ethTxHashIndex\",\"type\":\"uint256\"}],\"name\":\"getEthTxHash\",\"outputs\":[{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"getEthTxHashIndex\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"key1\",\"type\":\"bytes32\"},{\"internalType\":\"bytes32\",\"name\":\"key2\",\"type\":\"bytes32\"}],\"name\":\"getExtraData\",\"outputs\":[{\"internalType\":\"bytes\",\"name\":\"\",\"type\":\"bytes\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"isOwner\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"internalType\":\"uint64\",\"name\":\"fromChainId\",\"type\":\"uint64\"},{\"internalType\":\"bytes32\",\"name\":\"fromChainTx\",\"type\":\"bytes32\"}],\"name\":\"markFromChainTxExist\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"owner\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[],\"name\":\"pause\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"paused\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"internalType\":\"bytes\",\"name\":\"curEpochPkBytes\",\"type\":\"bytes\"}],\"name\":\"putCurEpochConPubKeyBytes\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"internalType\":\"uint32\",\"name\":\"curEpochStartHeight\",\"type\":\"uint32\"}],\"name\":\"putCurEpochStartHeight\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"ethTxHash\",\"type\":\"bytes32\"}],\"name\":\"putEthTxHash\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"key1\",\"type\":\"bytes32\"},{\"internalType\":\"bytes32\",\"name\":\"key2\",\"type\":\"bytes32\"},{\"internalType\":\"bytes\",\"name\":\"value\",\"type\":\"bytes\"}],\"name\":\"putExtraData\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[],\"name\":\"renounceOwnership\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"internalType\":\"address\",\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"transferOwnership\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[],\"name\":\"unpause\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"}]"
+const EthCrossChainDataABI = "[{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"previousOwner\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"OwnershipTransferred\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"address\",\"name\":\"account\",\"type\":\"address\"}],\"name\":\"Paused\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"address\",\"name\":\"account\",\"type\":\"address\"}],\"name\":\"Unpaused\",\"type\":\"event\"},{\"constant\":true,\"inputs\":[],\"name\":\"CurEpochEndHeight\",\"outputs\":[{\"internalType\":\"uint64\",\"name\":\"\",\"type\":\"uint64\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"CurEpochId\",\"outputs\":[{\"internalType\":\"uint64\",\"name\":\"\",\"type\":\"uint64\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"CurEpochStartHeight\",\"outputs\":[{\"internalType\":\"uint64\",\"name\":\"\",\"type\":\"uint64\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"CurValidatorPkBytes\",\"outputs\":[{\"internalType\":\"bytes\",\"name\":\"\",\"type\":\"bytes\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"EthToPolyTxHashIndex\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"EthToPolyTxHashMap\",\"outputs\":[{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"},{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"}],\"name\":\"ExtraData\",\"outputs\":[{\"internalType\":\"bytes\",\"name\":\"\",\"type\":\"bytes\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"internalType\":\"uint64\",\"name\":\"fromChainId\",\"type\":\"uint64\"},{\"internalType\":\"bytes32\",\"name\":\"fromChainTx\",\"type\":\"bytes32\"}],\"name\":\"checkIfFromChainTxExist\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"getCurEpochEndHeight\",\"outputs\":[{\"internalType\":\"uint64\",\"name\":\"\",\"type\":\"uint64\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"getCurEpochId\",\"outputs\":[{\"internalType\":\"uint64\",\"name\":\"\",\"type\":\"uint64\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"getCurEpochStartHeight\",\"outputs\":[{\"internalType\":\"uint64\",\"name\":\"\",\"type\":\"uint64\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"getCurEpochValidatorPkBytes\",\"outputs\":[{\"internalType\":\"bytes\",\"name\":\"\",\"type\":\"bytes\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"ethTxHashIndex\",\"type\":\"uint256\"}],\"name\":\"getEthTxHash\",\"outputs\":[{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"getEthTxHashIndex\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"key1\",\"type\":\"bytes32\"},{\"internalType\":\"bytes32\",\"name\":\"key2\",\"type\":\"bytes32\"}],\"name\":\"getExtraData\",\"outputs\":[{\"internalType\":\"bytes\",\"name\":\"\",\"type\":\"bytes\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"isOwner\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"internalType\":\"uint64\",\"name\":\"fromChainId\",\"type\":\"uint64\"},{\"internalType\":\"bytes32\",\"name\":\"fromChainTx\",\"type\":\"bytes32\"}],\"name\":\"markFromChainTxExist\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"owner\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[],\"name\":\"pause\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"paused\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"internalType\":\"uint64\",\"name\":\"endHeight\",\"type\":\"uint64\"}],\"name\":\"putCurEpochEndHeight\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"internalType\":\"uint64\",\"name\":\"epochId\",\"type\":\"uint64\"}],\"name\":\"putCurEpochId\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"internalType\":\"uint64\",\"name\":\"startHeight\",\"type\":\"uint64\"}],\"name\":\"putCurEpochStartHeight\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"internalType\":\"bytes\",\"name\":\"curEpochPkBytes\",\"type\":\"bytes\"}],\"name\":\"putCurEpochValidatorPkBytes\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"ethTxHash\",\"type\":\"bytes32\"}],\"name\":\"putEthTxHash\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"key1\",\"type\":\"bytes32\"},{\"internalType\":\"bytes32\",\"name\":\"key2\",\"type\":\"bytes32\"},{\"internalType\":\"bytes\",\"name\":\"value\",\"type\":\"bytes\"}],\"name\":\"putExtraData\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[],\"name\":\"renounceOwnership\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"internalType\":\"address\",\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"transferOwnership\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[],\"name\":\"unpause\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"}]"
 
 // EthCrossChainDataFuncSigs maps the 4-byte function signature to its string representation.
 var EthCrossChainDataFuncSigs = map[string]string{
-	"fcbdc1e0": "ConKeepersPkBytes()",
+	"ab9844ab": "CurEpochEndHeight()",
+	"fd4b67cf": "CurEpochId()",
 	"67e31a74": "CurEpochStartHeight()",
+	"06bfb1b6": "CurValidatorPkBytes()",
 	"00c5fff8": "EthToPolyTxHashIndex()",
 	"529caad8": "EthToPolyTxHashMap(uint256)",
 	"20bbde38": "ExtraData(bytes32,bytes32)",
 	"0586763c": "checkIfFromChainTxExist(uint64,bytes32)",
-	"69d48074": "getCurEpochConPubKeyBytes()",
+	"4e4af8ce": "getCurEpochEndHeight()",
+	"f881afd2": "getCurEpochId()",
 	"5ac40790": "getCurEpochStartHeight()",
+	"cd62908f": "getCurEpochValidatorPkBytes()",
 	"29927875": "getEthTxHash(uint256)",
 	"ff3d24a1": "getEthTxHashIndex()",
 	"40602bb5": "getExtraData(bytes32,bytes32)",
@@ -192,8 +196,10 @@ var EthCrossChainDataFuncSigs = map[string]string{
 	"8da5cb5b": "owner()",
 	"8456cb59": "pause()",
 	"5c975abb": "paused()",
-	"41973cd9": "putCurEpochConPubKeyBytes(bytes)",
-	"8a8bd17f": "putCurEpochStartHeight(uint32)",
+	"6a773962": "putCurEpochEndHeight(uint64)",
+	"738b5ae4": "putCurEpochId(uint64)",
+	"512feecc": "putCurEpochStartHeight(uint64)",
+	"1dc544bf": "putCurEpochValidatorPkBytes(bytes)",
 	"4c3ccf64": "putEthTxHash(bytes32)",
 	"1afe374e": "putExtraData(bytes32,bytes32,bytes)",
 	"715018a6": "renounceOwnership()",
@@ -202,7 +208,7 @@ var EthCrossChainDataFuncSigs = map[string]string{
 }
 
 // EthCrossChainDataBin is the compiled bytecode used for deploying new contracts.
-var EthCrossChainDataBin = "0x608060405260006100176001600160e01b0361007316565b600080546001600160a01b0319166001600160a01b0383169081178255604051929350917f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0908290a3506000805460ff60a01b19169055610077565b3390565b6110f7806100866000396000f3fe608060405234801561001057600080fd5b506004361061014c5760003560e01c80635c975abb116100c35780638da5cb5b1161007c5780638da5cb5b1461048c5780638f32d59b146104b0578063e90bfdcf146104b8578063f2fde38b146104e5578063fcbdc1e01461050b578063ff3d24a1146105135761014c565b80635c975abb1461043f57806367e31a741461044757806369d480741461044f578063715018a6146104575780638456cb59146104615780638a8bd17f146104695761014c565b80633f4ba83a116101155780633f4ba83a1461031357806340602bb51461031b57806341973cd91461033e5780634c3ccf64146103e4578063529caad8146104015780635ac407901461041e5761014c565b8062c5fff8146101515780630586763c1461016b5780631afe374e146101ac57806320bbde381461025e57806329927875146102f6575b600080fd5b61015961051b565b60408051918252519081900360200190f35b6101986004803603604081101561018157600080fd5b5067ffffffffffffffff8135169060200135610521565b604080519115158252519081900360200190f35b610198600480360360608110156101c257600080fd5b8135916020810135918101906060810160408201356401000000008111156101e957600080fd5b8201836020820111156101fb57600080fd5b8035906020019184600183028401116401000000008311171561021d57600080fd5b91908080601f01602080910402602001604051908101604052809392919081815260200183838082843760009201919091525092955061054d945050505050565b6102816004803603604081101561027457600080fd5b5080359060200135610619565b6040805160208082528351818301528351919283929083019185019080838360005b838110156102bb5781810151838201526020016102a3565b50505050905090810190601f1680156102e85780820380516001836020036101000a031916815260200191505b509250505060405180910390f35b6101596004803603602081101561030c57600080fd5b50356106bd565b6101986106cf565b6102816004803603604081101561033157600080fd5b508035906020013561077c565b6101986004803603602081101561035457600080fd5b81019060208101813564010000000081111561036f57600080fd5b82018360208201111561038157600080fd5b803590602001918460018302840111640100000000831117156103a357600080fd5b91908080601f016020809104026020016040519081016040528093929190818152602001838380828437600092019190915250929550610826945050505050565b610198600480360360208110156103fa57600080fd5b50356108dc565b6101596004803603602081101561041757600080fd5b5035610999565b6104266109ab565b6040805163ffffffff9092168252519081900360200190f35b6101986109b7565b6104266109c7565b6102816109d3565b61045f610a69565b005b610198610afa565b6101986004803603602081101561047f57600080fd5b503563ffffffff16610b9d565b610494610c56565b604080516001600160a01b039092168252519081900360200190f35b610198610c65565b610198600480360360408110156104ce57600080fd5b5067ffffffffffffffff8135169060200135610c89565b61045f600480360360208110156104fb57600080fd5b50356001600160a01b0316610d5a565b610281610dad565b610159610e08565b60025481565b67ffffffffffffffff919091166000908152600560209081526040808320938352929052205460ff1690565b60008054600160a01b900460ff16156105a0576040805162461bcd60e51b815260206004820152601060248201526f14185d5cd8589b194e881c185d5cd95960821b604482015290519081900360640190fd5b6105a8610c65565b6105e7576040805162461bcd60e51b815260206004820181905260248201526000805160206110a3833981519152604482015290519081900360640190fd5b60008481526006602090815260408083208684528252909120835161060e92850190610fe4565b506001949350505050565b60066020908152600092835260408084208252918352918190208054825160026001831615610100026000190190921691909104601f8101859004850282018501909352828152929091908301828280156106b55780601f1061068a576101008083540402835291602001916106b5565b820191906000526020600020905b81548152906001019060200180831161069857829003601f168201915b505050505081565b60009081526001602052604090205490565b60006106d9610c65565b610718576040805162461bcd60e51b815260206004820181905260248201526000805160206110a3833981519152604482015290519081900360640190fd5b600054600160a01b900460ff1661076d576040805162461bcd60e51b815260206004820152601460248201527314185d5cd8589b194e881b9bdd081c185d5cd95960621b604482015290519081900360640190fd5b610775610e0e565b5060015b90565b600082815260066020908152604080832084845282529182902080548351601f60026000196101006001861615020190931692909204918201849004840281018401909452808452606093928301828280156108195780601f106107ee57610100808354040283529160200191610819565b820191906000526020600020905b8154815290600101906020018083116107fc57829003601f168201915b5050505050905092915050565b60008054600160a01b900460ff1615610879576040805162461bcd60e51b815260206004820152601060248201526f14185d5cd8589b194e881c185d5cd95960821b604482015290519081900360640190fd5b610881610c65565b6108c0576040805162461bcd60e51b815260206004820181905260248201526000805160206110a3833981519152604482015290519081900360640190fd5b81516108d3906003906020850190610fe4565b50600192915050565b60008054600160a01b900460ff161561092f576040805162461bcd60e51b815260206004820152601060248201526f14185d5cd8589b194e881c185d5cd95960821b604482015290519081900360640190fd5b610937610c65565b610976576040805162461bcd60e51b815260206004820181905260248201526000805160206110a3833981519152604482015290519081900360640190fd5b506002805460009081526001602081905260409091209290925580548201905590565b60016020526000908152604090205481565b60045463ffffffff1690565b600054600160a01b900460ff1690565b60045463ffffffff1681565b60038054604080516020601f6002600019610100600188161502019095169490940493840181900481028201810190925282815260609390929091830182828015610a5f5780601f10610a3457610100808354040283529160200191610a5f565b820191906000526020600020905b815481529060010190602001808311610a4257829003601f168201915b5050505050905090565b610a71610c65565b610ab0576040805162461bcd60e51b815260206004820181905260248201526000805160206110a3833981519152604482015290519081900360640190fd5b600080546040516001600160a01b03909116907f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0908390a3600080546001600160a01b0319169055565b6000610b04610c65565b610b43576040805162461bcd60e51b815260206004820181905260248201526000805160206110a3833981519152604482015290519081900360640190fd5b600054600160a01b900460ff1615610b95576040805162461bcd60e51b815260206004820152601060248201526f14185d5cd8589b194e881c185d5cd95960821b604482015290519081900360640190fd5b610775610eb6565b60008054600160a01b900460ff1615610bf0576040805162461bcd60e51b815260206004820152601060248201526f14185d5cd8589b194e881c185d5cd95960821b604482015290519081900360640190fd5b610bf8610c65565b610c37576040805162461bcd60e51b815260206004820181905260248201526000805160206110a3833981519152604482015290519081900360640190fd5b506004805463ffffffff831663ffffffff199091161790556001919050565b6000546001600160a01b031690565b600080546001600160a01b0316610c7a610f40565b6001600160a01b031614905090565b60008054600160a01b900460ff1615610cdc576040805162461bcd60e51b815260206004820152601060248201526f14185d5cd8589b194e881c185d5cd95960821b604482015290519081900360640190fd5b610ce4610c65565b610d23576040805162461bcd60e51b815260206004820181905260248201526000805160206110a3833981519152604482015290519081900360640190fd5b5067ffffffffffffffff91909116600090815260056020908152604080832093835292905220805460ff1916600190811790915590565b610d62610c65565b610da1576040805162461bcd60e51b815260206004820181905260248201526000805160206110a3833981519152604482015290519081900360640190fd5b610daa81610f44565b50565b6003805460408051602060026001851615610100026000190190941693909304601f810184900484028201840190925281815292918301828280156106b55780601f1061068a576101008083540402835291602001916106b5565b60025490565b600054600160a01b900460ff16610e63576040805162461bcd60e51b815260206004820152601460248201527314185d5cd8589b194e881b9bdd081c185d5cd95960621b604482015290519081900360640190fd5b6000805460ff60a01b191690557f5db9ee0a495bf2e6ff9c91a7834c1ba4fdd244a5e8aa4e537bd38aeae4b073aa610e99610f40565b604080516001600160a01b039092168252519081900360200190a1565b600054600160a01b900460ff1615610f08576040805162461bcd60e51b815260206004820152601060248201526f14185d5cd8589b194e881c185d5cd95960821b604482015290519081900360640190fd5b6000805460ff60a01b1916600160a01b1790557f62e78cea01bee320cd4e420270b5ea74000d11b0c9f74754ebdbfc544b05a258610e995b3390565b6001600160a01b038116610f895760405162461bcd60e51b815260040180806020018281038252602681526020018061107d6026913960400191505060405180910390fd5b600080546040516001600160a01b03808516939216917f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e091a3600080546001600160a01b0319166001600160a01b0392909216919091179055565b828054600181600116156101000203166002900490600052602060002090601f016020900481019282601f1061102557805160ff1916838001178555611052565b82800160010185558215611052579182015b82811115611052578251825591602001919060010190611037565b5061105e929150611062565b5090565b61077991905b8082111561105e576000815560010161106856fe4f776e61626c653a206e6577206f776e657220697320746865207a65726f20616464726573734f776e61626c653a2063616c6c6572206973206e6f7420746865206f776e6572a265627a7a723158202b28eaa31a021f8aedc0adf7164e28cb31ed7851d775cc31ef8c8220c200113464736f6c63430005110032"
+var EthCrossChainDataBin = "0x608060405260006100176001600160e01b0361007316565b600080546001600160a01b0319166001600160a01b0383169081178255604051929350917f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0908290a3506000805460ff60a01b19169055610077565b3390565b6113e3806100866000396000f3fe608060405234801561001057600080fd5b50600436106101ce5760003560e01c80635c975abb116101045780638f32d59b116100a2578063f2fde38b11610071578063f2fde38b146105cf578063f881afd2146105f5578063fd4b67cf146105fd578063ff3d24a114610605576101ce565b80638f32d59b1461058b578063ab9844ab14610593578063cd62908f1461059b578063e90bfdcf146105a3576101ce565b8063715018a6116100de578063715018a61461052f578063738b5ae4146105395780638456cb591461055f5780638da5cb5b14610567576101ce565b80635c975abb146104f957806367e31a74146105015780636a77396214610509576101ce565b80633f4ba83a116101715780634e4af8ce1161014b5780634e4af8ce1461048a578063512feecc146104ae578063529caad8146104d45780635ac40790146104f1576101ce565b80633f4ba83a1461044257806340602bb51461044a5780634c3ccf641461046d576101ce565b80631afe374e116101ad5780631afe374e146102aa5780631dc544bf1461035c57806320bbde38146104025780632992787514610425576101ce565b8062c5fff8146101d35780630586763c146101ed57806306bfb1b61461022d575b600080fd5b6101db61060d565b60408051918252519081900360200190f35b6102196004803603604081101561020357600080fd5b506001600160401b038135169060200135610613565b604080519115158252519081900360200190f35b61023561063e565b6040805160208082528351818301528351919283929083019185019080838360005b8381101561026f578181015183820152602001610257565b50505050905090810190601f16801561029c5780820380516001836020036101000a031916815260200191505b509250505060405180910390f35b610219600480360360608110156102c057600080fd5b8135916020810135918101906060810160408201356401000000008111156102e757600080fd5b8201836020820111156102f957600080fd5b8035906020019184600183028401116401000000008311171561031b57600080fd5b91908080601f0160208091040260200160405190810160405280939291908181526020018383808284376000920191909152509295506106cc945050505050565b6102196004803603602081101561037257600080fd5b81019060208101813564010000000081111561038d57600080fd5b82018360208201111561039f57600080fd5b803590602001918460018302840111640100000000831117156103c157600080fd5b91908080601f016020809104026020016040519081016040528093929190818152602001838380828437600092019190915250929550610798945050505050565b6102356004803603604081101561041857600080fd5b508035906020013561084e565b6101db6004803603602081101561043b57600080fd5b50356108bf565b6102196108d1565b6102356004803603604081101561046057600080fd5b508035906020013561097e565b6102196004803603602081101561048357600080fd5b5035610a28565b610492610ae5565b604080516001600160401b039092168252519081900360200190f35b610219600480360360208110156104c457600080fd5b50356001600160401b0316610afb565b6101db600480360360208110156104ea57600080fd5b5035610bbb565b610492610bcd565b610219610bdc565b610492610bec565b6102196004803603602081101561051f57600080fd5b50356001600160401b0316610bfb565b610537610cc9565b005b6102196004803603602081101561054f57600080fd5b50356001600160401b0316610d5a565b610219610e23565b61056f610ec6565b604080516001600160a01b039092168252519081900360200190f35b610219610ed5565b610492610ef9565b610235610f0f565b610219600480360360408110156105b957600080fd5b506001600160401b038135169060200135610fa5565b610537600480360360208110156105e557600080fd5b50356001600160a01b0316611075565b6104926110c8565b6104926110de565b6101db6110f4565b60025481565b6001600160401b03919091166000908152600560209081526040808320938352929052205460ff1690565b6003805460408051602060026001851615610100026000190190941693909304601f810184900484028201840190925281815292918301828280156106c45780601f10610699576101008083540402835291602001916106c4565b820191906000526020600020905b8154815290600101906020018083116106a757829003601f168201915b505050505081565b60008054600160a01b900460ff161561071f576040805162461bcd60e51b815260206004820152601060248201526f14185d5cd8589b194e881c185d5cd95960821b604482015290519081900360640190fd5b610727610ed5565b610766576040805162461bcd60e51b8152602060048201819052602482015260008051602061138f833981519152604482015290519081900360640190fd5b60008481526006602090815260408083208684528252909120835161078d928501906112d0565b506001949350505050565b60008054600160a01b900460ff16156107eb576040805162461bcd60e51b815260206004820152601060248201526f14185d5cd8589b194e881c185d5cd95960821b604482015290519081900360640190fd5b6107f3610ed5565b610832576040805162461bcd60e51b8152602060048201819052602482015260008051602061138f833981519152604482015290519081900360640190fd5b81516108459060039060208501906112d0565b50600192915050565b60066020908152600092835260408084208252918352918190208054825160026001831615610100026000190190921691909104601f8101859004850282018501909352828152929091908301828280156106c45780601f10610699576101008083540402835291602001916106c4565b60009081526001602052604090205490565b60006108db610ed5565b61091a576040805162461bcd60e51b8152602060048201819052602482015260008051602061138f833981519152604482015290519081900360640190fd5b600054600160a01b900460ff1661096f576040805162461bcd60e51b815260206004820152601460248201527314185d5cd8589b194e881b9bdd081c185d5cd95960621b604482015290519081900360640190fd5b6109776110fa565b5060015b90565b600082815260066020908152604080832084845282529182902080548351601f6002600019610100600186161502019093169290920491820184900484028101840190945280845260609392830182828015610a1b5780601f106109f057610100808354040283529160200191610a1b565b820191906000526020600020905b8154815290600101906020018083116109fe57829003601f168201915b5050505050905092915050565b60008054600160a01b900460ff1615610a7b576040805162461bcd60e51b815260206004820152601060248201526f14185d5cd8589b194e881c185d5cd95960821b604482015290519081900360640190fd5b610a83610ed5565b610ac2576040805162461bcd60e51b8152602060048201819052602482015260008051602061138f833981519152604482015290519081900360640190fd5b506002805460009081526001602081905260409091209290925580548201905590565b600454600160401b90046001600160401b031690565b60008054600160a01b900460ff1615610b4e576040805162461bcd60e51b815260206004820152601060248201526f14185d5cd8589b194e881c185d5cd95960821b604482015290519081900360640190fd5b610b56610ed5565b610b95576040805162461bcd60e51b8152602060048201819052602482015260008051602061138f833981519152604482015290519081900360640190fd5b50600480546001600160401b03831667ffffffffffffffff199091161790556001919050565b60016020526000908152604090205481565b6004546001600160401b031690565b600054600160a01b900460ff1690565b6004546001600160401b031681565b60008054600160a01b900460ff1615610c4e576040805162461bcd60e51b815260206004820152601060248201526f14185d5cd8589b194e881c185d5cd95960821b604482015290519081900360640190fd5b610c56610ed5565b610c95576040805162461bcd60e51b8152602060048201819052602482015260008051602061138f833981519152604482015290519081900360640190fd5b50600480546001600160401b038316600160401b026fffffffffffffffff0000000000000000199091161790556001919050565b610cd1610ed5565b610d10576040805162461bcd60e51b8152602060048201819052602482015260008051602061138f833981519152604482015290519081900360640190fd5b600080546040516001600160a01b03909116907f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0908390a3600080546001600160a01b0319169055565b60008054600160a01b900460ff1615610dad576040805162461bcd60e51b815260206004820152601060248201526f14185d5cd8589b194e881c185d5cd95960821b604482015290519081900360640190fd5b610db5610ed5565b610df4576040805162461bcd60e51b8152602060048201819052602482015260008051602061138f833981519152604482015290519081900360640190fd5b50600480546001600160401b038316600160801b0267ffffffffffffffff60801b199091161790556001919050565b6000610e2d610ed5565b610e6c576040805162461bcd60e51b8152602060048201819052602482015260008051602061138f833981519152604482015290519081900360640190fd5b600054600160a01b900460ff1615610ebe576040805162461bcd60e51b815260206004820152601060248201526f14185d5cd8589b194e881c185d5cd95960821b604482015290519081900360640190fd5b6109776111a2565b6000546001600160a01b031690565b600080546001600160a01b0316610eea61122c565b6001600160a01b031614905090565b600454600160401b90046001600160401b031681565b60038054604080516020601f6002600019610100600188161502019095169490940493840181900481028201810190925282815260609390929091830182828015610f9b5780601f10610f7057610100808354040283529160200191610f9b565b820191906000526020600020905b815481529060010190602001808311610f7e57829003601f168201915b5050505050905090565b60008054600160a01b900460ff1615610ff8576040805162461bcd60e51b815260206004820152601060248201526f14185d5cd8589b194e881c185d5cd95960821b604482015290519081900360640190fd5b611000610ed5565b61103f576040805162461bcd60e51b8152602060048201819052602482015260008051602061138f833981519152604482015290519081900360640190fd5b506001600160401b0391909116600090815260056020908152604080832093835292905220805460ff1916600190811790915590565b61107d610ed5565b6110bc576040805162461bcd60e51b8152602060048201819052602482015260008051602061138f833981519152604482015290519081900360640190fd5b6110c581611230565b50565b600454600160801b90046001600160401b031690565b600454600160801b90046001600160401b031681565b60025490565b600054600160a01b900460ff1661114f576040805162461bcd60e51b815260206004820152601460248201527314185d5cd8589b194e881b9bdd081c185d5cd95960621b604482015290519081900360640190fd5b6000805460ff60a01b191690557f5db9ee0a495bf2e6ff9c91a7834c1ba4fdd244a5e8aa4e537bd38aeae4b073aa61118561122c565b604080516001600160a01b039092168252519081900360200190a1565b600054600160a01b900460ff16156111f4576040805162461bcd60e51b815260206004820152601060248201526f14185d5cd8589b194e881c185d5cd95960821b604482015290519081900360640190fd5b6000805460ff60a01b1916600160a01b1790557f62e78cea01bee320cd4e420270b5ea74000d11b0c9f74754ebdbfc544b05a2586111855b3390565b6001600160a01b0381166112755760405162461bcd60e51b81526004018080602001828103825260268152602001806113696026913960400191505060405180910390fd5b600080546040516001600160a01b03808516939216917f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e091a3600080546001600160a01b0319166001600160a01b0392909216919091179055565b828054600181600116156101000203166002900490600052602060002090601f016020900481019282601f1061131157805160ff191683800117855561133e565b8280016001018555821561133e579182015b8281111561133e578251825591602001919060010190611323565b5061134a92915061134e565b5090565b61097b91905b8082111561134a576000815560010161135456fe4f776e61626c653a206e6577206f776e657220697320746865207a65726f20616464726573734f776e61626c653a2063616c6c6572206973206e6f7420746865206f776e6572a265627a7a72315820866cfa18d69c07957cf932116fcff4e5cf2b55ec5ed87ae041839a5333a17a4064736f6c63430005110032"
 
 // DeployEthCrossChainData deploys a new Ethereum contract, binding an instance of EthCrossChainData to it.
 func DeployEthCrossChainData(auth *bind.TransactOpts, backend bind.ContractBackend) (common.Address, *types.Transaction, *EthCrossChainData, error) {
@@ -360,12 +366,105 @@ func (_EthCrossChainData *EthCrossChainDataTransactorRaw) Transact(opts *bind.Tr
 	return _EthCrossChainData.Contract.contract.Transact(opts, method, params...)
 }
 
-// ConKeepersPkBytes is a free data retrieval call binding the contract method 0xfcbdc1e0.
+// CurEpochEndHeight is a free data retrieval call binding the contract method 0xab9844ab.
 //
-// Solidity: function ConKeepersPkBytes() view returns(bytes)
-func (_EthCrossChainData *EthCrossChainDataCaller) ConKeepersPkBytes(opts *bind.CallOpts) ([]byte, error) {
+// Solidity: function CurEpochEndHeight() view returns(uint64)
+func (_EthCrossChainData *EthCrossChainDataCaller) CurEpochEndHeight(opts *bind.CallOpts) (uint64, error) {
 	var out []interface{}
-	err := _EthCrossChainData.contract.Call(opts, &out, "ConKeepersPkBytes")
+	err := _EthCrossChainData.contract.Call(opts, &out, "CurEpochEndHeight")
+
+	if err != nil {
+		return *new(uint64), err
+	}
+
+	out0 := *abi.ConvertType(out[0], new(uint64)).(*uint64)
+
+	return out0, err
+
+}
+
+// CurEpochEndHeight is a free data retrieval call binding the contract method 0xab9844ab.
+//
+// Solidity: function CurEpochEndHeight() view returns(uint64)
+func (_EthCrossChainData *EthCrossChainDataSession) CurEpochEndHeight() (uint64, error) {
+	return _EthCrossChainData.Contract.CurEpochEndHeight(&_EthCrossChainData.CallOpts)
+}
+
+// CurEpochEndHeight is a free data retrieval call binding the contract method 0xab9844ab.
+//
+// Solidity: function CurEpochEndHeight() view returns(uint64)
+func (_EthCrossChainData *EthCrossChainDataCallerSession) CurEpochEndHeight() (uint64, error) {
+	return _EthCrossChainData.Contract.CurEpochEndHeight(&_EthCrossChainData.CallOpts)
+}
+
+// CurEpochId is a free data retrieval call binding the contract method 0xfd4b67cf.
+//
+// Solidity: function CurEpochId() view returns(uint64)
+func (_EthCrossChainData *EthCrossChainDataCaller) CurEpochId(opts *bind.CallOpts) (uint64, error) {
+	var out []interface{}
+	err := _EthCrossChainData.contract.Call(opts, &out, "CurEpochId")
+
+	if err != nil {
+		return *new(uint64), err
+	}
+
+	out0 := *abi.ConvertType(out[0], new(uint64)).(*uint64)
+
+	return out0, err
+
+}
+
+// CurEpochId is a free data retrieval call binding the contract method 0xfd4b67cf.
+//
+// Solidity: function CurEpochId() view returns(uint64)
+func (_EthCrossChainData *EthCrossChainDataSession) CurEpochId() (uint64, error) {
+	return _EthCrossChainData.Contract.CurEpochId(&_EthCrossChainData.CallOpts)
+}
+
+// CurEpochId is a free data retrieval call binding the contract method 0xfd4b67cf.
+//
+// Solidity: function CurEpochId() view returns(uint64)
+func (_EthCrossChainData *EthCrossChainDataCallerSession) CurEpochId() (uint64, error) {
+	return _EthCrossChainData.Contract.CurEpochId(&_EthCrossChainData.CallOpts)
+}
+
+// CurEpochStartHeight is a free data retrieval call binding the contract method 0x67e31a74.
+//
+// Solidity: function CurEpochStartHeight() view returns(uint64)
+func (_EthCrossChainData *EthCrossChainDataCaller) CurEpochStartHeight(opts *bind.CallOpts) (uint64, error) {
+	var out []interface{}
+	err := _EthCrossChainData.contract.Call(opts, &out, "CurEpochStartHeight")
+
+	if err != nil {
+		return *new(uint64), err
+	}
+
+	out0 := *abi.ConvertType(out[0], new(uint64)).(*uint64)
+
+	return out0, err
+
+}
+
+// CurEpochStartHeight is a free data retrieval call binding the contract method 0x67e31a74.
+//
+// Solidity: function CurEpochStartHeight() view returns(uint64)
+func (_EthCrossChainData *EthCrossChainDataSession) CurEpochStartHeight() (uint64, error) {
+	return _EthCrossChainData.Contract.CurEpochStartHeight(&_EthCrossChainData.CallOpts)
+}
+
+// CurEpochStartHeight is a free data retrieval call binding the contract method 0x67e31a74.
+//
+// Solidity: function CurEpochStartHeight() view returns(uint64)
+func (_EthCrossChainData *EthCrossChainDataCallerSession) CurEpochStartHeight() (uint64, error) {
+	return _EthCrossChainData.Contract.CurEpochStartHeight(&_EthCrossChainData.CallOpts)
+}
+
+// CurValidatorPkBytes is a free data retrieval call binding the contract method 0x06bfb1b6.
+//
+// Solidity: function CurValidatorPkBytes() view returns(bytes)
+func (_EthCrossChainData *EthCrossChainDataCaller) CurValidatorPkBytes(opts *bind.CallOpts) ([]byte, error) {
+	var out []interface{}
+	err := _EthCrossChainData.contract.Call(opts, &out, "CurValidatorPkBytes")
 
 	if err != nil {
 		return *new([]byte), err
@@ -377,49 +476,18 @@ func (_EthCrossChainData *EthCrossChainDataCaller) ConKeepersPkBytes(opts *bind.
 
 }
 
-// ConKeepersPkBytes is a free data retrieval call binding the contract method 0xfcbdc1e0.
+// CurValidatorPkBytes is a free data retrieval call binding the contract method 0x06bfb1b6.
 //
-// Solidity: function ConKeepersPkBytes() view returns(bytes)
-func (_EthCrossChainData *EthCrossChainDataSession) ConKeepersPkBytes() ([]byte, error) {
-	return _EthCrossChainData.Contract.ConKeepersPkBytes(&_EthCrossChainData.CallOpts)
+// Solidity: function CurValidatorPkBytes() view returns(bytes)
+func (_EthCrossChainData *EthCrossChainDataSession) CurValidatorPkBytes() ([]byte, error) {
+	return _EthCrossChainData.Contract.CurValidatorPkBytes(&_EthCrossChainData.CallOpts)
 }
 
-// ConKeepersPkBytes is a free data retrieval call binding the contract method 0xfcbdc1e0.
+// CurValidatorPkBytes is a free data retrieval call binding the contract method 0x06bfb1b6.
 //
-// Solidity: function ConKeepersPkBytes() view returns(bytes)
-func (_EthCrossChainData *EthCrossChainDataCallerSession) ConKeepersPkBytes() ([]byte, error) {
-	return _EthCrossChainData.Contract.ConKeepersPkBytes(&_EthCrossChainData.CallOpts)
-}
-
-// CurEpochStartHeight is a free data retrieval call binding the contract method 0x67e31a74.
-//
-// Solidity: function CurEpochStartHeight() view returns(uint32)
-func (_EthCrossChainData *EthCrossChainDataCaller) CurEpochStartHeight(opts *bind.CallOpts) (uint32, error) {
-	var out []interface{}
-	err := _EthCrossChainData.contract.Call(opts, &out, "CurEpochStartHeight")
-
-	if err != nil {
-		return *new(uint32), err
-	}
-
-	out0 := *abi.ConvertType(out[0], new(uint32)).(*uint32)
-
-	return out0, err
-
-}
-
-// CurEpochStartHeight is a free data retrieval call binding the contract method 0x67e31a74.
-//
-// Solidity: function CurEpochStartHeight() view returns(uint32)
-func (_EthCrossChainData *EthCrossChainDataSession) CurEpochStartHeight() (uint32, error) {
-	return _EthCrossChainData.Contract.CurEpochStartHeight(&_EthCrossChainData.CallOpts)
-}
-
-// CurEpochStartHeight is a free data retrieval call binding the contract method 0x67e31a74.
-//
-// Solidity: function CurEpochStartHeight() view returns(uint32)
-func (_EthCrossChainData *EthCrossChainDataCallerSession) CurEpochStartHeight() (uint32, error) {
-	return _EthCrossChainData.Contract.CurEpochStartHeight(&_EthCrossChainData.CallOpts)
+// Solidity: function CurValidatorPkBytes() view returns(bytes)
+func (_EthCrossChainData *EthCrossChainDataCallerSession) CurValidatorPkBytes() ([]byte, error) {
+	return _EthCrossChainData.Contract.CurValidatorPkBytes(&_EthCrossChainData.CallOpts)
 }
 
 // EthToPolyTxHashIndex is a free data retrieval call binding the contract method 0x00c5fff8.
@@ -546,12 +614,105 @@ func (_EthCrossChainData *EthCrossChainDataCallerSession) CheckIfFromChainTxExis
 	return _EthCrossChainData.Contract.CheckIfFromChainTxExist(&_EthCrossChainData.CallOpts, fromChainId, fromChainTx)
 }
 
-// GetCurEpochConPubKeyBytes is a free data retrieval call binding the contract method 0x69d48074.
+// GetCurEpochEndHeight is a free data retrieval call binding the contract method 0x4e4af8ce.
 //
-// Solidity: function getCurEpochConPubKeyBytes() view returns(bytes)
-func (_EthCrossChainData *EthCrossChainDataCaller) GetCurEpochConPubKeyBytes(opts *bind.CallOpts) ([]byte, error) {
+// Solidity: function getCurEpochEndHeight() view returns(uint64)
+func (_EthCrossChainData *EthCrossChainDataCaller) GetCurEpochEndHeight(opts *bind.CallOpts) (uint64, error) {
 	var out []interface{}
-	err := _EthCrossChainData.contract.Call(opts, &out, "getCurEpochConPubKeyBytes")
+	err := _EthCrossChainData.contract.Call(opts, &out, "getCurEpochEndHeight")
+
+	if err != nil {
+		return *new(uint64), err
+	}
+
+	out0 := *abi.ConvertType(out[0], new(uint64)).(*uint64)
+
+	return out0, err
+
+}
+
+// GetCurEpochEndHeight is a free data retrieval call binding the contract method 0x4e4af8ce.
+//
+// Solidity: function getCurEpochEndHeight() view returns(uint64)
+func (_EthCrossChainData *EthCrossChainDataSession) GetCurEpochEndHeight() (uint64, error) {
+	return _EthCrossChainData.Contract.GetCurEpochEndHeight(&_EthCrossChainData.CallOpts)
+}
+
+// GetCurEpochEndHeight is a free data retrieval call binding the contract method 0x4e4af8ce.
+//
+// Solidity: function getCurEpochEndHeight() view returns(uint64)
+func (_EthCrossChainData *EthCrossChainDataCallerSession) GetCurEpochEndHeight() (uint64, error) {
+	return _EthCrossChainData.Contract.GetCurEpochEndHeight(&_EthCrossChainData.CallOpts)
+}
+
+// GetCurEpochId is a free data retrieval call binding the contract method 0xf881afd2.
+//
+// Solidity: function getCurEpochId() view returns(uint64)
+func (_EthCrossChainData *EthCrossChainDataCaller) GetCurEpochId(opts *bind.CallOpts) (uint64, error) {
+	var out []interface{}
+	err := _EthCrossChainData.contract.Call(opts, &out, "getCurEpochId")
+
+	if err != nil {
+		return *new(uint64), err
+	}
+
+	out0 := *abi.ConvertType(out[0], new(uint64)).(*uint64)
+
+	return out0, err
+
+}
+
+// GetCurEpochId is a free data retrieval call binding the contract method 0xf881afd2.
+//
+// Solidity: function getCurEpochId() view returns(uint64)
+func (_EthCrossChainData *EthCrossChainDataSession) GetCurEpochId() (uint64, error) {
+	return _EthCrossChainData.Contract.GetCurEpochId(&_EthCrossChainData.CallOpts)
+}
+
+// GetCurEpochId is a free data retrieval call binding the contract method 0xf881afd2.
+//
+// Solidity: function getCurEpochId() view returns(uint64)
+func (_EthCrossChainData *EthCrossChainDataCallerSession) GetCurEpochId() (uint64, error) {
+	return _EthCrossChainData.Contract.GetCurEpochId(&_EthCrossChainData.CallOpts)
+}
+
+// GetCurEpochStartHeight is a free data retrieval call binding the contract method 0x5ac40790.
+//
+// Solidity: function getCurEpochStartHeight() view returns(uint64)
+func (_EthCrossChainData *EthCrossChainDataCaller) GetCurEpochStartHeight(opts *bind.CallOpts) (uint64, error) {
+	var out []interface{}
+	err := _EthCrossChainData.contract.Call(opts, &out, "getCurEpochStartHeight")
+
+	if err != nil {
+		return *new(uint64), err
+	}
+
+	out0 := *abi.ConvertType(out[0], new(uint64)).(*uint64)
+
+	return out0, err
+
+}
+
+// GetCurEpochStartHeight is a free data retrieval call binding the contract method 0x5ac40790.
+//
+// Solidity: function getCurEpochStartHeight() view returns(uint64)
+func (_EthCrossChainData *EthCrossChainDataSession) GetCurEpochStartHeight() (uint64, error) {
+	return _EthCrossChainData.Contract.GetCurEpochStartHeight(&_EthCrossChainData.CallOpts)
+}
+
+// GetCurEpochStartHeight is a free data retrieval call binding the contract method 0x5ac40790.
+//
+// Solidity: function getCurEpochStartHeight() view returns(uint64)
+func (_EthCrossChainData *EthCrossChainDataCallerSession) GetCurEpochStartHeight() (uint64, error) {
+	return _EthCrossChainData.Contract.GetCurEpochStartHeight(&_EthCrossChainData.CallOpts)
+}
+
+// GetCurEpochValidatorPkBytes is a free data retrieval call binding the contract method 0xcd62908f.
+//
+// Solidity: function getCurEpochValidatorPkBytes() view returns(bytes)
+func (_EthCrossChainData *EthCrossChainDataCaller) GetCurEpochValidatorPkBytes(opts *bind.CallOpts) ([]byte, error) {
+	var out []interface{}
+	err := _EthCrossChainData.contract.Call(opts, &out, "getCurEpochValidatorPkBytes")
 
 	if err != nil {
 		return *new([]byte), err
@@ -563,49 +724,18 @@ func (_EthCrossChainData *EthCrossChainDataCaller) GetCurEpochConPubKeyBytes(opt
 
 }
 
-// GetCurEpochConPubKeyBytes is a free data retrieval call binding the contract method 0x69d48074.
+// GetCurEpochValidatorPkBytes is a free data retrieval call binding the contract method 0xcd62908f.
 //
-// Solidity: function getCurEpochConPubKeyBytes() view returns(bytes)
-func (_EthCrossChainData *EthCrossChainDataSession) GetCurEpochConPubKeyBytes() ([]byte, error) {
-	return _EthCrossChainData.Contract.GetCurEpochConPubKeyBytes(&_EthCrossChainData.CallOpts)
+// Solidity: function getCurEpochValidatorPkBytes() view returns(bytes)
+func (_EthCrossChainData *EthCrossChainDataSession) GetCurEpochValidatorPkBytes() ([]byte, error) {
+	return _EthCrossChainData.Contract.GetCurEpochValidatorPkBytes(&_EthCrossChainData.CallOpts)
 }
 
-// GetCurEpochConPubKeyBytes is a free data retrieval call binding the contract method 0x69d48074.
+// GetCurEpochValidatorPkBytes is a free data retrieval call binding the contract method 0xcd62908f.
 //
-// Solidity: function getCurEpochConPubKeyBytes() view returns(bytes)
-func (_EthCrossChainData *EthCrossChainDataCallerSession) GetCurEpochConPubKeyBytes() ([]byte, error) {
-	return _EthCrossChainData.Contract.GetCurEpochConPubKeyBytes(&_EthCrossChainData.CallOpts)
-}
-
-// GetCurEpochStartHeight is a free data retrieval call binding the contract method 0x5ac40790.
-//
-// Solidity: function getCurEpochStartHeight() view returns(uint32)
-func (_EthCrossChainData *EthCrossChainDataCaller) GetCurEpochStartHeight(opts *bind.CallOpts) (uint32, error) {
-	var out []interface{}
-	err := _EthCrossChainData.contract.Call(opts, &out, "getCurEpochStartHeight")
-
-	if err != nil {
-		return *new(uint32), err
-	}
-
-	out0 := *abi.ConvertType(out[0], new(uint32)).(*uint32)
-
-	return out0, err
-
-}
-
-// GetCurEpochStartHeight is a free data retrieval call binding the contract method 0x5ac40790.
-//
-// Solidity: function getCurEpochStartHeight() view returns(uint32)
-func (_EthCrossChainData *EthCrossChainDataSession) GetCurEpochStartHeight() (uint32, error) {
-	return _EthCrossChainData.Contract.GetCurEpochStartHeight(&_EthCrossChainData.CallOpts)
-}
-
-// GetCurEpochStartHeight is a free data retrieval call binding the contract method 0x5ac40790.
-//
-// Solidity: function getCurEpochStartHeight() view returns(uint32)
-func (_EthCrossChainData *EthCrossChainDataCallerSession) GetCurEpochStartHeight() (uint32, error) {
-	return _EthCrossChainData.Contract.GetCurEpochStartHeight(&_EthCrossChainData.CallOpts)
+// Solidity: function getCurEpochValidatorPkBytes() view returns(bytes)
+func (_EthCrossChainData *EthCrossChainDataCallerSession) GetCurEpochValidatorPkBytes() ([]byte, error) {
+	return _EthCrossChainData.Contract.GetCurEpochValidatorPkBytes(&_EthCrossChainData.CallOpts)
 }
 
 // GetEthTxHash is a free data retrieval call binding the contract method 0x29927875.
@@ -836,46 +966,88 @@ func (_EthCrossChainData *EthCrossChainDataTransactorSession) Pause() (*types.Tr
 	return _EthCrossChainData.Contract.Pause(&_EthCrossChainData.TransactOpts)
 }
 
-// PutCurEpochConPubKeyBytes is a paid mutator transaction binding the contract method 0x41973cd9.
+// PutCurEpochEndHeight is a paid mutator transaction binding the contract method 0x6a773962.
 //
-// Solidity: function putCurEpochConPubKeyBytes(bytes curEpochPkBytes) returns(bool)
-func (_EthCrossChainData *EthCrossChainDataTransactor) PutCurEpochConPubKeyBytes(opts *bind.TransactOpts, curEpochPkBytes []byte) (*types.Transaction, error) {
-	return _EthCrossChainData.contract.Transact(opts, "putCurEpochConPubKeyBytes", curEpochPkBytes)
+// Solidity: function putCurEpochEndHeight(uint64 endHeight) returns(bool)
+func (_EthCrossChainData *EthCrossChainDataTransactor) PutCurEpochEndHeight(opts *bind.TransactOpts, endHeight uint64) (*types.Transaction, error) {
+	return _EthCrossChainData.contract.Transact(opts, "putCurEpochEndHeight", endHeight)
 }
 
-// PutCurEpochConPubKeyBytes is a paid mutator transaction binding the contract method 0x41973cd9.
+// PutCurEpochEndHeight is a paid mutator transaction binding the contract method 0x6a773962.
 //
-// Solidity: function putCurEpochConPubKeyBytes(bytes curEpochPkBytes) returns(bool)
-func (_EthCrossChainData *EthCrossChainDataSession) PutCurEpochConPubKeyBytes(curEpochPkBytes []byte) (*types.Transaction, error) {
-	return _EthCrossChainData.Contract.PutCurEpochConPubKeyBytes(&_EthCrossChainData.TransactOpts, curEpochPkBytes)
+// Solidity: function putCurEpochEndHeight(uint64 endHeight) returns(bool)
+func (_EthCrossChainData *EthCrossChainDataSession) PutCurEpochEndHeight(endHeight uint64) (*types.Transaction, error) {
+	return _EthCrossChainData.Contract.PutCurEpochEndHeight(&_EthCrossChainData.TransactOpts, endHeight)
 }
 
-// PutCurEpochConPubKeyBytes is a paid mutator transaction binding the contract method 0x41973cd9.
+// PutCurEpochEndHeight is a paid mutator transaction binding the contract method 0x6a773962.
 //
-// Solidity: function putCurEpochConPubKeyBytes(bytes curEpochPkBytes) returns(bool)
-func (_EthCrossChainData *EthCrossChainDataTransactorSession) PutCurEpochConPubKeyBytes(curEpochPkBytes []byte) (*types.Transaction, error) {
-	return _EthCrossChainData.Contract.PutCurEpochConPubKeyBytes(&_EthCrossChainData.TransactOpts, curEpochPkBytes)
+// Solidity: function putCurEpochEndHeight(uint64 endHeight) returns(bool)
+func (_EthCrossChainData *EthCrossChainDataTransactorSession) PutCurEpochEndHeight(endHeight uint64) (*types.Transaction, error) {
+	return _EthCrossChainData.Contract.PutCurEpochEndHeight(&_EthCrossChainData.TransactOpts, endHeight)
 }
 
-// PutCurEpochStartHeight is a paid mutator transaction binding the contract method 0x8a8bd17f.
+// PutCurEpochId is a paid mutator transaction binding the contract method 0x738b5ae4.
 //
-// Solidity: function putCurEpochStartHeight(uint32 curEpochStartHeight) returns(bool)
-func (_EthCrossChainData *EthCrossChainDataTransactor) PutCurEpochStartHeight(opts *bind.TransactOpts, curEpochStartHeight uint32) (*types.Transaction, error) {
-	return _EthCrossChainData.contract.Transact(opts, "putCurEpochStartHeight", curEpochStartHeight)
+// Solidity: function putCurEpochId(uint64 epochId) returns(bool)
+func (_EthCrossChainData *EthCrossChainDataTransactor) PutCurEpochId(opts *bind.TransactOpts, epochId uint64) (*types.Transaction, error) {
+	return _EthCrossChainData.contract.Transact(opts, "putCurEpochId", epochId)
 }
 
-// PutCurEpochStartHeight is a paid mutator transaction binding the contract method 0x8a8bd17f.
+// PutCurEpochId is a paid mutator transaction binding the contract method 0x738b5ae4.
 //
-// Solidity: function putCurEpochStartHeight(uint32 curEpochStartHeight) returns(bool)
-func (_EthCrossChainData *EthCrossChainDataSession) PutCurEpochStartHeight(curEpochStartHeight uint32) (*types.Transaction, error) {
-	return _EthCrossChainData.Contract.PutCurEpochStartHeight(&_EthCrossChainData.TransactOpts, curEpochStartHeight)
+// Solidity: function putCurEpochId(uint64 epochId) returns(bool)
+func (_EthCrossChainData *EthCrossChainDataSession) PutCurEpochId(epochId uint64) (*types.Transaction, error) {
+	return _EthCrossChainData.Contract.PutCurEpochId(&_EthCrossChainData.TransactOpts, epochId)
 }
 
-// PutCurEpochStartHeight is a paid mutator transaction binding the contract method 0x8a8bd17f.
+// PutCurEpochId is a paid mutator transaction binding the contract method 0x738b5ae4.
 //
-// Solidity: function putCurEpochStartHeight(uint32 curEpochStartHeight) returns(bool)
-func (_EthCrossChainData *EthCrossChainDataTransactorSession) PutCurEpochStartHeight(curEpochStartHeight uint32) (*types.Transaction, error) {
-	return _EthCrossChainData.Contract.PutCurEpochStartHeight(&_EthCrossChainData.TransactOpts, curEpochStartHeight)
+// Solidity: function putCurEpochId(uint64 epochId) returns(bool)
+func (_EthCrossChainData *EthCrossChainDataTransactorSession) PutCurEpochId(epochId uint64) (*types.Transaction, error) {
+	return _EthCrossChainData.Contract.PutCurEpochId(&_EthCrossChainData.TransactOpts, epochId)
+}
+
+// PutCurEpochStartHeight is a paid mutator transaction binding the contract method 0x512feecc.
+//
+// Solidity: function putCurEpochStartHeight(uint64 startHeight) returns(bool)
+func (_EthCrossChainData *EthCrossChainDataTransactor) PutCurEpochStartHeight(opts *bind.TransactOpts, startHeight uint64) (*types.Transaction, error) {
+	return _EthCrossChainData.contract.Transact(opts, "putCurEpochStartHeight", startHeight)
+}
+
+// PutCurEpochStartHeight is a paid mutator transaction binding the contract method 0x512feecc.
+//
+// Solidity: function putCurEpochStartHeight(uint64 startHeight) returns(bool)
+func (_EthCrossChainData *EthCrossChainDataSession) PutCurEpochStartHeight(startHeight uint64) (*types.Transaction, error) {
+	return _EthCrossChainData.Contract.PutCurEpochStartHeight(&_EthCrossChainData.TransactOpts, startHeight)
+}
+
+// PutCurEpochStartHeight is a paid mutator transaction binding the contract method 0x512feecc.
+//
+// Solidity: function putCurEpochStartHeight(uint64 startHeight) returns(bool)
+func (_EthCrossChainData *EthCrossChainDataTransactorSession) PutCurEpochStartHeight(startHeight uint64) (*types.Transaction, error) {
+	return _EthCrossChainData.Contract.PutCurEpochStartHeight(&_EthCrossChainData.TransactOpts, startHeight)
+}
+
+// PutCurEpochValidatorPkBytes is a paid mutator transaction binding the contract method 0x1dc544bf.
+//
+// Solidity: function putCurEpochValidatorPkBytes(bytes curEpochPkBytes) returns(bool)
+func (_EthCrossChainData *EthCrossChainDataTransactor) PutCurEpochValidatorPkBytes(opts *bind.TransactOpts, curEpochPkBytes []byte) (*types.Transaction, error) {
+	return _EthCrossChainData.contract.Transact(opts, "putCurEpochValidatorPkBytes", curEpochPkBytes)
+}
+
+// PutCurEpochValidatorPkBytes is a paid mutator transaction binding the contract method 0x1dc544bf.
+//
+// Solidity: function putCurEpochValidatorPkBytes(bytes curEpochPkBytes) returns(bool)
+func (_EthCrossChainData *EthCrossChainDataSession) PutCurEpochValidatorPkBytes(curEpochPkBytes []byte) (*types.Transaction, error) {
+	return _EthCrossChainData.Contract.PutCurEpochValidatorPkBytes(&_EthCrossChainData.TransactOpts, curEpochPkBytes)
+}
+
+// PutCurEpochValidatorPkBytes is a paid mutator transaction binding the contract method 0x1dc544bf.
+//
+// Solidity: function putCurEpochValidatorPkBytes(bytes curEpochPkBytes) returns(bool)
+func (_EthCrossChainData *EthCrossChainDataTransactorSession) PutCurEpochValidatorPkBytes(curEpochPkBytes []byte) (*types.Transaction, error) {
+	return _EthCrossChainData.Contract.PutCurEpochValidatorPkBytes(&_EthCrossChainData.TransactOpts, curEpochPkBytes)
 }
 
 // PutEthTxHash is a paid mutator transaction binding the contract method 0x4c3ccf64.
@@ -1405,21 +1577,25 @@ func (_EthCrossChainData *EthCrossChainDataFilterer) ParseUnpaused(log types.Log
 }
 
 // IEthCrossChainDataABI is the input ABI used to generate the binding from.
-const IEthCrossChainDataABI = "[{\"constant\":true,\"inputs\":[{\"internalType\":\"uint64\",\"name\":\"fromChainId\",\"type\":\"uint64\"},{\"internalType\":\"bytes32\",\"name\":\"fromChainTx\",\"type\":\"bytes32\"}],\"name\":\"checkIfFromChainTxExist\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"getCurEpochConPubKeyBytes\",\"outputs\":[{\"internalType\":\"bytes\",\"name\":\"\",\"type\":\"bytes\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"getCurEpochStartHeight\",\"outputs\":[{\"internalType\":\"uint32\",\"name\":\"\",\"type\":\"uint32\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"ethTxHashIndex\",\"type\":\"uint256\"}],\"name\":\"getEthTxHash\",\"outputs\":[{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"getEthTxHashIndex\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"key1\",\"type\":\"bytes32\"},{\"internalType\":\"bytes32\",\"name\":\"key2\",\"type\":\"bytes32\"}],\"name\":\"getExtraData\",\"outputs\":[{\"internalType\":\"bytes\",\"name\":\"\",\"type\":\"bytes\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"internalType\":\"uint64\",\"name\":\"fromChainId\",\"type\":\"uint64\"},{\"internalType\":\"bytes32\",\"name\":\"fromChainTx\",\"type\":\"bytes32\"}],\"name\":\"markFromChainTxExist\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[],\"name\":\"pause\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"paused\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"internalType\":\"bytes\",\"name\":\"curEpochPkBytes\",\"type\":\"bytes\"}],\"name\":\"putCurEpochConPubKeyBytes\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"internalType\":\"uint32\",\"name\":\"curEpochStartHeight\",\"type\":\"uint32\"}],\"name\":\"putCurEpochStartHeight\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"ethTxHash\",\"type\":\"bytes32\"}],\"name\":\"putEthTxHash\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"key1\",\"type\":\"bytes32\"},{\"internalType\":\"bytes32\",\"name\":\"key2\",\"type\":\"bytes32\"},{\"internalType\":\"bytes\",\"name\":\"value\",\"type\":\"bytes\"}],\"name\":\"putExtraData\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"internalType\":\"address\",\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"transferOwnership\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[],\"name\":\"unpause\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"}]"
+const IEthCrossChainDataABI = "[{\"constant\":true,\"inputs\":[{\"internalType\":\"uint64\",\"name\":\"fromChainId\",\"type\":\"uint64\"},{\"internalType\":\"bytes32\",\"name\":\"fromChainTx\",\"type\":\"bytes32\"}],\"name\":\"checkIfFromChainTxExist\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"getCurEpochEndHeight\",\"outputs\":[{\"internalType\":\"uint64\",\"name\":\"\",\"type\":\"uint64\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"getCurEpochId\",\"outputs\":[{\"internalType\":\"uint64\",\"name\":\"\",\"type\":\"uint64\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"getCurEpochStartHeight\",\"outputs\":[{\"internalType\":\"uint64\",\"name\":\"\",\"type\":\"uint64\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"getCurEpochValidatorPkBytes\",\"outputs\":[{\"internalType\":\"bytes\",\"name\":\"\",\"type\":\"bytes\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"ethTxHashIndex\",\"type\":\"uint256\"}],\"name\":\"getEthTxHash\",\"outputs\":[{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"getEthTxHashIndex\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"key1\",\"type\":\"bytes32\"},{\"internalType\":\"bytes32\",\"name\":\"key2\",\"type\":\"bytes32\"}],\"name\":\"getExtraData\",\"outputs\":[{\"internalType\":\"bytes\",\"name\":\"\",\"type\":\"bytes\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"internalType\":\"uint64\",\"name\":\"fromChainId\",\"type\":\"uint64\"},{\"internalType\":\"bytes32\",\"name\":\"fromChainTx\",\"type\":\"bytes32\"}],\"name\":\"markFromChainTxExist\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[],\"name\":\"pause\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"paused\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"internalType\":\"uint64\",\"name\":\"startHeight\",\"type\":\"uint64\"}],\"name\":\"putCurEpochEndHeight\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"internalType\":\"uint64\",\"name\":\"epochId\",\"type\":\"uint64\"}],\"name\":\"putCurEpochId\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"internalType\":\"uint64\",\"name\":\"startHeight\",\"type\":\"uint64\"}],\"name\":\"putCurEpochStartHeight\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"internalType\":\"bytes\",\"name\":\"curEpochPkBytes\",\"type\":\"bytes\"}],\"name\":\"putCurEpochValidatorPkBytes\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"ethTxHash\",\"type\":\"bytes32\"}],\"name\":\"putEthTxHash\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"key1\",\"type\":\"bytes32\"},{\"internalType\":\"bytes32\",\"name\":\"key2\",\"type\":\"bytes32\"},{\"internalType\":\"bytes\",\"name\":\"value\",\"type\":\"bytes\"}],\"name\":\"putExtraData\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"internalType\":\"address\",\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"transferOwnership\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[],\"name\":\"unpause\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"}]"
 
 // IEthCrossChainDataFuncSigs maps the 4-byte function signature to its string representation.
 var IEthCrossChainDataFuncSigs = map[string]string{
 	"0586763c": "checkIfFromChainTxExist(uint64,bytes32)",
-	"69d48074": "getCurEpochConPubKeyBytes()",
+	"4e4af8ce": "getCurEpochEndHeight()",
+	"f881afd2": "getCurEpochId()",
 	"5ac40790": "getCurEpochStartHeight()",
+	"cd62908f": "getCurEpochValidatorPkBytes()",
 	"29927875": "getEthTxHash(uint256)",
 	"ff3d24a1": "getEthTxHashIndex()",
 	"40602bb5": "getExtraData(bytes32,bytes32)",
 	"e90bfdcf": "markFromChainTxExist(uint64,bytes32)",
 	"8456cb59": "pause()",
 	"5c975abb": "paused()",
-	"41973cd9": "putCurEpochConPubKeyBytes(bytes)",
-	"8a8bd17f": "putCurEpochStartHeight(uint32)",
+	"6a773962": "putCurEpochEndHeight(uint64)",
+	"738b5ae4": "putCurEpochId(uint64)",
+	"512feecc": "putCurEpochStartHeight(uint64)",
+	"1dc544bf": "putCurEpochValidatorPkBytes(bytes)",
 	"4c3ccf64": "putEthTxHash(bytes32)",
 	"1afe374e": "putExtraData(bytes32,bytes32,bytes)",
 	"f2fde38b": "transferOwnership(address)",
@@ -1599,12 +1775,105 @@ func (_IEthCrossChainData *IEthCrossChainDataCallerSession) CheckIfFromChainTxEx
 	return _IEthCrossChainData.Contract.CheckIfFromChainTxExist(&_IEthCrossChainData.CallOpts, fromChainId, fromChainTx)
 }
 
-// GetCurEpochConPubKeyBytes is a free data retrieval call binding the contract method 0x69d48074.
+// GetCurEpochEndHeight is a free data retrieval call binding the contract method 0x4e4af8ce.
 //
-// Solidity: function getCurEpochConPubKeyBytes() view returns(bytes)
-func (_IEthCrossChainData *IEthCrossChainDataCaller) GetCurEpochConPubKeyBytes(opts *bind.CallOpts) ([]byte, error) {
+// Solidity: function getCurEpochEndHeight() view returns(uint64)
+func (_IEthCrossChainData *IEthCrossChainDataCaller) GetCurEpochEndHeight(opts *bind.CallOpts) (uint64, error) {
 	var out []interface{}
-	err := _IEthCrossChainData.contract.Call(opts, &out, "getCurEpochConPubKeyBytes")
+	err := _IEthCrossChainData.contract.Call(opts, &out, "getCurEpochEndHeight")
+
+	if err != nil {
+		return *new(uint64), err
+	}
+
+	out0 := *abi.ConvertType(out[0], new(uint64)).(*uint64)
+
+	return out0, err
+
+}
+
+// GetCurEpochEndHeight is a free data retrieval call binding the contract method 0x4e4af8ce.
+//
+// Solidity: function getCurEpochEndHeight() view returns(uint64)
+func (_IEthCrossChainData *IEthCrossChainDataSession) GetCurEpochEndHeight() (uint64, error) {
+	return _IEthCrossChainData.Contract.GetCurEpochEndHeight(&_IEthCrossChainData.CallOpts)
+}
+
+// GetCurEpochEndHeight is a free data retrieval call binding the contract method 0x4e4af8ce.
+//
+// Solidity: function getCurEpochEndHeight() view returns(uint64)
+func (_IEthCrossChainData *IEthCrossChainDataCallerSession) GetCurEpochEndHeight() (uint64, error) {
+	return _IEthCrossChainData.Contract.GetCurEpochEndHeight(&_IEthCrossChainData.CallOpts)
+}
+
+// GetCurEpochId is a free data retrieval call binding the contract method 0xf881afd2.
+//
+// Solidity: function getCurEpochId() view returns(uint64)
+func (_IEthCrossChainData *IEthCrossChainDataCaller) GetCurEpochId(opts *bind.CallOpts) (uint64, error) {
+	var out []interface{}
+	err := _IEthCrossChainData.contract.Call(opts, &out, "getCurEpochId")
+
+	if err != nil {
+		return *new(uint64), err
+	}
+
+	out0 := *abi.ConvertType(out[0], new(uint64)).(*uint64)
+
+	return out0, err
+
+}
+
+// GetCurEpochId is a free data retrieval call binding the contract method 0xf881afd2.
+//
+// Solidity: function getCurEpochId() view returns(uint64)
+func (_IEthCrossChainData *IEthCrossChainDataSession) GetCurEpochId() (uint64, error) {
+	return _IEthCrossChainData.Contract.GetCurEpochId(&_IEthCrossChainData.CallOpts)
+}
+
+// GetCurEpochId is a free data retrieval call binding the contract method 0xf881afd2.
+//
+// Solidity: function getCurEpochId() view returns(uint64)
+func (_IEthCrossChainData *IEthCrossChainDataCallerSession) GetCurEpochId() (uint64, error) {
+	return _IEthCrossChainData.Contract.GetCurEpochId(&_IEthCrossChainData.CallOpts)
+}
+
+// GetCurEpochStartHeight is a free data retrieval call binding the contract method 0x5ac40790.
+//
+// Solidity: function getCurEpochStartHeight() view returns(uint64)
+func (_IEthCrossChainData *IEthCrossChainDataCaller) GetCurEpochStartHeight(opts *bind.CallOpts) (uint64, error) {
+	var out []interface{}
+	err := _IEthCrossChainData.contract.Call(opts, &out, "getCurEpochStartHeight")
+
+	if err != nil {
+		return *new(uint64), err
+	}
+
+	out0 := *abi.ConvertType(out[0], new(uint64)).(*uint64)
+
+	return out0, err
+
+}
+
+// GetCurEpochStartHeight is a free data retrieval call binding the contract method 0x5ac40790.
+//
+// Solidity: function getCurEpochStartHeight() view returns(uint64)
+func (_IEthCrossChainData *IEthCrossChainDataSession) GetCurEpochStartHeight() (uint64, error) {
+	return _IEthCrossChainData.Contract.GetCurEpochStartHeight(&_IEthCrossChainData.CallOpts)
+}
+
+// GetCurEpochStartHeight is a free data retrieval call binding the contract method 0x5ac40790.
+//
+// Solidity: function getCurEpochStartHeight() view returns(uint64)
+func (_IEthCrossChainData *IEthCrossChainDataCallerSession) GetCurEpochStartHeight() (uint64, error) {
+	return _IEthCrossChainData.Contract.GetCurEpochStartHeight(&_IEthCrossChainData.CallOpts)
+}
+
+// GetCurEpochValidatorPkBytes is a free data retrieval call binding the contract method 0xcd62908f.
+//
+// Solidity: function getCurEpochValidatorPkBytes() view returns(bytes)
+func (_IEthCrossChainData *IEthCrossChainDataCaller) GetCurEpochValidatorPkBytes(opts *bind.CallOpts) ([]byte, error) {
+	var out []interface{}
+	err := _IEthCrossChainData.contract.Call(opts, &out, "getCurEpochValidatorPkBytes")
 
 	if err != nil {
 		return *new([]byte), err
@@ -1616,49 +1885,18 @@ func (_IEthCrossChainData *IEthCrossChainDataCaller) GetCurEpochConPubKeyBytes(o
 
 }
 
-// GetCurEpochConPubKeyBytes is a free data retrieval call binding the contract method 0x69d48074.
+// GetCurEpochValidatorPkBytes is a free data retrieval call binding the contract method 0xcd62908f.
 //
-// Solidity: function getCurEpochConPubKeyBytes() view returns(bytes)
-func (_IEthCrossChainData *IEthCrossChainDataSession) GetCurEpochConPubKeyBytes() ([]byte, error) {
-	return _IEthCrossChainData.Contract.GetCurEpochConPubKeyBytes(&_IEthCrossChainData.CallOpts)
+// Solidity: function getCurEpochValidatorPkBytes() view returns(bytes)
+func (_IEthCrossChainData *IEthCrossChainDataSession) GetCurEpochValidatorPkBytes() ([]byte, error) {
+	return _IEthCrossChainData.Contract.GetCurEpochValidatorPkBytes(&_IEthCrossChainData.CallOpts)
 }
 
-// GetCurEpochConPubKeyBytes is a free data retrieval call binding the contract method 0x69d48074.
+// GetCurEpochValidatorPkBytes is a free data retrieval call binding the contract method 0xcd62908f.
 //
-// Solidity: function getCurEpochConPubKeyBytes() view returns(bytes)
-func (_IEthCrossChainData *IEthCrossChainDataCallerSession) GetCurEpochConPubKeyBytes() ([]byte, error) {
-	return _IEthCrossChainData.Contract.GetCurEpochConPubKeyBytes(&_IEthCrossChainData.CallOpts)
-}
-
-// GetCurEpochStartHeight is a free data retrieval call binding the contract method 0x5ac40790.
-//
-// Solidity: function getCurEpochStartHeight() view returns(uint32)
-func (_IEthCrossChainData *IEthCrossChainDataCaller) GetCurEpochStartHeight(opts *bind.CallOpts) (uint32, error) {
-	var out []interface{}
-	err := _IEthCrossChainData.contract.Call(opts, &out, "getCurEpochStartHeight")
-
-	if err != nil {
-		return *new(uint32), err
-	}
-
-	out0 := *abi.ConvertType(out[0], new(uint32)).(*uint32)
-
-	return out0, err
-
-}
-
-// GetCurEpochStartHeight is a free data retrieval call binding the contract method 0x5ac40790.
-//
-// Solidity: function getCurEpochStartHeight() view returns(uint32)
-func (_IEthCrossChainData *IEthCrossChainDataSession) GetCurEpochStartHeight() (uint32, error) {
-	return _IEthCrossChainData.Contract.GetCurEpochStartHeight(&_IEthCrossChainData.CallOpts)
-}
-
-// GetCurEpochStartHeight is a free data retrieval call binding the contract method 0x5ac40790.
-//
-// Solidity: function getCurEpochStartHeight() view returns(uint32)
-func (_IEthCrossChainData *IEthCrossChainDataCallerSession) GetCurEpochStartHeight() (uint32, error) {
-	return _IEthCrossChainData.Contract.GetCurEpochStartHeight(&_IEthCrossChainData.CallOpts)
+// Solidity: function getCurEpochValidatorPkBytes() view returns(bytes)
+func (_IEthCrossChainData *IEthCrossChainDataCallerSession) GetCurEpochValidatorPkBytes() ([]byte, error) {
+	return _IEthCrossChainData.Contract.GetCurEpochValidatorPkBytes(&_IEthCrossChainData.CallOpts)
 }
 
 // GetEthTxHash is a free data retrieval call binding the contract method 0x29927875.
@@ -1827,46 +2065,88 @@ func (_IEthCrossChainData *IEthCrossChainDataTransactorSession) Pause() (*types.
 	return _IEthCrossChainData.Contract.Pause(&_IEthCrossChainData.TransactOpts)
 }
 
-// PutCurEpochConPubKeyBytes is a paid mutator transaction binding the contract method 0x41973cd9.
+// PutCurEpochEndHeight is a paid mutator transaction binding the contract method 0x6a773962.
 //
-// Solidity: function putCurEpochConPubKeyBytes(bytes curEpochPkBytes) returns(bool)
-func (_IEthCrossChainData *IEthCrossChainDataTransactor) PutCurEpochConPubKeyBytes(opts *bind.TransactOpts, curEpochPkBytes []byte) (*types.Transaction, error) {
-	return _IEthCrossChainData.contract.Transact(opts, "putCurEpochConPubKeyBytes", curEpochPkBytes)
+// Solidity: function putCurEpochEndHeight(uint64 startHeight) returns(bool)
+func (_IEthCrossChainData *IEthCrossChainDataTransactor) PutCurEpochEndHeight(opts *bind.TransactOpts, startHeight uint64) (*types.Transaction, error) {
+	return _IEthCrossChainData.contract.Transact(opts, "putCurEpochEndHeight", startHeight)
 }
 
-// PutCurEpochConPubKeyBytes is a paid mutator transaction binding the contract method 0x41973cd9.
+// PutCurEpochEndHeight is a paid mutator transaction binding the contract method 0x6a773962.
 //
-// Solidity: function putCurEpochConPubKeyBytes(bytes curEpochPkBytes) returns(bool)
-func (_IEthCrossChainData *IEthCrossChainDataSession) PutCurEpochConPubKeyBytes(curEpochPkBytes []byte) (*types.Transaction, error) {
-	return _IEthCrossChainData.Contract.PutCurEpochConPubKeyBytes(&_IEthCrossChainData.TransactOpts, curEpochPkBytes)
+// Solidity: function putCurEpochEndHeight(uint64 startHeight) returns(bool)
+func (_IEthCrossChainData *IEthCrossChainDataSession) PutCurEpochEndHeight(startHeight uint64) (*types.Transaction, error) {
+	return _IEthCrossChainData.Contract.PutCurEpochEndHeight(&_IEthCrossChainData.TransactOpts, startHeight)
 }
 
-// PutCurEpochConPubKeyBytes is a paid mutator transaction binding the contract method 0x41973cd9.
+// PutCurEpochEndHeight is a paid mutator transaction binding the contract method 0x6a773962.
 //
-// Solidity: function putCurEpochConPubKeyBytes(bytes curEpochPkBytes) returns(bool)
-func (_IEthCrossChainData *IEthCrossChainDataTransactorSession) PutCurEpochConPubKeyBytes(curEpochPkBytes []byte) (*types.Transaction, error) {
-	return _IEthCrossChainData.Contract.PutCurEpochConPubKeyBytes(&_IEthCrossChainData.TransactOpts, curEpochPkBytes)
+// Solidity: function putCurEpochEndHeight(uint64 startHeight) returns(bool)
+func (_IEthCrossChainData *IEthCrossChainDataTransactorSession) PutCurEpochEndHeight(startHeight uint64) (*types.Transaction, error) {
+	return _IEthCrossChainData.Contract.PutCurEpochEndHeight(&_IEthCrossChainData.TransactOpts, startHeight)
 }
 
-// PutCurEpochStartHeight is a paid mutator transaction binding the contract method 0x8a8bd17f.
+// PutCurEpochId is a paid mutator transaction binding the contract method 0x738b5ae4.
 //
-// Solidity: function putCurEpochStartHeight(uint32 curEpochStartHeight) returns(bool)
-func (_IEthCrossChainData *IEthCrossChainDataTransactor) PutCurEpochStartHeight(opts *bind.TransactOpts, curEpochStartHeight uint32) (*types.Transaction, error) {
-	return _IEthCrossChainData.contract.Transact(opts, "putCurEpochStartHeight", curEpochStartHeight)
+// Solidity: function putCurEpochId(uint64 epochId) returns(bool)
+func (_IEthCrossChainData *IEthCrossChainDataTransactor) PutCurEpochId(opts *bind.TransactOpts, epochId uint64) (*types.Transaction, error) {
+	return _IEthCrossChainData.contract.Transact(opts, "putCurEpochId", epochId)
 }
 
-// PutCurEpochStartHeight is a paid mutator transaction binding the contract method 0x8a8bd17f.
+// PutCurEpochId is a paid mutator transaction binding the contract method 0x738b5ae4.
 //
-// Solidity: function putCurEpochStartHeight(uint32 curEpochStartHeight) returns(bool)
-func (_IEthCrossChainData *IEthCrossChainDataSession) PutCurEpochStartHeight(curEpochStartHeight uint32) (*types.Transaction, error) {
-	return _IEthCrossChainData.Contract.PutCurEpochStartHeight(&_IEthCrossChainData.TransactOpts, curEpochStartHeight)
+// Solidity: function putCurEpochId(uint64 epochId) returns(bool)
+func (_IEthCrossChainData *IEthCrossChainDataSession) PutCurEpochId(epochId uint64) (*types.Transaction, error) {
+	return _IEthCrossChainData.Contract.PutCurEpochId(&_IEthCrossChainData.TransactOpts, epochId)
 }
 
-// PutCurEpochStartHeight is a paid mutator transaction binding the contract method 0x8a8bd17f.
+// PutCurEpochId is a paid mutator transaction binding the contract method 0x738b5ae4.
 //
-// Solidity: function putCurEpochStartHeight(uint32 curEpochStartHeight) returns(bool)
-func (_IEthCrossChainData *IEthCrossChainDataTransactorSession) PutCurEpochStartHeight(curEpochStartHeight uint32) (*types.Transaction, error) {
-	return _IEthCrossChainData.Contract.PutCurEpochStartHeight(&_IEthCrossChainData.TransactOpts, curEpochStartHeight)
+// Solidity: function putCurEpochId(uint64 epochId) returns(bool)
+func (_IEthCrossChainData *IEthCrossChainDataTransactorSession) PutCurEpochId(epochId uint64) (*types.Transaction, error) {
+	return _IEthCrossChainData.Contract.PutCurEpochId(&_IEthCrossChainData.TransactOpts, epochId)
+}
+
+// PutCurEpochStartHeight is a paid mutator transaction binding the contract method 0x512feecc.
+//
+// Solidity: function putCurEpochStartHeight(uint64 startHeight) returns(bool)
+func (_IEthCrossChainData *IEthCrossChainDataTransactor) PutCurEpochStartHeight(opts *bind.TransactOpts, startHeight uint64) (*types.Transaction, error) {
+	return _IEthCrossChainData.contract.Transact(opts, "putCurEpochStartHeight", startHeight)
+}
+
+// PutCurEpochStartHeight is a paid mutator transaction binding the contract method 0x512feecc.
+//
+// Solidity: function putCurEpochStartHeight(uint64 startHeight) returns(bool)
+func (_IEthCrossChainData *IEthCrossChainDataSession) PutCurEpochStartHeight(startHeight uint64) (*types.Transaction, error) {
+	return _IEthCrossChainData.Contract.PutCurEpochStartHeight(&_IEthCrossChainData.TransactOpts, startHeight)
+}
+
+// PutCurEpochStartHeight is a paid mutator transaction binding the contract method 0x512feecc.
+//
+// Solidity: function putCurEpochStartHeight(uint64 startHeight) returns(bool)
+func (_IEthCrossChainData *IEthCrossChainDataTransactorSession) PutCurEpochStartHeight(startHeight uint64) (*types.Transaction, error) {
+	return _IEthCrossChainData.Contract.PutCurEpochStartHeight(&_IEthCrossChainData.TransactOpts, startHeight)
+}
+
+// PutCurEpochValidatorPkBytes is a paid mutator transaction binding the contract method 0x1dc544bf.
+//
+// Solidity: function putCurEpochValidatorPkBytes(bytes curEpochPkBytes) returns(bool)
+func (_IEthCrossChainData *IEthCrossChainDataTransactor) PutCurEpochValidatorPkBytes(opts *bind.TransactOpts, curEpochPkBytes []byte) (*types.Transaction, error) {
+	return _IEthCrossChainData.contract.Transact(opts, "putCurEpochValidatorPkBytes", curEpochPkBytes)
+}
+
+// PutCurEpochValidatorPkBytes is a paid mutator transaction binding the contract method 0x1dc544bf.
+//
+// Solidity: function putCurEpochValidatorPkBytes(bytes curEpochPkBytes) returns(bool)
+func (_IEthCrossChainData *IEthCrossChainDataSession) PutCurEpochValidatorPkBytes(curEpochPkBytes []byte) (*types.Transaction, error) {
+	return _IEthCrossChainData.Contract.PutCurEpochValidatorPkBytes(&_IEthCrossChainData.TransactOpts, curEpochPkBytes)
+}
+
+// PutCurEpochValidatorPkBytes is a paid mutator transaction binding the contract method 0x1dc544bf.
+//
+// Solidity: function putCurEpochValidatorPkBytes(bytes curEpochPkBytes) returns(bool)
+func (_IEthCrossChainData *IEthCrossChainDataTransactorSession) PutCurEpochValidatorPkBytes(curEpochPkBytes []byte) (*types.Transaction, error) {
+	return _IEthCrossChainData.Contract.PutCurEpochValidatorPkBytes(&_IEthCrossChainData.TransactOpts, curEpochPkBytes)
 }
 
 // PutEthTxHash is a paid mutator transaction binding the contract method 0x4c3ccf64.

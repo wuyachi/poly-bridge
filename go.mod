@@ -20,7 +20,7 @@ require (
 	github.com/ontio/ontology v1.14.0-beta.0.20210818114002-fedaf66010a7
 	github.com/ontio/ontology-crypto v1.2.1
 	github.com/ontio/ontology-go-sdk v1.12.4
-	github.com/polynetwork/bridge-common v0.0.55-v2
+	github.com/polynetwork/bridge-common v0.0.0-20221116093850-9eac3883ee0e
 	github.com/polynetwork/cosmos-poly-module v0.0.0-20200827085015-12374709b707
 	github.com/polynetwork/poly v1.3.1
 	github.com/polynetwork/ripple-sdk v0.0.0-20220616022641-d64d4aa053fe
@@ -176,6 +176,6 @@ replace (
 	github.com/cosmos/cosmos-sdk => github.com/Switcheo/cosmos-sdk v0.39.2-0.20200814061308-474a0dbbe4ba
 	github.com/ethereum/go-ethereum v1.10.11 => github.com/ethereum/go-ethereum v1.9.25
 	github.com/joeqian10/neo-gogogo => github.com/blockchain-develop/neo-gogogo v0.0.0-20210126025041-8d21ec4f0324
-	//github.com/polynetwork/bridge-common => github.com/wuyachi/bridge-common v0.0.0-20221115030104-d65782c431e8
+	//github.com/polynetwork/bridge-common => ../bridge-common-v2
 	github.com/rubblelabs/ripple v0.0.0-20220222071018-38c1a8b14c18 => github.com/siovanus/ripple v0.0.0-20220406100637-81f6afe283d9
 )

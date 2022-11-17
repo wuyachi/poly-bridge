@@ -20,6 +20,7 @@ package crosschainlisten
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/polynetwork/bridge-common/base"
 	"math"
 	"poly-bridge/cacheRedis"
 	"poly-bridge/common"
@@ -92,33 +93,29 @@ type ChainHandle interface {
 
 func NewChainHandle(chainListenConfig *conf.ChainListenConfig) ChainHandle {
 	switch chainListenConfig.ChainId {
-	case basedef.POLY_CROSSCHAIN_ID:
+	case base.ZION: // todo
 		return polylisten.NewPolyChainListen(chainListenConfig)
-	case basedef.ETHEREUM_CROSSCHAIN_ID, basedef.BSC_CROSSCHAIN_ID, basedef.PLT_CROSSCHAIN_ID, basedef.OK_CROSSCHAIN_ID,
-		basedef.HECO_CROSSCHAIN_ID, basedef.MATIC_CROSSCHAIN_ID, basedef.ARBITRUM_CROSSCHAIN_ID, basedef.XDAI_CROSSCHAIN_ID,
-		basedef.FANTOM_CROSSCHAIN_ID, basedef.AVAX_CROSSCHAIN_ID, basedef.OPTIMISTIC_CROSSCHAIN_ID, basedef.METIS_CROSSCHAIN_ID,
-		basedef.BOBA_CROSSCHAIN_ID, basedef.RINKEBY_CROSSCHAIN_ID, basedef.OASIS_CROSSCHAIN_ID, basedef.HARMONY_CROSSCHAIN_ID,
-		basedef.KCC_CROSSCHAIN_ID, basedef.BYTOM_CROSSCHAIN_ID, basedef.HSC_CROSSCHAIN_ID, basedef.KAVA_CROSSCHAIN_ID,
-		basedef.CUBE_CROSSCHAIN_ID, basedef.ZKSYNC_CROSSCHAIN_ID, basedef.CELO_CROSSCHAIN_ID, basedef.CLOVER_CROSSCHAIN_ID,
-		basedef.CONFLUX_CROSSCHAIN_ID, basedef.ASTAR_CROSSCHAIN_ID, basedef.BRISE_CROSSCHAIN_ID:
+	case base.ETH, base.BSC, base.PLT, base.OK, base.HECO, base.MATIC, base.ARBITRUM, base.XDAI, base.FANTOM, base.AVA,
+		base.OPTIMISM, base.METIS, base.BOBA, base.OASIS, base.HARMONY, base.KCC, base.BYTOM, base.HSC, base.KAVA,
+		base.CUBE, base.ZKSYNC, base.CELO, base.CLOVER, base.CONFLUX, base.ASTAR, base.BRISE:
 		return ethereumlisten.NewEthereumChainListen(chainListenConfig)
-	case basedef.NEO_CROSSCHAIN_ID:
+	case base.NEO:
 		return neolisten.NewNeoChainListen(chainListenConfig)
-	case basedef.ONT_CROSSCHAIN_ID:
+	case base.ONT:
 		return ontologylisten.NewOntologyChainListen(chainListenConfig)
-	case basedef.O3_CROSSCHAIN_ID:
+	case base.O3:
 		return o3listen.NewO3ChainListen(chainListenConfig)
-	case basedef.SWITCHEO_CROSSCHAIN_ID:
+	case base.SWITCHEO:
 		return switcheolisten.NewSwitcheoChainListen(chainListenConfig)
-	case basedef.NEO3_CROSSCHAIN_ID:
+	case base.NEO3:
 		return neo3listen.NewNeo3ChainListen(chainListenConfig)
-	case basedef.ZILLIQA_CROSSCHAIN_ID:
+	case base.ZILLIQA:
 		return zilliqalisten.NewZilliqaChainListen(chainListenConfig)
-	case basedef.STARCOIN_CROSSCHAIN_ID:
+	case base.STARCOIN:
 		return starcoinlisten.NewStarcoinChainListen(chainListenConfig)
-	case basedef.RIPPLE_CROSSCHAIN_ID:
+	case basedef.RIPPLE_CROSSCHAIN_ID: // todo
 		return ripplelisten.NewRippleChainListen(chainListenConfig)
-	case basedef.APTOS_CROSSCHAIN_ID:
+	case base.APTOS:
 		return aptoslisten.NewAptosChainListen(chainListenConfig)
 
 	default:

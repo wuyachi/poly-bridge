@@ -198,7 +198,7 @@ func (e *EthereumChainListen) getNFTWrapperEventByBlockNumber(
 			return nil, nil
 		}
 		wrapAddr := common.HexToAddress(wrapAddrStr)
-		wrapperContract, err := nftwp.NewPolyNFTWrapper(wrapAddr, e.ethSdk.GetClient())
+		wrapperContract, err := nftwp.NewPolyNFTWrapper(wrapAddr, e.ethSdk.Node())
 		if err != nil {
 			return nil, fmt.Errorf("GetSmartContractEventByBlock, error: %s", err.Error())
 		}
@@ -239,7 +239,7 @@ func (e *EthereumChainListen) getNFTECCMEventByBlockNumber(
 	error,
 ) {
 
-	eccmContract, err := eccm_abi.NewEthCrossChainManager(eccmAddr, e.ethSdk.GetClient())
+	eccmContract, err := eccm_abi.NewEthCrossChainManagerImplementation(eccmAddr, e.ethSdk.Node())
 	if err != nil {
 		return nil, nil, fmt.Errorf("GetSmartContractEventByBlock, error: %s", err.Error())
 	}
@@ -290,7 +290,7 @@ func (e *EthereumChainListen) getNFTProxyEventByBlockNumber(
 			continue
 		}
 		proxyAddr := common.HexToAddress(proxyAddrStr)
-		proxyContract, err := nftlp.NewPolyNFTLockProxy(proxyAddr, e.ethSdk.GetClient())
+		proxyContract, err := nftlp.NewPolyNFTLockProxy(proxyAddr, e.ethSdk.Node())
 		if err != nil {
 			return nil, nil, fmt.Errorf("GetSmartContractEventByBlock, error: %s", err.Error())
 		}
