@@ -95,7 +95,7 @@ func NewChainHandle(chainListenConfig *conf.ChainListenConfig) ChainHandle {
 	switch chainListenConfig.ChainId {
 	case base.ZION: // todo
 		return polylisten.NewPolyChainListen(chainListenConfig)
-	case base.ETH, base.BSC, base.PLT, base.OK, base.HECO, base.MATIC, base.ARBITRUM, base.XDAI, base.FANTOM, base.AVA,
+	case base.ETH, base.GOERLI, base.BSC, base.PLT, base.OK, base.HECO, base.MATIC, base.ARBITRUM, base.XDAI, base.FANTOM, base.AVA,
 		base.OPTIMISM, base.METIS, base.BOBA, base.OASIS, base.HARMONY, base.KCC, base.BYTOM, base.HSC, base.KAVA,
 		base.CUBE, base.ZKSYNC, base.CELO, base.CLOVER, base.CONFLUX, base.ASTAR, base.BRISE:
 		return ethereumlisten.NewEthereumChainListen(chainListenConfig)

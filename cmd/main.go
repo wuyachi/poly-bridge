@@ -19,6 +19,7 @@ package main
 
 import (
 	"fmt"
+	"github.com/polynetwork/bridge-common/log"
 	"os"
 	"os/signal"
 	"poly-bridge/activity"
@@ -43,15 +44,28 @@ import (
 
 func setupApp() *cli.App {
 	app := cli.NewApp()
-	app.Usage = "poly-bridge Service"
+	app.Usage = "zion-bridge Service"
 	app.Action = StartServer
 	app.Version = "1.0.0"
-	app.Copyright = "Copyright in 2019 The Ontology Authors"
+	app.Copyright = "Copyright in 2022 The Poly Network Authors"
 	app.Flags = []cli.Flag{
 		conf.ConfigPathFlag,
+		&cli.StringFlag{
+			Name:  "log",
+			Value: "",
+			Usage: "log file path, use stdout when unspecified",
+		},
+		&cli.UintFlag{
+			Name:  "logmaxsize",
+			Usage: "max log file size in MB, wont split log file when unspecified",
+		},
+		&cli.UintFlag{
+			Name:  "logmaxfiles",
+			Usage: "max log files to keep, wont remove old logs when unspecified",
+		},
 	}
 	app.Commands = []cli.Command{}
-	app.Before = func(context *cli.Context) error {
+	app.Before = func(ctx *cli.Context) error {
 		runtime.GOMAXPROCS(runtime.NumCPU())
 		return nil
 	}
@@ -79,6 +93,7 @@ func startServer(ctx *cli.Context) {
 		return
 	}
 	logs.SetLogger(logs.AdapterFile, fmt.Sprintf(`{"filename":"%s"}`, config.ServerLogFile))
+	log.Init(&log.LogConfig{Path: config.ServerLogFile})
 
 	//{
 	//	conf, _ := json.Marshal(config)
